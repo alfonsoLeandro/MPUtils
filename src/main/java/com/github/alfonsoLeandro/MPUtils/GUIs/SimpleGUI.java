@@ -1,4 +1,4 @@
-package io.github.alfonsoLeandro.MPUtils.GUIs;
+package com.github.alfonsoLeandro.MPUtils.GUIs;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

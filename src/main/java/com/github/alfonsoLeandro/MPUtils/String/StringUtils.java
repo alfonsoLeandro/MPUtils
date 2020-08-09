@@ -1,4 +1,4 @@
-package io.github.alfonsoLeandro.MPUtils.String;
+package com.github.alfonsoLeandro.MPUtils.String;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -1,6 +1,6 @@
-package io.github.alfonsoLeandro.MPUtils;
+package com.github.alfonsoLeandro.MPUtils;
 
-import io.github.alfonsoLeandro.MPUtils.GUIs.Events;
+import com.github.alfonsoLeandro.MPUtils.GUIs.Events;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginDescriptionFile;

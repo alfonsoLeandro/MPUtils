@@ -1,6 +1,6 @@
-package io.github.alfonsoLeandro.MPUtils.GUIs;
+package com.github.alfonsoLeandro.MPUtils.GUIs;
 
-import io.github.alfonsoLeandro.MPUtils.String.StringUtils;
+import com.github.alfonsoLeandro.MPUtils.String.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -133,6 +133,8 @@ public class PaginatedGUI {
     /**
      * Updates the nav bar, called when the GUI is opened for an user, replicates the navBar items and
      * replaces the %page%, %nextpage%, %previouspage% and %totalpages% placeholders.
+     *
+     * @param page The current open page, used for placeholders.
      */
     public void setnavBar(int page) {
         ItemStack previousPageItem = getPreviousPageItem(page);
@@ -182,7 +184,7 @@ public class PaginatedGUI {
      * Choose whether or not do you want an item in the mid slot of the navigation bar (last row),
      * usually used for telling the player the page they are on.
      *
-     * @param hasCurrentPageItem true if you want the item to be shown, or false if you want the mid slot to be the same as navBar item {@link this#setNavbarItem(ItemStack)}
+     * @param hasCurrentPageItem true if you want the item to be shown, or false if you want the mid slot to be the same as navBar item {@link PaginatedGUI#setNavbarItem(ItemStack)}
      */
     public void setHasCurrentPageItem(boolean hasCurrentPageItem) {
         this.hasCurrentPageitem = hasCurrentPageItem;
@@ -211,7 +213,7 @@ public class PaginatedGUI {
 
     /**
      * Sets the item to be shown as the "current page" button, situated in the center of the navigation bar.
-     * Only shown if {@link this#setHasCurrentPageItem(boolean)} is set to true, else, will show {@link this#setNavbarItem(ItemStack)}
+     * Only shown if {@link PaginatedGUI#setHasCurrentPageItem(boolean)} is set to true, else, will show {@link PaginatedGUI#setNavbarItem(ItemStack)}
      * Can use the %page%, %nextpage%, %previouspage% and %totalpages% placeholders.
      *
      * @param currentPageItem The item in question.
@@ -386,9 +388,9 @@ public class PaginatedGUI {
     }
 
     /**
-     * Sets the items from {@link this#updateItemsPerPage(List)} for the desired page.
+     * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
      *
-     * @param page The page to look for in {@link this#pagesOfItems}.
+     * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
      */
     public void setItemsForPage(int page){
         List<ItemStack> itemsOnPage = pagesOfItems.get(page);

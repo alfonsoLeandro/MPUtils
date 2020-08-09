@@ -1,4 +1,4 @@
-package io.github.alfonsoLeandro.MPUtils.GUIs;
+package com.github.alfonsoLeandro.MPUtils.GUIs;
 
 import java.util.HashMap;
 
