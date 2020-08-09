@@ -41,7 +41,7 @@ public final class Main extends JavaPlugin {
     }
 
   /*  //
-    //updates
+    // Update checker
     //
     public void updateChecker(){
         try {
@@ -63,9 +63,8 @@ public final class Main extends JavaPlugin {
     }*/
 
     //
-    //registrar los EVENTOS
+    //register Events
     //
-
     public void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new Events(), this);

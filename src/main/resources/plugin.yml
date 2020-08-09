@@ -3,5 +3,5 @@ version: ${project.version}
 main: com.github.alfonsoLeandro.MPUtils.Main
 api-version: "1.13"
 authors: [lelesape]
-description: MP's API for minecraft plugins development
+description: API for minecraft plugins development
 website: http://bit.ly/2mwvHWN
