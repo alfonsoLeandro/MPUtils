@@ -1,5 +1,5 @@
 # MPUtils
-### Simple API for helping on the developing of minecraft spigot plugins. 
+### Simple library for helping on the developing of minecraft spigot plugins. 
 
 ## Features:
   - Easy creation of one-page GUIs and paginated GUIs.
