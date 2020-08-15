@@ -40,9 +40,9 @@ public class PaginatedGUI {
      */
     private HashMap<Integer, List<ItemStack>> pagesOfItems;
     /**
-     * Setting for wether showing or not a "Current page item" generally used for displaying info i.e: totla number of pages.
+     * Setting for whether showing or not a "Current page item" generally used for displaying info i.e: total number of pages.
      */
-    private boolean hasCurrentPageitem = true;
+    private boolean hasCurrentPageItem = true;
     /**
      * The GUI button "Current page".
      */
@@ -59,6 +59,10 @@ public class PaginatedGUI {
      * The GUI ItemStack for empty navigation bar slots.
      */
     private ItemStack navbarItem;
+    /**
+     * Some extra tags you may add to differentiate between GUIs.
+     */
+    final private String guiTags;
 
     /**
      * Creates a GUI of any size bigger than 9 and smaller that 54 slots, with ability to have various pages and a navigation bar in the last row.
@@ -68,12 +72,13 @@ public class PaginatedGUI {
      * @param sizePerPage The size of each page, must be multiple of 9, bigger than 9 and smaller than 54.
      * @param items       The list of all items to show in the GUI throughout all pages.
      */
-    public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items) {
+    public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags) {
         if(sizePerPage > 54) sizePerPage = 54;
         if(sizePerPage % 9 != 0) sizePerPage = (int) Math.floor(sizePerPage / 9.0);
         if(sizePerPage == 9) sizePerPage = 18;
 
         this.items = items;
+        this.guiTags = guiTags;
         inv = Bukkit.createInventory(null, sizePerPage, title);
         this.sizePerPage = sizePerPage;
         updateItemsPerPage(items);
@@ -136,7 +141,7 @@ public class PaginatedGUI {
      *
      * @param page The current open page, used for placeholders.
      */
-    public void setnavBar(int page) {
+    public void setNavBar(int page) {
         ItemStack previousPageItem = getPreviousPageItem(page);
         ItemStack navbarItem = getNavBarItem(page);
         ItemStack currentPageItem = getCurrentPageItem(page);
@@ -155,7 +160,7 @@ public class PaginatedGUI {
 
         }
 
-        if(hasCurrentPageitem) {
+        if(hasCurrentPageItem) {
             inv.setItem(sizePerPage - 5, currentPageItem);
         } else {
             inv.setItem(sizePerPage - 5, navbarItem);
@@ -187,7 +192,7 @@ public class PaginatedGUI {
      * @param hasCurrentPageItem true if you want the item to be shown, or false if you want the mid slot to be the same as navBar item {@link PaginatedGUI#setNavbarItem(ItemStack)}
      */
     public void setHasCurrentPageItem(boolean hasCurrentPageItem) {
-        this.hasCurrentPageitem = hasCurrentPageItem;
+        this.hasCurrentPageItem = hasCurrentPageItem;
     }
 
 
@@ -381,10 +386,10 @@ public class PaginatedGUI {
     public void openGUI(Player player, int page) {
         if(page > pages) return;
         player.closeInventory();
-        setnavBar(page);
+        setNavBar(page);
         setItemsForPage(page);
         player.openInventory(inv);
-        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED);
+        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, guiTags);
     }
 
     /**

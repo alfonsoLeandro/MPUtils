@@ -15,7 +15,7 @@ final class PlayersOnGUIsManager {
      * @param playerName The name of the player to look for.
      * @return the page the player is in if it is a paginated GUI, -1 if it is not paginated or null if that player is not in a GUI.
      */
-    public static GUIAtributes getAtributesByPlayer(String playerName){
+    public static GUIAtributes getAttributesByPlayer(String playerName){
         return players.get(playerName);
     }
 
@@ -26,9 +26,9 @@ final class PlayersOnGUIsManager {
      * @param playerName The name of the player to add.
      * @param pageNumber The page of the GUI the player is on, or -1 if its not a paginated GUI.
      */
-    public static void addPlayer(String playerName, int pageNumber, GUIType guiType){
+    public static void addPlayer(String playerName, int pageNumber, GUIType guiType, String guiTags){
         players.remove(playerName);
-        players.put(playerName, new GUIAtributes(pageNumber, guiType));
+        players.put(playerName, new GUIAtributes(pageNumber, guiType, guiTags));
     }
 
     /**

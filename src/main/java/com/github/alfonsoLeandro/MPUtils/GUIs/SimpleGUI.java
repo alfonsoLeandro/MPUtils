@@ -14,9 +14,23 @@ import java.util.HashMap;
 @SuppressWarnings("unused")
 public class SimpleGUI {
 
-    Inventory inv;
-    int size;
-    HashMap<Integer, ItemStack> items;
+    /**
+     * The inventory that will contain the GUI itself.
+     */
+    private Inventory inv;
+    /**
+     * The number of slots the GUI will contain. Must be a multiple of 9.
+     */
+    private final int size;
+    /**
+     * Hashmap containing every item that has been added to the GUI.
+     */
+    private HashMap<Integer, ItemStack> items;
+    /**
+     * Some extra tags you may add to differentiate between GUIs.
+     */
+    final private String guiTags;
+
 
     /**
      * Creates an empty non-paginated CHEST type {@link InventoryType#CHEST} inventory for GUI purposes
@@ -25,7 +39,8 @@ public class SimpleGUI {
      * @param title Inventory title.
      * @param size Inventory size.
      */
-    public SimpleGUI(String title, int size){
+    public SimpleGUI(String title, int size, String guiTags){
+        this.guiTags = guiTags;
         this.size = size;
         inv = Bukkit.createInventory(null, size, title);
     }
@@ -87,7 +102,7 @@ public class SimpleGUI {
     public void openGUI(Player player){
         if(player == null) return;
         player.openInventory(inv);
-        PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE);
+        PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, guiTags);
     }
 
 

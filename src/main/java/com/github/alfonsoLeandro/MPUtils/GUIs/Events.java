@@ -15,8 +15,8 @@ public class Events implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event){
         if(event.getWhoClicked() instanceof Player && PlayersOnGUIsManager.isInGUI(event.getWhoClicked().getName())){
-            GUIAtributes atributes = PlayersOnGUIsManager.getAtributesByPlayer(event.getWhoClicked().getName());
-            Bukkit.getPluginManager().callEvent(new GUIClickEvent((Player)event.getWhoClicked(), atributes.getGuiType(), atributes.getPage(), event));
+            GUIAtributes atributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getWhoClicked().getName());
+            Bukkit.getPluginManager().callEvent(new GUIClickEvent((Player)event.getWhoClicked(), atributes.getGuiType(), atributes.getPage(), event, atributes.getGuiTags()));
         }
     }
 

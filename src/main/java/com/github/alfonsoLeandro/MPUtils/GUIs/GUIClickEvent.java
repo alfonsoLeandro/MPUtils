@@ -12,6 +12,7 @@ public class GUIClickEvent extends Event {
     private final GUIType guiType;
     private final int page;
     private final InventoryClickEvent event;
+    private final String guiTags;
 
     /**
      * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
@@ -22,11 +23,12 @@ public class GUIClickEvent extends Event {
      * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
      * @param event The actual {@link InventoryClickEvent} fired, for you to modify it at your will.
      */
-    public GUIClickEvent(Player clicker, GUIType guiType, int page, InventoryClickEvent event) {
+    public GUIClickEvent(Player clicker, GUIType guiType, int page, InventoryClickEvent event, String guiTags) {
         this.clicker = clicker;
         this.guiType = guiType;
         this.page = page;
         this.event = event;
+        this.guiTags = guiTags;
     }
 
     public HandlerList getHandlers() {
@@ -52,6 +54,10 @@ public class GUIClickEvent extends Event {
 
     public InventoryClickEvent getEvent() {
         return event;
+    }
+
+    public String getGuiTags() {
+        return guiTags;
     }
 
 }
