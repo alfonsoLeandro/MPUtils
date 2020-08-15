@@ -38,6 +38,7 @@ public class SimpleGUI {
      *
      * @param title Inventory title.
      * @param size Inventory size.
+     * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
     public SimpleGUI(String title, int size, String guiTags){
         this.guiTags = guiTags;

@@ -71,6 +71,7 @@ public class PaginatedGUI {
      * @param title       The title for the GUI, not colorized by default.
      * @param sizePerPage The size of each page, must be multiple of 9, bigger than 9 and smaller than 54.
      * @param items       The list of all items to show in the GUI throughout all pages.
+     * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
     public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags) {
         if(sizePerPage > 54) sizePerPage = 54;

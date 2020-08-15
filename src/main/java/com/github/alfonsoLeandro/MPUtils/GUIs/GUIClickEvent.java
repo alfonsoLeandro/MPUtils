@@ -22,6 +22,7 @@ public class GUIClickEvent extends Event {
      * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
      * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
      * @param event The actual {@link InventoryClickEvent} fired, for you to modify it at your will.
+     * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
     public GUIClickEvent(Player clicker, GUIType guiType, int page, InventoryClickEvent event, String guiTags) {
         this.clicker = clicker;
