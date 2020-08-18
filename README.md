@@ -24,14 +24,6 @@ MP Utils is a simple library for helping on the developing of minecraft spigot p
 Developers:
   Add the following maven dependecy to your pom.xml file:
 ```xml
-    <repositories>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-    </repositories>
-```
-```xml
     <dependencies>
         <dependency>
             <groupId>com.github.alfonsoLeandro</groupId>
