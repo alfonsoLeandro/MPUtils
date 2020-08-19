@@ -43,6 +43,7 @@ public class SimpleGUI {
     public SimpleGUI(String title, int size, String guiTags){
         this.guiTags = guiTags;
         this.size = size;
+        items = new HashMap<>();
         inv = Bukkit.createInventory(null, size, title);
     }
 
