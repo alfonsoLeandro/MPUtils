@@ -1,6 +1,6 @@
-package com.github.alfonsoLeandro.MPUtils.GUIs;
+package com.github.alfonsoLeandro.mpUtils.guis;
 
-import com.github.alfonsoLeandro.MPUtils.String.StringUtils;
+import com.github.alfonsoLeandro.mpUtils.string.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * Class for creating a paginated GUI with unlimited pages. Dynamically updates the number of pages according to the given List of ItemStacks.
  */
-@SuppressWarnings("unused")
 public class PaginatedGUI {
 
     /**
@@ -63,6 +62,7 @@ public class PaginatedGUI {
      * Some extra tags you may add to differentiate between GUIs.
      */
     final private String guiTags;
+
 
     /**
      * Creates a GUI of any size bigger than 9 and smaller that 54 slots, with ability to have various pages and a navigation bar in the last row.
@@ -390,7 +390,7 @@ public class PaginatedGUI {
         setNavBar(page);
         setItemsForPage(page);
         player.openInventory(inv);
-        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, guiTags);
+        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, guiTags, this);
     }
 
     /**

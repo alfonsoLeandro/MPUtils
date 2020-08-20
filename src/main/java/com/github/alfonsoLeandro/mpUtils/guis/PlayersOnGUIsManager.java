@@ -1,13 +1,14 @@
-package com.github.alfonsoLeandro.MPUtils.GUIs;
+package com.github.alfonsoLeandro.mpUtils.guis;
 
 import java.util.HashMap;
 
 /**
  * Class for managing which players have GUIs opened and what page they are on.
  */
-final class PlayersOnGUIsManager {
+public final class PlayersOnGUIsManager {
 
-    static HashMap<String, GUIAtributes> players = new HashMap<>();
+    private static final HashMap<String, GUIAtributes> players = new HashMap<>();
+
 
     /**
      * get the page where the player is at in a GUI, if they are in a GUI.
@@ -26,9 +27,9 @@ final class PlayersOnGUIsManager {
      * @param playerName The name of the player to add.
      * @param pageNumber The page of the GUI the player is on, or -1 if its not a paginated GUI.
      */
-    public static void addPlayer(String playerName, int pageNumber, GUIType guiType, String guiTags){
+    public static void addPlayer(String playerName, int pageNumber, GUIType guiType, String guiTags, Object gui){
         players.remove(playerName);
-        players.put(playerName, new GUIAtributes(pageNumber, guiType, guiTags));
+        players.put(playerName, new GUIAtributes(pageNumber, guiType, guiTags, gui));
     }
 
     /**

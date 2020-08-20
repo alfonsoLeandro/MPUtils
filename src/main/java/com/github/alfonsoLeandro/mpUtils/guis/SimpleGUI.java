@@ -1,4 +1,4 @@
-package com.github.alfonsoLeandro.MPUtils.GUIs;
+package com.github.alfonsoLeandro.mpUtils.guis;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -11,7 +11,6 @@ import java.util.HashMap;
 /**
  * Class for creating a GUI of a single page. Check {@link PaginatedGUI} for a paginated GUI.
  */
-@SuppressWarnings("unused")
 public class SimpleGUI {
 
     /**
@@ -25,7 +24,7 @@ public class SimpleGUI {
     /**
      * Hashmap containing every item that has been added to the GUI.
      */
-    private HashMap<Integer, ItemStack> items;
+    private final HashMap<Integer, ItemStack> items;
     /**
      * Some extra tags you may add to differentiate between GUIs.
      */
@@ -104,7 +103,7 @@ public class SimpleGUI {
     public void openGUI(Player player){
         if(player == null) return;
         player.openInventory(inv);
-        PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, guiTags);
+        PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, guiTags, this);
     }
 
 
