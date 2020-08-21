@@ -250,7 +250,7 @@ public class PaginatedGUI {
             if(meta.hasDisplayName()) {
                 meta.setDisplayName(meta.getDisplayName().replace("%page%", String.valueOf(page+1))
                         .replace("%nextpage%", String.valueOf(page + 2))
-                        .replace("%previouspage%", String.valueOf(page - 2))
+                        .replace("%previouspage%", String.valueOf(page))
                         .replace("%totalpages%", String.valueOf(pages))
                 );
             }
@@ -259,7 +259,7 @@ public class PaginatedGUI {
                 for (String line : meta.getLore()) {
                     lore.add(line.replace("%page%", String.valueOf(page+1))
                             .replace("%nextpage%", String.valueOf(page + 2))
-                            .replace("%previouspage%", String.valueOf(page - 2))
+                            .replace("%previouspage%", String.valueOf(page))
                             .replace("%totalpages%", String.valueOf(pages))
                     );
                 }
@@ -284,7 +284,7 @@ public class PaginatedGUI {
             if(meta.hasDisplayName()) {
                 meta.setDisplayName(meta.getDisplayName().replace("%page%", String.valueOf(page+1))
                         .replace("%nextpage%", String.valueOf(page + 2))
-                        .replace("%previouspage%", String.valueOf(page - 2))
+                        .replace("%previouspage%", String.valueOf(page))
                         .replace("%totalpages%", String.valueOf(pages))
                 );
             }
@@ -293,7 +293,7 @@ public class PaginatedGUI {
                 for (String line : meta.getLore()) {
                     lore.add(line.replace("%page%", String.valueOf(page+1))
                             .replace("%nextpage%", String.valueOf(page + 2))
-                            .replace("%previouspage%", String.valueOf(page - 2))
+                            .replace("%previouspage%", String.valueOf(page))
                             .replace("%totalpages%", String.valueOf(pages))
                     );
                 }
@@ -317,7 +317,7 @@ public class PaginatedGUI {
             if(meta.hasDisplayName()) {
                 meta.setDisplayName(meta.getDisplayName().replace("%page%", String.valueOf(page+1))
                         .replace("%nextpage%", String.valueOf(page + 2))
-                        .replace("%previouspage%", String.valueOf(page - 2))
+                        .replace("%previouspage%", String.valueOf(page))
                         .replace("%totalpages%", String.valueOf(pages))
                 );
             }
@@ -326,7 +326,7 @@ public class PaginatedGUI {
                 for (String line : meta.getLore()) {
                     lore.add(line.replace("%page%", String.valueOf(page+1))
                             .replace("%nextpage%", String.valueOf(page + 2))
-                            .replace("%previouspage%", String.valueOf(page - 2))
+                            .replace("%previouspage%", String.valueOf(page))
                             .replace("%totalpages%", String.valueOf(pages))
                     );
                 }
@@ -350,7 +350,7 @@ public class PaginatedGUI {
             if(meta.hasDisplayName()) {
                 meta.setDisplayName(meta.getDisplayName().replace("%page%", String.valueOf(page+1))
                         .replace("%nextpage%", String.valueOf(page + 2))
-                        .replace("%previouspage%", String.valueOf(page - 2))
+                        .replace("%previouspage%", String.valueOf(page))
                         .replace("%totalpages%", String.valueOf(pages))
                 );
             }
@@ -359,7 +359,7 @@ public class PaginatedGUI {
                 for (String line : meta.getLore()) {
                     lore.add(line.replace("%page%", String.valueOf(page+1))
                             .replace("%nextpage%", String.valueOf(page + 2))
-                            .replace("%previouspage%", String.valueOf(page - 2))
+                            .replace("%previouspage%", String.valueOf(page))
                             .replace("%totalpages%", String.valueOf(pages))
                     );
                 }
@@ -400,9 +400,10 @@ public class PaginatedGUI {
      */
     public void setItemsForPage(int page){
         List<ItemStack> itemsOnPage = pagesOfItems.get(page);
+
+        if(itemsOnPage.isEmpty()) return;
+
         for(int i = 0; i < sizePerPage-9; i++){
-            //REMOVE
-            Bukkit.broadcastMessage(itemsOnPage.size()+"");
             if(i < itemsOnPage.size()) {
                 inv.setItem(i, itemsOnPage.get(i));
             }else{
