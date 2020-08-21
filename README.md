@@ -10,7 +10,7 @@ MP Utils is a simple library for helping on the developing of minecraft spigot p
 3. [Usage](#usage)
 4. [About the author](#author)
 5. [License](#license)
-6. [Wiki](#wiki)
+6. [Wiki](../../wiki)
   
   
 <a name="features"></a>
