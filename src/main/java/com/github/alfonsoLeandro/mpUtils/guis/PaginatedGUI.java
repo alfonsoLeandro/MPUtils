@@ -76,7 +76,7 @@ public class PaginatedGUI {
     public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags) {
         if(sizePerPage > 54) sizePerPage = 54;
         if(sizePerPage % 9 != 0) sizePerPage = (int) Math.floor(sizePerPage / 9.0);
-        if(sizePerPage == 9) sizePerPage = 18;
+        if(sizePerPage <= 9) sizePerPage = 18;
 
         this.items = items;
         this.guiTags = guiTags;
@@ -401,6 +401,8 @@ public class PaginatedGUI {
     public void setItemsForPage(int page){
         List<ItemStack> itemsOnPage = pagesOfItems.get(page);
         for(int i = 0; i < sizePerPage-9; i++){
+            //REMOVE
+            Bukkit.broadcastMessage(itemsOnPage.size()+"");
             if(i < itemsOnPage.size()) {
                 inv.setItem(i, itemsOnPage.get(i));
             }else{
