@@ -2,6 +2,7 @@ package com.github.alfonsoLeandro.mpUtils;
 
 import com.github.alfonsoLeandro.mpUtils.events.JoinEvent;
 import com.github.alfonsoLeandro.mpUtils.guis.Events;
+import com.github.alfonsoLeandro.mpUtils.string.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -19,12 +20,12 @@ public final class Main extends JavaPlugin {
     final public String version = pdfFile.getVersion();
     String latestVersion;
     final char color = 'a';
-    final String name = ChatColor.translateAlternateColorCodes('&', "&f[&" + color + pdfFile.getName() + "&f]");
+    final String name = "&f[&" + color + pdfFile.getName() + "&f]";
     final String exclamation = "&e&l(&4&l!&e&l)";
 
 
-    public void send(String msg) {
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', name + msg));
+    public static void send(String msg){
+        Bukkit.getConsoleSender().sendMessage(StringUtils.colorizeString('&', "&f[&aMPUtils&f] "+msg));
     }
 
 
