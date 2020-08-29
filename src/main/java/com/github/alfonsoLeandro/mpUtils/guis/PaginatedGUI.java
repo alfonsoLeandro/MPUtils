@@ -1,17 +1,14 @@
 package com.github.alfonsoLeandro.mpUtils.guis;
 
+import com.github.alfonsoLeandro.mpUtils.itemStacks.MPItemStacks;
 import com.github.alfonsoLeandro.mpUtils.string.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Class for creating a paginated GUI with unlimited pages. Dynamically updates the number of pages according to the given List of ItemStacks.
@@ -113,27 +110,25 @@ public class PaginatedGUI {
      * Sets the default items for the navBar buttons.
      */
     public void setDefaultNavBarItems() {
-        nextPageItem = new ItemStack(Material.ARROW);
-        ItemMeta nextPageMeta = nextPageItem.getItemMeta();
-        nextPageMeta.setDisplayName(StringUtils.colorizeString('&', "&6&oNext page &6&l->"));
-        nextPageMeta.setLore(Arrays.asList((StringUtils.colorizeString('&', "&6Click &fhere,&fto go to page %nextpage%")).split(",")));
-        nextPageItem.setItemMeta(nextPageMeta);
+        nextPageItem = MPItemStacks.newItemStack(Material.ARROW,
+                1,
+                "&6&oNext page &6&l->",
+                Arrays.asList((StringUtils.colorizeString('&', "&6Click &fhere,&fto go to page %nextpage%")).split(",")));
 
-        currentPageItem = new ItemStack(Material.BOOK);
-        ItemMeta currentPageMeta = currentPageItem.getItemMeta();
-        currentPageMeta.setDisplayName(StringUtils.colorizeString('&', "&f&lPage: &6%page%&f&l/&6%totalpages%"));
-        currentPageItem.setItemMeta(currentPageMeta);
+        currentPageItem = MPItemStacks.newItemStack(Material.BOOK,
+                1,
+                "&f&lPage: &6%page%&f&l/&6%totalpages%",
+                new ArrayList<>());
 
-        previousPageItem = new ItemStack(Material.ARROW);
-        ItemMeta previousPageMeta = previousPageItem.getItemMeta();
-        previousPageMeta.setDisplayName(StringUtils.colorizeString('&', "&6&l<- &6&oPrevious page "));
-        previousPageMeta.setLore(Arrays.asList((StringUtils.colorizeString('&', "&6Click &fhere,&fto go to page %previouspage%")).split(",")));
-        previousPageItem.setItemMeta(previousPageMeta);
+        previousPageItem = MPItemStacks.newItemStack(Material.ARROW,
+                1,
+                "&6&l<- &6&oPrevious page",
+                Arrays.asList((StringUtils.colorizeString('&', "&6Click &fhere,&fto go to page %previouspage%")).split(",")));
 
-        navbarItem = new ItemStack(Material.PAPER);
-        ItemMeta navbarMeta = navbarItem.getItemMeta();
-        navbarMeta.setDisplayName(StringUtils.colorizeString('&', "&8&l*"));
-        navbarItem.setItemMeta(navbarMeta);
+        navbarItem = MPItemStacks.newItemStack(Material.PAPER,
+                1,
+                "&8&l*",
+                new ArrayList<>());
     }
 
     /**
@@ -245,29 +240,13 @@ public class PaginatedGUI {
      */
     public ItemStack getPreviousPageItem(int page){
         ItemStack item = new ItemStack(this.previousPageItem);
-        if(item.hasItemMeta()) {
-            ItemMeta meta = item.getItemMeta();
-            if(meta.hasDisplayName()) {
-                meta.setDisplayName(meta.getDisplayName().replace("%page%", String.valueOf(page+1))
-                        .replace("%nextpage%", String.valueOf(page + 2))
-                        .replace("%previouspage%", String.valueOf(page))
-                        .replace("%totalpages%", String.valueOf(pages))
-                );
-            }
-            if(meta.hasLore()) {
-                List<String> lore = new ArrayList<>();
-                for (String line : meta.getLore()) {
-                    lore.add(line.replace("%page%", String.valueOf(page+1))
-                            .replace("%nextpage%", String.valueOf(page + 2))
-                            .replace("%previouspage%", String.valueOf(page))
-                            .replace("%totalpages%", String.valueOf(pages))
-                    );
-                }
-                meta.setLore(lore);
-            }
-            item.setItemMeta(meta);
-        }
-        return item;
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("%page%", String.valueOf(page+1));
+        placeholders.put("%nextpage%", String.valueOf(page+2));
+        placeholders.put("%previouspage%", String.valueOf(page));
+        placeholders.put("%totalpages%", String.valueOf(pages));
+
+        return MPItemStacks.replacePlaceholders(item, placeholders);
     }
 
 
@@ -279,29 +258,13 @@ public class PaginatedGUI {
      */
     public ItemStack getNavBarItem(int page){
         ItemStack item = new ItemStack(this.navbarItem);
-        if(item.hasItemMeta()) {
-            ItemMeta meta = item.getItemMeta();
-            if(meta.hasDisplayName()) {
-                meta.setDisplayName(meta.getDisplayName().replace("%page%", String.valueOf(page+1))
-                        .replace("%nextpage%", String.valueOf(page + 2))
-                        .replace("%previouspage%", String.valueOf(page))
-                        .replace("%totalpages%", String.valueOf(pages))
-                );
-            }
-            if(meta.hasLore()) {
-                List<String> lore = new ArrayList<>();
-                for (String line : meta.getLore()) {
-                    lore.add(line.replace("%page%", String.valueOf(page+1))
-                            .replace("%nextpage%", String.valueOf(page + 2))
-                            .replace("%previouspage%", String.valueOf(page))
-                            .replace("%totalpages%", String.valueOf(pages))
-                    );
-                }
-                meta.setLore(lore);
-            }
-            item.setItemMeta(meta);
-        }
-        return item;
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("%page%", String.valueOf(page+1));
+        placeholders.put("%nextpage%", String.valueOf(page+2));
+        placeholders.put("%previouspage%", String.valueOf(page));
+        placeholders.put("%totalpages%", String.valueOf(pages));
+
+        return MPItemStacks.replacePlaceholders(item, placeholders);
     }
 
     /**
@@ -312,29 +275,13 @@ public class PaginatedGUI {
      */
     public ItemStack getCurrentPageItem(int page){
         ItemStack item = new ItemStack(this.currentPageItem);
-        if(item.hasItemMeta()) {
-            ItemMeta meta = item.getItemMeta();
-            if(meta.hasDisplayName()) {
-                meta.setDisplayName(meta.getDisplayName().replace("%page%", String.valueOf(page+1))
-                        .replace("%nextpage%", String.valueOf(page + 2))
-                        .replace("%previouspage%", String.valueOf(page))
-                        .replace("%totalpages%", String.valueOf(pages))
-                );
-            }
-            if(meta.hasLore()) {
-                List<String> lore = new ArrayList<>();
-                for (String line : meta.getLore()) {
-                    lore.add(line.replace("%page%", String.valueOf(page+1))
-                            .replace("%nextpage%", String.valueOf(page + 2))
-                            .replace("%previouspage%", String.valueOf(page))
-                            .replace("%totalpages%", String.valueOf(pages))
-                    );
-                }
-                meta.setLore(lore);
-            }
-            item.setItemMeta(meta);
-        }
-        return item;
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("%page%", String.valueOf(page+1));
+        placeholders.put("%nextpage%", String.valueOf(page+2));
+        placeholders.put("%previouspage%", String.valueOf(page));
+        placeholders.put("%totalpages%", String.valueOf(pages));
+
+        return MPItemStacks.replacePlaceholders(item, placeholders);
     }
 
     /**
@@ -345,29 +292,13 @@ public class PaginatedGUI {
      */
     public ItemStack getNextPageItem(int page){
         ItemStack item = new ItemStack(this.nextPageItem);
-        if(item.hasItemMeta()) {
-            ItemMeta meta = item.getItemMeta();
-            if(meta.hasDisplayName()) {
-                meta.setDisplayName(meta.getDisplayName().replace("%page%", String.valueOf(page+1))
-                        .replace("%nextpage%", String.valueOf(page + 2))
-                        .replace("%previouspage%", String.valueOf(page))
-                        .replace("%totalpages%", String.valueOf(pages))
-                );
-            }
-            if(meta.hasLore()) {
-                List<String> lore = new ArrayList<>();
-                for (String line : meta.getLore()) {
-                    lore.add(line.replace("%page%", String.valueOf(page+1))
-                            .replace("%nextpage%", String.valueOf(page + 2))
-                            .replace("%previouspage%", String.valueOf(page))
-                            .replace("%totalpages%", String.valueOf(pages))
-                    );
-                }
-                meta.setLore(lore);
-            }
-            item.setItemMeta(meta);
-        }
-        return item;
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("%page%", String.valueOf(page+1));
+        placeholders.put("%nextpage%", String.valueOf(page+2));
+        placeholders.put("%previouspage%", String.valueOf(page));
+        placeholders.put("%totalpages%", String.valueOf(pages));
+
+        return MPItemStacks.replacePlaceholders(item, placeholders);
     }
 
     /**
