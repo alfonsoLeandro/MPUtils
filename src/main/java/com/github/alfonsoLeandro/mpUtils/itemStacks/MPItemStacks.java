@@ -59,12 +59,12 @@ public final class MPItemStacks {
 
     /**
      * Helps on the making of a new {@link ItemStack} setting its lore an display name.
-     * Colorizes the lore and display name using {@link StringUtils#colorizeString(char, String)} using '&' as the alternateColorCode.
+     * Colorizes the lore and display name using {@link StringUtils#colorizeString(char, String)} using {@literal '&'} as the alternateColorCode.
      *
      * @param material The material for the ItemStack.
      * @param amount The size of the stack.
      * @param displayName The display nam for the item.
-     * @param lore The lore to be added. If none wanted, a "new ArrayList<>()" should be acceptable.
+     * @param lore The lore to be added. If none wanted, a {@code new ArrayList<>()} should be acceptable.
      * @return The new ItemStack with the given properties.
      */
     public static ItemStack newItemStack(Material material, int amount, String displayName, List<String> lore){
