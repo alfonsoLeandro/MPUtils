@@ -4,7 +4,6 @@ import com.github.alfonsoLeandro.mpUtils.events.JoinEvent;
 import com.github.alfonsoLeandro.mpUtils.guis.Events;
 import com.github.alfonsoLeandro.mpUtils.string.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,7 +19,6 @@ public final class Main extends JavaPlugin {
     final public String version = pdfFile.getVersion();
     String latestVersion;
     final char color = 'a';
-    final String name = "&f[&" + color + pdfFile.getName() + "&f]";
     final String exclamation = "&e&l(&4&l!&e&l)";
 
 
