@@ -70,14 +70,19 @@ public final class MPItemStacks {
     public static ItemStack newItemStack(Material material, int amount, String displayName, List<String> lore){
         ItemStack itemStack = new ItemStack(material, amount);
         ItemMeta meta = itemStack.getItemMeta();
+        assert meta != null;
 
-        meta.setDisplayName(StringUtils.colorizeString('&', displayName));
+        if(displayName != null && !displayName.equalsIgnoreCase("")) {
+            meta.setDisplayName(StringUtils.colorizeString('&', displayName));
+        }
 
         List<String> resultingLore = new ArrayList<>();
         for(String line : lore){
             resultingLore.add(StringUtils.colorizeString('&', line));
         }
         meta.setLore(resultingLore);
+        
+        itemStack.setItemMeta(meta);
 
         return itemStack;
     }
