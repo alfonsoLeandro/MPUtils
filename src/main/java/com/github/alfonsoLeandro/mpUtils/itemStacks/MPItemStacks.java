@@ -16,7 +16,7 @@ import java.util.Map;
 public final class MPItemStacks {
 
     /**
-     * Private constructor so this class cannot be used as an object.
+     * Private constructor so this class cannot be instantiated
      */
     private MPItemStacks(){}
 
