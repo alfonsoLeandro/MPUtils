@@ -1,36 +1,34 @@
 package com.github.alfonsoLeandro.mpUtils.guis;
 
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 
-/**
- * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
- * Should be used for turning pages, interactive GUIs and cancelling {@link InventoryClickEvent}
- */
-public class GUIClickEvent extends Event {
+public class GUICloseEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
-    private final Player clicker;
+    private final Player player;
     private final GUIType guiType;
     private final int page;
-    private final InventoryClickEvent event;
+    private final InventoryCloseEvent event;
     private final String guiTags;
     private final Object gui;
 
+
     /**
-     * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
-     * Should be used for turning pages, interactive GUIs and cancelling {@link InventoryClickEvent}
-     * @param clicker The player that clicked the GUI.
+     * Custom event for registering when a player closes a GUI inventory.
+     *
+     * @param player The player that was using the GUI.
      * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
-     * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
-     * @param event The bukkit {@link InventoryClickEvent} fired, for you to modify it at your will.
+     * @param page The page the clicker was on when closing the GUI, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
+     * @param event The bukkit {@link InventoryCloseEvent} fired, for you to modify it at your will.
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
      */
-    public GUIClickEvent(Player clicker, GUIType guiType, int page, InventoryClickEvent event, String guiTags, Object gui) {
-        this.clicker = clicker;
+    public GUICloseEvent(Player player, GUIType guiType, int page, InventoryCloseEvent event, String guiTags, Object gui) {
+        this.player = player;
         this.guiType = guiType;
         this.page = page;
         this.event = event;
@@ -51,8 +49,8 @@ public class GUIClickEvent extends Event {
      *
      * @return Player who clicked.
      */
-    public Player getClicker() {
-        return clicker;
+    public Player getPlayer() {
+        return player;
     }
 
     /**
@@ -74,11 +72,11 @@ public class GUIClickEvent extends Event {
     }
 
     /**
-     * Gets the actual {@link InventoryClickEvent} that was fired when clicking the GUI.
+     * Gets the actual {@link InventoryCloseEvent} that was fired when clicking the GUI.
      *
      * @return Said event.
      */
-    public InventoryClickEvent getEvent() {
+    public InventoryCloseEvent getInventoryCloseEvent() {
         return event;
     }
 
