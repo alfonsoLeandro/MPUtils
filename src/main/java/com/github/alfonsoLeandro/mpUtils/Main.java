@@ -2,6 +2,7 @@ package com.github.alfonsoLeandro.mpUtils;
 
 import com.github.alfonsoLeandro.mpUtils.events.JoinEvent;
 import com.github.alfonsoLeandro.mpUtils.guis.Events;
+import com.github.alfonsoLeandro.mpUtils.metrics.Metrics;
 import com.github.alfonsoLeandro.mpUtils.string.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -35,6 +36,7 @@ public final class Main extends JavaPlugin {
         send("Please consider subscribing to my yt channel: &c" + pdfFile.getWebsite());
         registerEvents();
         updateChecker();
+        startMetrics();
     }
 
     @Override
@@ -43,6 +45,10 @@ public final class Main extends JavaPlugin {
         send("&fThank you for using my plugin! &" + color + pdfFile.getName() + "&f By " + pdfFile.getAuthors().get(0));
         send("&fJoin my discord server at &chttps://discordapp.com/invite/ZznhQud");
         send("Please consider subscribing to my yt channel: &c" + pdfFile.getWebsite());
+    }
+
+    public void startMetrics(){
+        new Metrics(this, 8825);
     }
 
     //
