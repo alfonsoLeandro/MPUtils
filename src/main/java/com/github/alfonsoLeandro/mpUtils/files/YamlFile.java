@@ -22,6 +22,7 @@ public class YamlFile {
     private final JavaPlugin plugin;
     /**
      * String,String map used for refilling nodes.
+     * @see #refillNodes()
      */
     private final Map<String, String> mapRefill;
     /**
@@ -48,6 +49,14 @@ public class YamlFile {
         this(plugin, fileName, null);
     }
 
+
+    /**
+     * YamlFile constructor.
+     * @param plugin Your plugin's main instance.
+     * @param fileName The file name to look for on your resources folder and the file name for the final file in
+     *                 your plugin's data folder in the server.
+     * @param mapRefill String, String map used for adding default values not set in the default file.
+     */
     public YamlFile(JavaPlugin plugin,
                     String fileName,
                     Map<String, String> mapRefill) {
@@ -81,7 +90,7 @@ public class YamlFile {
     }
 
     /**
-     *
+     *  Fills the config file with some given keys and values.
      */
     public void refillNodes() {
         for (Map.Entry<String, String> mapEntry : mapRefill.entrySet()) {
