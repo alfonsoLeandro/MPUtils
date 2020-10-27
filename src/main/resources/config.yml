@@ -1,0 +1,4 @@
+config:
+  # Metrics are a way for me (the developer) to see how many players and servers are using this plugin
+  # Leaving this setting to its default value (true) is a way to "give back" and support me.
+  metrics enabled: true
