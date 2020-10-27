@@ -13,7 +13,7 @@ import java.util.*;
 /**
  * Class for creating a paginated GUI with unlimited pages. Dynamically updates the number of pages according to the given List of ItemStacks.
  */
-public class PaginatedGUI {
+public class PaginatedGUI implements GUI{
 
     /**
      * The actual inventory, where the GUI is supposed to go in.
@@ -81,6 +81,10 @@ public class PaginatedGUI {
         this.sizePerPage = sizePerPage;
         updateItemsPerPage(items);
         setDefaultNavBarItems();
+    }
+
+    public void addItem(ItemStack item){
+        this.items.add(item);
     }
 
 
@@ -240,13 +244,8 @@ public class PaginatedGUI {
      */
     public ItemStack getPreviousPageItem(int page){
         ItemStack item = new ItemStack(this.previousPageItem);
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("%page%", String.valueOf(page+1));
-        placeholders.put("%nextpage%", String.valueOf(page+2));
-        placeholders.put("%previouspage%", String.valueOf(page));
-        placeholders.put("%totalpages%", String.valueOf(pages));
 
-        return MPItemStacks.replacePlaceholders(item, placeholders);
+        return MPItemStacks.replacePlaceholders(item, getPlaceHoldersMap(page));
     }
 
 
@@ -258,13 +257,8 @@ public class PaginatedGUI {
      */
     public ItemStack getNavBarItem(int page){
         ItemStack item = new ItemStack(this.navbarItem);
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("%page%", String.valueOf(page+1));
-        placeholders.put("%nextpage%", String.valueOf(page+2));
-        placeholders.put("%previouspage%", String.valueOf(page));
-        placeholders.put("%totalpages%", String.valueOf(pages));
 
-        return MPItemStacks.replacePlaceholders(item, placeholders);
+        return MPItemStacks.replacePlaceholders(item, getPlaceHoldersMap(page));
     }
 
     /**
@@ -275,13 +269,8 @@ public class PaginatedGUI {
      */
     public ItemStack getCurrentPageItem(int page){
         ItemStack item = new ItemStack(this.currentPageItem);
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("%page%", String.valueOf(page+1));
-        placeholders.put("%nextpage%", String.valueOf(page+2));
-        placeholders.put("%previouspage%", String.valueOf(page));
-        placeholders.put("%totalpages%", String.valueOf(pages));
 
-        return MPItemStacks.replacePlaceholders(item, placeholders);
+        return MPItemStacks.replacePlaceholders(item, getPlaceHoldersMap(page));
     }
 
     /**
@@ -292,13 +281,23 @@ public class PaginatedGUI {
      */
     public ItemStack getNextPageItem(int page){
         ItemStack item = new ItemStack(this.nextPageItem);
+
+        return MPItemStacks.replacePlaceholders(item, getPlaceHoldersMap(page));
+    }
+
+    /**
+     * Gets a Map with every placeholder available for this object with every corresponding value.
+     * @param page The page the GUI is in.
+     * @return A map containing every placeholder and every value.
+     */
+    public Map<String, String> getPlaceHoldersMap(int page){
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("%page%", String.valueOf(page+1));
         placeholders.put("%nextpage%", String.valueOf(page+2));
         placeholders.put("%previouspage%", String.valueOf(page));
         placeholders.put("%totalpages%", String.valueOf(pages));
 
-        return MPItemStacks.replacePlaceholders(item, placeholders);
+        return placeholders;
     }
 
     /**
@@ -341,6 +340,22 @@ public class PaginatedGUI {
                 inv.setItem(i, new ItemStack(Material.AIR));
             }
         }
+    }
+
+    /**
+     * Clears the inventory and the item list for this PaginatedGUI.
+     */
+    public void clearInventory(){
+        this.inv.clear();
+        this.items.clear();
+    }
+
+    /**
+     * Get the unique tags for this GUI.
+     * @return The GuiTags String for this GUI.
+     */
+    public String getGuiTags(){
+        return this.guiTags;
     }
 
 

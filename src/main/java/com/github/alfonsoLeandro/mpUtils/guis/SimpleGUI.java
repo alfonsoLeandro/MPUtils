@@ -11,7 +11,7 @@ import java.util.HashMap;
 /**
  * Class for creating a GUI of a single page. Check {@link PaginatedGUI} for a paginated GUI.
  */
-public class SimpleGUI {
+public class SimpleGUI implements GUI{
 
     /**
      * The inventory that will contain the GUI itself.
@@ -104,6 +104,14 @@ public class SimpleGUI {
         if(player == null) return;
         player.openInventory(inv);
         PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, guiTags, this);
+    }
+
+    /**
+     * Get the unique tags for this GUI.
+     * @return The GuiTags String for this GUI.
+     */
+    public String getGuiTags(){
+        return this.guiTags;
     }
 
 

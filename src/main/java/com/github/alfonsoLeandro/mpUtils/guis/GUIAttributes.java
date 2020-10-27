@@ -6,9 +6,9 @@ class GUIAttributes {
     final private int page;
     final private GUIType guiType;
     final private String guiTags;
-    final private Object gui;
+    final private GUI gui;
 
-    public GUIAttributes(int page, GUIType guiType, String guiTags, Object gui){
+    public GUIAttributes(int page, GUIType guiType, String guiTags, GUI gui){
         this.page = page;
         this.guiType = guiType;
         this.guiTags = guiTags;
@@ -27,7 +27,7 @@ class GUIAttributes {
         return guiTags;
     }
 
-    public Object getGui(){
+    public GUI getGui(){
         return gui;
     }
 
