@@ -14,7 +14,7 @@ public class GUICloseEvent extends Event {
     private final int page;
     private final InventoryCloseEvent event;
     private final String guiTags;
-    private final Object gui;
+    private final GUI gui;
 
 
     /**
@@ -27,7 +27,7 @@ public class GUICloseEvent extends Event {
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
      */
-    public GUICloseEvent(Player player, GUIType guiType, int page, InventoryCloseEvent event, String guiTags, Object gui) {
+    public GUICloseEvent(Player player, GUIType guiType, int page, InventoryCloseEvent event, String guiTags, GUI gui) {
         this.player = player;
         this.guiType = guiType;
         this.page = page;
@@ -94,7 +94,7 @@ public class GUICloseEvent extends Event {
      *
      * @return Instance of the object {@link SimpleGUI} or {@link PaginatedGUI}.
      */
-    public Object getGui() {
+    public GUI getGui() {
         return gui;
     }
 }

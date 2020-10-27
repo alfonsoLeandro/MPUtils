@@ -30,7 +30,7 @@ public final class PlayersOnGUIsManager {
      * @param guiTags Any tags passed to the GUI instance in order to recognize it. Then passed to the {@link GUIClickEvent}.
      * @param gui The GUI instance used to then pass it to {@link GUIClickEvent}.
      */
-    public static void addPlayer(String playerName, int pageNumber, GUIType guiType, String guiTags, Object gui){
+    public static void addPlayer(String playerName, int pageNumber, GUIType guiType, String guiTags, GUI gui){
         players.remove(playerName);
         players.put(playerName, new GUIAttributes(pageNumber, guiType, guiTags, gui));
     }

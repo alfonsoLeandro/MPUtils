@@ -2,10 +2,8 @@ package com.github.alfonsoLeandro.mpUtils.guis;
 
 import com.github.alfonsoLeandro.mpUtils.itemStacks.MPItemStacks;
 import com.github.alfonsoLeandro.mpUtils.string.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -13,16 +11,8 @@ import java.util.*;
 /**
  * Class for creating a paginated GUI with unlimited pages. Dynamically updates the number of pages according to the given List of ItemStacks.
  */
-public class PaginatedGUI {
+public class PaginatedGUI extends GUI{
 
-    /**
-     * The actual inventory, where the GUI is supposed to go in.
-     */
-    private final Inventory inv;
-    /**
-     * The inventory size (slots) per GUI page.
-     */
-    private int sizePerPage;
     /**
      * The total nu,ber of pages this GUI has.
      */
@@ -55,10 +45,6 @@ public class PaginatedGUI {
      * The GUI ItemStack for empty navigation bar slots.
      */
     private ItemStack navbarItem;
-    /**
-     * Some extra tags you may add to differentiate between GUIs.
-     */
-    final private String guiTags;
 
 
     /**
@@ -71,16 +57,15 @@ public class PaginatedGUI {
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
     public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags) {
-        if(sizePerPage > 54) sizePerPage = 54;
-        if(sizePerPage % 9 != 0) sizePerPage = (int) Math.floor(sizePerPage / 9.0);
-        if(sizePerPage <= 9) sizePerPage = 18;
+        super(title, sizePerPage, guiTags);
 
         this.items = items;
-        this.guiTags = guiTags;
-        inv = Bukkit.createInventory(null, sizePerPage, title);
-        this.sizePerPage = sizePerPage;
         updateItemsPerPage(items);
         setDefaultNavBarItems();
+    }
+
+    public void addItem(ItemStack item){
+        this.items.add(item);
     }
 
 
@@ -95,7 +80,7 @@ public class PaginatedGUI {
         pagesOfItems = new HashMap<>();
         List<ItemStack> itemsOnAPage = new ArrayList<>();
         for (ItemStack item : items) {
-            if(itemsOnAPage.size() >= sizePerPage - 9) {
+            if(itemsOnAPage.size() >= guiSize - 9) {
                 pagesOfItems.put(pagesOfItems.size(), itemsOnAPage);
                 itemsOnAPage = new ArrayList<>();
             }
@@ -144,29 +129,29 @@ public class PaginatedGUI {
         ItemStack nextPageItem = getNextPageItem(page);
 
         if(page > 0) {
-            inv.setItem(sizePerPage - 9, previousPageItem);
+            inventory.setItem(guiSize - 9, previousPageItem);
         } else {
-            inv.setItem(sizePerPage - 9, navbarItem);
+            inventory.setItem(guiSize - 9, navbarItem);
         }
 
 
-        for (int i = sizePerPage - 8; i < sizePerPage - 1; i++) {
-            if(i == sizePerPage - 5) continue;
-            inv.setItem(i, navbarItem);
+        for (int i = guiSize - 8; i < guiSize - 1; i++) {
+            if(i == guiSize - 5) continue;
+            inventory.setItem(i, navbarItem);
 
         }
 
         if(hasCurrentPageItem) {
-            inv.setItem(sizePerPage - 5, currentPageItem);
+            inventory.setItem(guiSize - 5, currentPageItem);
         } else {
-            inv.setItem(sizePerPage - 5, navbarItem);
+            inventory.setItem(guiSize - 5, navbarItem);
         }
 
 
         if(page+1 < pages) {
-            inv.setItem(sizePerPage - 1, nextPageItem);
+            inventory.setItem(guiSize - 1, nextPageItem);
         } else {
-            inv.setItem(sizePerPage - 1, navbarItem);
+            inventory.setItem(guiSize - 1, navbarItem);
         }
     }
 
@@ -176,7 +161,7 @@ public class PaginatedGUI {
      * @param size The size for each GUI page.
      */
     public void setSizePerPage(int size) {
-        this.sizePerPage = size;
+        this.guiSize = size;
         updateItemsPerPage(items);
     }
 
@@ -240,13 +225,8 @@ public class PaginatedGUI {
      */
     public ItemStack getPreviousPageItem(int page){
         ItemStack item = new ItemStack(this.previousPageItem);
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("%page%", String.valueOf(page+1));
-        placeholders.put("%nextpage%", String.valueOf(page+2));
-        placeholders.put("%previouspage%", String.valueOf(page));
-        placeholders.put("%totalpages%", String.valueOf(pages));
 
-        return MPItemStacks.replacePlaceholders(item, placeholders);
+        return MPItemStacks.replacePlaceholders(item, getPlaceHoldersMap(page));
     }
 
 
@@ -258,13 +238,8 @@ public class PaginatedGUI {
      */
     public ItemStack getNavBarItem(int page){
         ItemStack item = new ItemStack(this.navbarItem);
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("%page%", String.valueOf(page+1));
-        placeholders.put("%nextpage%", String.valueOf(page+2));
-        placeholders.put("%previouspage%", String.valueOf(page));
-        placeholders.put("%totalpages%", String.valueOf(pages));
 
-        return MPItemStacks.replacePlaceholders(item, placeholders);
+        return MPItemStacks.replacePlaceholders(item, getPlaceHoldersMap(page));
     }
 
     /**
@@ -275,13 +250,8 @@ public class PaginatedGUI {
      */
     public ItemStack getCurrentPageItem(int page){
         ItemStack item = new ItemStack(this.currentPageItem);
-        Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("%page%", String.valueOf(page+1));
-        placeholders.put("%nextpage%", String.valueOf(page+2));
-        placeholders.put("%previouspage%", String.valueOf(page));
-        placeholders.put("%totalpages%", String.valueOf(pages));
 
-        return MPItemStacks.replacePlaceholders(item, placeholders);
+        return MPItemStacks.replacePlaceholders(item, getPlaceHoldersMap(page));
     }
 
     /**
@@ -292,13 +262,23 @@ public class PaginatedGUI {
      */
     public ItemStack getNextPageItem(int page){
         ItemStack item = new ItemStack(this.nextPageItem);
+
+        return MPItemStacks.replacePlaceholders(item, getPlaceHoldersMap(page));
+    }
+
+    /**
+     * Gets a Map with every placeholder available for this object with every corresponding value.
+     * @param page The page the GUI is in.
+     * @return A map containing every placeholder and every value.
+     */
+    public Map<String, String> getPlaceHoldersMap(int page){
         Map<String, String> placeholders = new HashMap<>();
         placeholders.put("%page%", String.valueOf(page+1));
         placeholders.put("%nextpage%", String.valueOf(page+2));
         placeholders.put("%previouspage%", String.valueOf(page));
         placeholders.put("%totalpages%", String.valueOf(pages));
 
-        return MPItemStacks.replacePlaceholders(item, placeholders);
+        return placeholders;
     }
 
     /**
@@ -320,7 +300,7 @@ public class PaginatedGUI {
         player.closeInventory();
         setNavBar(page);
         setItemsForPage(page);
-        player.openInventory(inv);
+        player.openInventory(inventory);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, guiTags, this);
     }
 
@@ -334,13 +314,31 @@ public class PaginatedGUI {
 
         if(itemsOnPage.isEmpty()) return;
 
-        for(int i = 0; i < sizePerPage-9; i++){
+        for(int i = 0; i < guiSize -9; i++){
             if(i < itemsOnPage.size()) {
-                inv.setItem(i, itemsOnPage.get(i));
+                inventory.setItem(i, itemsOnPage.get(i));
             }else{
-                inv.setItem(i, new ItemStack(Material.AIR));
+                inventory.setItem(i, new ItemStack(Material.AIR));
             }
         }
+    }
+
+    /**
+     * Clears the inventory and the item list for this PaginatedGUI.
+     */
+    public void clearInventory(){
+        this.inventory.clear();
+        this.items.clear();
+    }
+
+
+    /**
+     * Opens this PaginatedGUI in page 0 for the given player.
+     * @param player The player to open the GUI for.
+     */
+    @Override
+    public void openGUI(Player player){
+        this.openGUI(player, 0);
     }
 
 

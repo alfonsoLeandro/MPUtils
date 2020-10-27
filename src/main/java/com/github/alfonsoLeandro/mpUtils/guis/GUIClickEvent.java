@@ -17,7 +17,7 @@ public class GUIClickEvent extends Event {
     private final int page;
     private final InventoryClickEvent event;
     private final String guiTags;
-    private final Object gui;
+    private final GUI gui;
 
     /**
      * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
@@ -29,7 +29,7 @@ public class GUIClickEvent extends Event {
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
      */
-    public GUIClickEvent(Player clicker, GUIType guiType, int page, InventoryClickEvent event, String guiTags, Object gui) {
+    public GUIClickEvent(Player clicker, GUIType guiType, int page, InventoryClickEvent event, String guiTags, GUI gui) {
         this.clicker = clicker;
         this.guiType = guiType;
         this.page = page;
@@ -96,7 +96,7 @@ public class GUIClickEvent extends Event {
      *
      * @return Instance of the object {@link SimpleGUI} or {@link PaginatedGUI}.
      */
-    public Object getGui() {
+    public GUI getGui() {
         return gui;
     }
 }
