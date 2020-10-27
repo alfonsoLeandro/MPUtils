@@ -342,4 +342,13 @@ public class PaginatedGUI extends GUI{
     }
 
 
+    /**
+     * Gets a list of all the items contained throughout all the pages in this GUI.
+     * @return
+     */
+    public List<ItemStack> getItems(){
+        return this.items;
+    }
+
+
 }

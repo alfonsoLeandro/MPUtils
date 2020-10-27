@@ -79,4 +79,13 @@ public class SimpleGUI extends GUI{
         items.clear();
     }
 
+    /**
+     * Gets a hashmap containing every item in the inventory and its slot.
+     * @return The hashmap containing the items in this GUI.
+     */
+    public HashMap<Integer, ItemStack> getItems(){
+        return this.items;
+    }
+
+
 }

@@ -20,6 +20,7 @@ public abstract class GUI {
      */
     protected int guiSize;
 
+
     protected GUI(String title, int size, String guiTags) {
         if(size > 54) size = 54;
         if(size % 9 != 0) size = (int) Math.floor(size / 9.0);
