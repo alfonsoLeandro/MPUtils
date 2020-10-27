@@ -1,9 +1,7 @@
 package com.github.alfonsoLeandro.mpUtils.guis;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -11,24 +9,12 @@ import java.util.HashMap;
 /**
  * Class for creating a GUI of a single page. Check {@link PaginatedGUI} for a paginated GUI.
  */
-public class SimpleGUI implements GUI{
+public class SimpleGUI extends GUI{
 
-    /**
-     * The inventory that will contain the GUI itself.
-     */
-    private Inventory inv;
-    /**
-     * The number of slots the GUI will contain. Must be a multiple of 9.
-     */
-    private final int size;
     /**
      * Hashmap containing every item that has been added to the GUI.
      */
-    private final HashMap<Integer, ItemStack> items;
-    /**
-     * Some extra tags you may add to differentiate between GUIs.
-     */
-    final private String guiTags;
+    final private HashMap<Integer, ItemStack> items;
 
 
     /**
@@ -40,10 +26,8 @@ public class SimpleGUI implements GUI{
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
     public SimpleGUI(String title, int size, String guiTags){
-        this.guiTags = guiTags;
-        this.size = size;
+        super(title, size, guiTags);
         items = new HashMap<>();
-        inv = Bukkit.createInventory(null, size, title);
     }
 
     /**
@@ -54,8 +38,8 @@ public class SimpleGUI implements GUI{
      * @param item The item to be put.
      */
     public void setItem(int index, ItemStack item){
-        if(index >= size || index < 0) return;
-        inv.setItem(index, item);
+        if(index >= guiSize || index < 0) return;
+        inventory.setItem(index, item);
         items.put(index, item);
     }
 
@@ -65,9 +49,9 @@ public class SimpleGUI implements GUI{
      * @param item The item to add.
      */
     public void addItem(ItemStack item){
-        inv.addItem(item);
-        for(int i = 0; i < size; i++){
-            if(inv.getItem(i).isSimilar(item)){
+        inventory.addItem(item);
+        for(int i = 0; i < guiSize; i++){
+            if(inventory.getItem(i).isSimilar(item)){
                 items.put(i, item);
             }
         }
@@ -80,9 +64,9 @@ public class SimpleGUI implements GUI{
      * @param title The new title to use.
      */
     public void setTitle(String title){
-        inv = Bukkit.createInventory(null, size, title);
+        inventory = Bukkit.createInventory(null, guiSize, title);
         for(int i : items.keySet()){
-           inv.setItem(i, items.get(i));
+           inventory.setItem(i, items.get(i));
         }
 
     }
@@ -91,28 +75,8 @@ public class SimpleGUI implements GUI{
      * Removes all the items from the inventory.
      */
     public void clearInventory(){
-        inv.clear();
+        inventory.clear();
         items.clear();
     }
-
-    /**
-     * Opens the GUI for a specified player.
-     *
-     * @param player The player to open the GUI for.
-     */
-    public void openGUI(Player player){
-        if(player == null) return;
-        player.openInventory(inv);
-        PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, guiTags, this);
-    }
-
-    /**
-     * Get the unique tags for this GUI.
-     * @return The GuiTags String for this GUI.
-     */
-    public String getGuiTags(){
-        return this.guiTags;
-    }
-
 
 }

@@ -2,10 +2,8 @@ package com.github.alfonsoLeandro.mpUtils.guis;
 
 import com.github.alfonsoLeandro.mpUtils.itemStacks.MPItemStacks;
 import com.github.alfonsoLeandro.mpUtils.string.StringUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.*;
@@ -13,16 +11,8 @@ import java.util.*;
 /**
  * Class for creating a paginated GUI with unlimited pages. Dynamically updates the number of pages according to the given List of ItemStacks.
  */
-public class PaginatedGUI implements GUI{
+public class PaginatedGUI extends GUI{
 
-    /**
-     * The actual inventory, where the GUI is supposed to go in.
-     */
-    private final Inventory inv;
-    /**
-     * The inventory size (slots) per GUI page.
-     */
-    private int sizePerPage;
     /**
      * The total nu,ber of pages this GUI has.
      */
@@ -55,10 +45,6 @@ public class PaginatedGUI implements GUI{
      * The GUI ItemStack for empty navigation bar slots.
      */
     private ItemStack navbarItem;
-    /**
-     * Some extra tags you may add to differentiate between GUIs.
-     */
-    final private String guiTags;
 
 
     /**
@@ -71,14 +57,9 @@ public class PaginatedGUI implements GUI{
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
     public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags) {
-        if(sizePerPage > 54) sizePerPage = 54;
-        if(sizePerPage % 9 != 0) sizePerPage = (int) Math.floor(sizePerPage / 9.0);
-        if(sizePerPage <= 9) sizePerPage = 18;
+        super(title, sizePerPage, guiTags);
 
         this.items = items;
-        this.guiTags = guiTags;
-        inv = Bukkit.createInventory(null, sizePerPage, title);
-        this.sizePerPage = sizePerPage;
         updateItemsPerPage(items);
         setDefaultNavBarItems();
     }
@@ -99,7 +80,7 @@ public class PaginatedGUI implements GUI{
         pagesOfItems = new HashMap<>();
         List<ItemStack> itemsOnAPage = new ArrayList<>();
         for (ItemStack item : items) {
-            if(itemsOnAPage.size() >= sizePerPage - 9) {
+            if(itemsOnAPage.size() >= guiSize - 9) {
                 pagesOfItems.put(pagesOfItems.size(), itemsOnAPage);
                 itemsOnAPage = new ArrayList<>();
             }
@@ -148,29 +129,29 @@ public class PaginatedGUI implements GUI{
         ItemStack nextPageItem = getNextPageItem(page);
 
         if(page > 0) {
-            inv.setItem(sizePerPage - 9, previousPageItem);
+            inventory.setItem(guiSize - 9, previousPageItem);
         } else {
-            inv.setItem(sizePerPage - 9, navbarItem);
+            inventory.setItem(guiSize - 9, navbarItem);
         }
 
 
-        for (int i = sizePerPage - 8; i < sizePerPage - 1; i++) {
-            if(i == sizePerPage - 5) continue;
-            inv.setItem(i, navbarItem);
+        for (int i = guiSize - 8; i < guiSize - 1; i++) {
+            if(i == guiSize - 5) continue;
+            inventory.setItem(i, navbarItem);
 
         }
 
         if(hasCurrentPageItem) {
-            inv.setItem(sizePerPage - 5, currentPageItem);
+            inventory.setItem(guiSize - 5, currentPageItem);
         } else {
-            inv.setItem(sizePerPage - 5, navbarItem);
+            inventory.setItem(guiSize - 5, navbarItem);
         }
 
 
         if(page+1 < pages) {
-            inv.setItem(sizePerPage - 1, nextPageItem);
+            inventory.setItem(guiSize - 1, nextPageItem);
         } else {
-            inv.setItem(sizePerPage - 1, navbarItem);
+            inventory.setItem(guiSize - 1, navbarItem);
         }
     }
 
@@ -180,7 +161,7 @@ public class PaginatedGUI implements GUI{
      * @param size The size for each GUI page.
      */
     public void setSizePerPage(int size) {
-        this.sizePerPage = size;
+        this.guiSize = size;
         updateItemsPerPage(items);
     }
 
@@ -319,7 +300,7 @@ public class PaginatedGUI implements GUI{
         player.closeInventory();
         setNavBar(page);
         setItemsForPage(page);
-        player.openInventory(inv);
+        player.openInventory(inventory);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, guiTags, this);
     }
 
@@ -333,11 +314,11 @@ public class PaginatedGUI implements GUI{
 
         if(itemsOnPage.isEmpty()) return;
 
-        for(int i = 0; i < sizePerPage-9; i++){
+        for(int i = 0; i < guiSize -9; i++){
             if(i < itemsOnPage.size()) {
-                inv.setItem(i, itemsOnPage.get(i));
+                inventory.setItem(i, itemsOnPage.get(i));
             }else{
-                inv.setItem(i, new ItemStack(Material.AIR));
+                inventory.setItem(i, new ItemStack(Material.AIR));
             }
         }
     }
@@ -346,16 +327,18 @@ public class PaginatedGUI implements GUI{
      * Clears the inventory and the item list for this PaginatedGUI.
      */
     public void clearInventory(){
-        this.inv.clear();
+        this.inventory.clear();
         this.items.clear();
     }
 
+
     /**
-     * Get the unique tags for this GUI.
-     * @return The GuiTags String for this GUI.
+     * Opens this PaginatedGUI in page 0 for the given player.
+     * @param player The player to open the GUI for.
      */
-    public String getGuiTags(){
-        return this.guiTags;
+    @Override
+    public void openGUI(Player player){
+        this.openGUI(player, 0);
     }
 
 
