@@ -51,7 +51,7 @@ public class SimpleGUI extends GUI{
     public void addItem(ItemStack item){
         inventory.addItem(item);
         for(int i = 0; i < guiSize; i++){
-            if(inventory.getItem(i).isSimilar(item)){
+            if(inventory.getItem(i)!= null && inventory.getItem(i).isSimilar(item)){
                 items.put(i, item);
             }
         }
