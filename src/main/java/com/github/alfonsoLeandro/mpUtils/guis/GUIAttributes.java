@@ -1,6 +1,6 @@
 package com.github.alfonsoLeandro.mpUtils.guis;
 
-class GUIAtributes {
+class GUIAttributes {
 
 
     final private int page;
@@ -8,7 +8,7 @@ class GUIAtributes {
     final private String guiTags;
     final private Object gui;
 
-    public GUIAtributes(int page, GUIType guiType, String guiTags, Object gui){
+    public GUIAttributes(int page, GUIType guiType, String guiTags, Object gui){
         this.page = page;
         this.guiType = guiType;
         this.guiTags = guiTags;

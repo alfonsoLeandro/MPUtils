@@ -7,7 +7,7 @@ import java.util.HashMap;
  */
 public final class PlayersOnGUIsManager {
 
-    private static final HashMap<String, GUIAtributes> players = new HashMap<>();
+    private static final HashMap<String, GUIAttributes> players = new HashMap<>();
 
 
     /**
@@ -16,7 +16,7 @@ public final class PlayersOnGUIsManager {
      * @param playerName The name of the player to look for.
      * @return the page the player is in if it is a paginated GUI, -1 if it is not paginated or null if that player is not in a GUI.
      */
-    public static GUIAtributes getAttributesByPlayer(String playerName){
+    public static GUIAttributes getAttributesByPlayer(String playerName){
         return players.get(playerName);
     }
 
@@ -32,7 +32,7 @@ public final class PlayersOnGUIsManager {
      */
     public static void addPlayer(String playerName, int pageNumber, GUIType guiType, String guiTags, Object gui){
         players.remove(playerName);
-        players.put(playerName, new GUIAtributes(pageNumber, guiType, guiTags, gui));
+        players.put(playerName, new GUIAttributes(pageNumber, guiType, guiTags, gui));
     }
 
     /**

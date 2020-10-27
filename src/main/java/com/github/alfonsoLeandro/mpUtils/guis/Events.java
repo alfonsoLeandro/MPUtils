@@ -16,7 +16,7 @@ public class Events implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event){
         if(event.getWhoClicked() instanceof Player && PlayersOnGUIsManager.isInGUI(event.getWhoClicked().getName())){
-            GUIAtributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getWhoClicked().getName());
+            GUIAttributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getWhoClicked().getName());
             Bukkit.getPluginManager().callEvent(new GUIClickEvent((Player)event.getWhoClicked(), attributes.getGuiType(), attributes.getPage(), event, attributes.getGuiTags(), attributes.getGui()));
         }
     }
@@ -24,7 +24,7 @@ public class Events implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent event){
         if(PlayersOnGUIsManager.isInGUI(event.getPlayer().getName())) {
-            GUIAtributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getPlayer().getName());
+            GUIAttributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getPlayer().getName());
             Bukkit.getPluginManager().callEvent(new GUICloseEvent((Player) event.getPlayer(), attributes.getGuiType(), attributes.getPage(), event, attributes.getGuiTags(), attributes.getGui()));
             PlayersOnGUIsManager.removePlayer(event.getPlayer().getName());
         }

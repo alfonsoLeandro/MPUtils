@@ -47,11 +47,14 @@ public final class MPItemStacks {
             List<String> lore = new ArrayList<>();
             for (String line: meta.getLore()) {
                 for (String key : placeholders.keySet()) {
-                    lore.add(line.replace(key, placeholders.get(key)));
+                    line = line.replace(key, placeholders.get(key));
                 }
+                lore.add(line);
             }
+
             meta.setLore(lore);
         }
+
         itemStack.setItemMeta(meta);
 
         return itemStack;
