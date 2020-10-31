@@ -60,4 +60,13 @@ public abstract class GUI {
     public String getGuiTags(){
         return this.guiTags;
     }
+
+
+    /**
+     * Get the size for this GUI, in case of {@link PaginatedGUI}, the given size is the size per page.
+     * @return The size of this GUI.
+     */
+    public int getSize(){
+        return this.guiSize;
+    }
 }
