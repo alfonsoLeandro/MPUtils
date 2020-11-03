@@ -312,7 +312,13 @@ public class PaginatedGUI extends GUI{
     public void setItemsForPage(int page){
         List<ItemStack> itemsOnPage = pagesOfItems.get(page);
 
-        if(itemsOnPage.isEmpty()) return;
+        if(itemsOnPage == null || itemsOnPage.isEmpty()){
+            for(int i = 0; i < guiSize -9; i++){
+                inventory.setItem(i, new ItemStack(Material.AIR));
+
+            }
+            return;
+        }
 
         for(int i = 0; i < guiSize -9; i++){
             if(i < itemsOnPage.size()) {
