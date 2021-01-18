@@ -46,6 +46,9 @@ public class Cooldown {
      * Creates a cooldown object.
      * When creating a new cooldown the HashMap is also new so players in another cooldown do not
      * have nothing to do with the new cooldown.
+     *
+     * @param cooldownName The name to be given to this cooldown, used for saving to the cooldown file.
+     *                     Suggested cooldownName is "PluginName-CooldownType", i.e: "MPUtils-SendMessage"
      */
     public Cooldown(String cooldownName){
         this.cooldownName = cooldownName;
@@ -78,7 +81,7 @@ public class Cooldown {
 
     /**
      * Checks if a player is on cooldown.
-     * This method will be removed from MPUtils. Please use "{@link #getTimeLeft(String)} > 0" instead for
+     * This method will be removed from MPUtils. Please use "{@link #getTimeLeft(String)} {@literal >} 0" instead for
      * checking if a player is on cooldown.
      *
      * @param playerName The player to look for.
