@@ -1,6 +1,6 @@
 name: MPUtils
 version: ${project.version}
-main: com.github.alfonsoLeandro.mpUtils.Main
+main: com.github.alfonsoleandro.mputils.MPUtils
 api-version: "1.13"
 authors: [lelesape]
 description: Library for minecraft plugins development

@@ -23,10 +23,11 @@ MP Utils is a simple library for helping on the developing of minecraft spigot p
 ## Installation
 Developers:
   Add the following maven dependecy to your pom.xml file:
+
 ```xml
     <dependencies>
         <dependency>
-            <groupId>com.github.alfonsoLeandro</groupId>
+            <groupId>com.github.alfonsoleandrocom.github.alfonsoleandro</groupId>
             <artifactId>MPUtils</artifactId>
             <version>VERSION</version>
             <scope>provided</scope>

@@ -1,10 +1,32 @@
-package com.github.alfonsoLeandro.mpUtils;
+/*
+Copyright (c) 2020 Leandro Alfonso
 
-import com.github.alfonsoLeandro.mpUtils.events.JoinEvent;
-import com.github.alfonsoLeandro.mpUtils.files.YamlFile;
-import com.github.alfonsoLeandro.mpUtils.guis.Events;
-import com.github.alfonsoLeandro.mpUtils.metrics.Metrics;
-import com.github.alfonsoLeandro.mpUtils.string.StringUtils;
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
+package com.github.alfonsoleandro.mputils;
+
+import com.github.alfonsoleandro.mputils.events.JoinEvent;
+import com.github.alfonsoleandro.mputils.files.YamlFile;
+import com.github.alfonsoleandro.mputils.guis.Events;
+import com.github.alfonsoleandro.mputils.metrics.Metrics;
+import com.github.alfonsoleandro.mputils.string.StringUtils;
+import com.github.alfonsoleandro.mputils.time.Cooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -16,7 +38,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public final class Main extends JavaPlugin {
+/**
+ * MPUtils' main class.
+ */
+public final class MPUtils extends JavaPlugin {
 
     /**
      * This plugin's plugin.yml file.
@@ -34,6 +59,10 @@ public final class Main extends JavaPlugin {
      * YamlFile object used for storing the {@link FileConfiguration} object for the config file and the file itself.
      */
     private YamlFile configYaml;
+    /**
+     * YamlFile object used for storing the {@link FileConfiguration} object for the cooldown file and the file itself.
+     */
+    private YamlFile cooldownYaml;
 
     /**
      * Sends a message to the console with colors and prefix.
@@ -43,7 +72,9 @@ public final class Main extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(StringUtils.colorizeString('&', "&f[&aMPUtils&f] "+msg));
     }
 
-
+    /**
+     * Plugin enable logic.
+     */
     @Override
     public void onEnable() {
         send("&aEnabled&f. Version: &e" + version);
@@ -51,11 +82,15 @@ public final class Main extends JavaPlugin {
         send("&fJoin my discord server at &chttps://discordapp.com/invite/ZznhQud");
         send("Please consider subscribing to my yt channel: &c" + pdfFile.getWebsite());
         registerConfig();
+        registerCooldown();
         registerEvents();
         updateChecker();
         startMetrics();
     }
 
+    /**
+     * Plugin disable logic.
+     */
     @Override
     public void onDisable() {
         send("&cDisabled&f. Version: &e" + version);
@@ -69,6 +104,13 @@ public final class Main extends JavaPlugin {
      */
     private void registerConfig(){
         configYaml = new YamlFile(this, "config.yml");
+    }
+
+    /**
+     * Registers the cooldown file for this plugin.
+     */
+    private void registerCooldown(){
+        cooldownYaml = new YamlFile(this, "cooldown.yml");
     }
 
     /**
@@ -129,5 +171,13 @@ public final class Main extends JavaPlugin {
      */
     public String getLatestVersion(){
         return latestVersion;
+    }
+
+    /**
+     * Gets the cooldown YAMLFile object.
+     * @return The YAMLFile object containing the cooldown's File and FileConfiguration objects.
+     */
+    public YamlFile getCooldownYaml(){
+        return cooldownYaml;
     }
 }

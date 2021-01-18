@@ -1,4 +1,4 @@
-package com.github.alfonsoLeandro.mpUtils.files;
+package com.github.alfonsoleandro.mputils.files;
 
 import com.google.common.base.Strings;
 import org.bukkit.configuration.InvalidConfigurationException;

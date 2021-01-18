@@ -1,4 +1,4 @@
-package com.github.alfonsoLeandro.mpUtils.metrics;
+package com.github.alfonsoleandro.mputils.metrics;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
