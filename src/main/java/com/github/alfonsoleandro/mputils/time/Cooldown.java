@@ -108,7 +108,7 @@ public class Cooldown {
             removeFromCooldown(playerName);
             return 0;
         }else{
-            return timeLeft*20000;
+            return java.util.concurrent.TimeUnit.MILLISECONDS.toSeconds(timeLeft)*TimeUnit.SECONDS.getMultiplier();
         }
 
 
