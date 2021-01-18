@@ -100,7 +100,7 @@ public class Cooldown {
      * @return The time left for the player to leave the cooldown or 0 if the player was not in cooldown.
      */
     public long getTimeLeft(String playerName){
-        if(!cooldownYaml.getAccess().contains(playerName)) return 0;
+        if(!cooldownYaml.getAccess().contains("cooldowns."+cooldownName+"."+playerName)) return 0;
 
         final long timeLeft = cooldownYaml.getAccess().getLong("cooldowns."+cooldownName+"."+playerName) - System.currentTimeMillis();
 
