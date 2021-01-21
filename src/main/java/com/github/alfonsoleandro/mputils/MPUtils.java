@@ -110,7 +110,7 @@ public final class MPUtils extends JavaPlugin {
      * Registers the cooldown file for this plugin.
      */
     private void registerCooldown(){
-        cooldownYaml = new YamlFile(this, "cooldown.yml");
+        cooldownYaml = new YamlFile(this, "cooldowns.yml");
     }
 
     /**
