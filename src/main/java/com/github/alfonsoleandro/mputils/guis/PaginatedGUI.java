@@ -78,7 +78,7 @@ public class PaginatedGUI extends GUI{
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
     public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags) {
-        super(title, sizePerPage, guiTags);
+        super(title, sizePerPage, guiTags, GUIType.PAGINATED);
 
         this.items = items;
         updateItemsPerPage(items);

@@ -129,7 +129,7 @@ public class TimeUtils {
      * @return A number between 0 and 59 representing the seconds for the given amount of ticks.
      */
     public static long getSeconds(long ticks){
-        return java.util.concurrent.TimeUnit.SECONDS.toSeconds(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.MINUTES.toSeconds(getMinutes(ticks)) - java.util.concurrent.TimeUnit.HOURS.toSeconds(getHours(ticks)) - java.util.concurrent.TimeUnit.DAYS.toSeconds(getDays(ticks));
+        return java.util.concurrent.TimeUnit.SECONDS.toSeconds(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.MINUTES.toSeconds(getMinutes(ticks)) - java.util.concurrent.TimeUnit.HOURS.toSeconds(getHours(ticks)) - java.util.concurrent.TimeUnit.DAYS.toSeconds(getDays(ticks) - java.util.concurrent.TimeUnit.DAYS.toSeconds(getWeeks(ticks)*7));
     }
 
     /**
@@ -138,7 +138,7 @@ public class TimeUtils {
      * @return A number between 0 and 59 representing the minutes for the given amount of ticks.
      */
     public static long getMinutes(long ticks){
-        return java.util.concurrent.TimeUnit.SECONDS.toMinutes(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.HOURS.toMinutes(getHours(ticks)) - java.util.concurrent.TimeUnit.DAYS.toMinutes(getDays(ticks));
+        return java.util.concurrent.TimeUnit.SECONDS.toMinutes(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.HOURS.toMinutes(getHours(ticks)) - java.util.concurrent.TimeUnit.DAYS.toMinutes(getDays(ticks) - java.util.concurrent.TimeUnit.DAYS.toMinutes(getWeeks(ticks)*7));
     }
 
     /**
@@ -147,7 +147,7 @@ public class TimeUtils {
      * @return A number between 0 and 23 representing the hours for the given amount of ticks.
      */
     public static long getHours(long ticks){
-        return java.util.concurrent.TimeUnit.SECONDS.toHours(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.DAYS.toHours(getDays(ticks));
+        return java.util.concurrent.TimeUnit.SECONDS.toHours(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.DAYS.toHours(getDays(ticks) - java.util.concurrent.TimeUnit.DAYS.toHours(getWeeks(ticks)*7));
     }
 
     /**

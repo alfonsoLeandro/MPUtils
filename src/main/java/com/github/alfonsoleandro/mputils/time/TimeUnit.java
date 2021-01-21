@@ -24,9 +24,13 @@ package com.github.alfonsoleandro.mputils.time;
 public enum TimeUnit {
 
     /**
+     * Ticks, The simplest Time unit for this class.
+     */
+    TICKS(1),
+    /**
      * Seconds, conformed by 20 ticks.
      */
-    SECONDS(20),
+    SECONDS(TICKS.multiplier*20),
     /**
      * Minutes, conformed by 60 seconds, 1,200 ticks.
      */
@@ -79,6 +83,9 @@ public enum TimeUnit {
      */
     public static TimeUnit getByAlias(char alias){
         switch (alias){
+            case 't':
+            case 'T':
+                return TICKS;
             case 'm':
             case 'M':
                 return MINUTES;

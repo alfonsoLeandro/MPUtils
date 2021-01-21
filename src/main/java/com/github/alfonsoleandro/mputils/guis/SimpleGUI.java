@@ -47,7 +47,7 @@ public class SimpleGUI extends GUI{
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
     public SimpleGUI(String title, int size, String guiTags){
-        super(title, size, guiTags);
+        super(title, size, guiTags, GUIType.SIMPLE);
         items = new HashMap<>();
     }
 
