@@ -27,7 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 
 /**
- * Class used for creating cooldowns
+ * Class used for creating plain cooldowns (for "items", players or functions of any type).
  */
 public class Cooldown {
 
@@ -44,8 +44,6 @@ public class Cooldown {
 
     /**
      * Creates a cooldown object.
-     * When creating a new cooldown the HashMap is also new so players in another cooldown do not
-     * have nothing to do with the new cooldown.
      *
      * @param cooldownName The name to be given to this cooldown, used for saving to the cooldown file.
      *                     Suggested cooldownName is "PluginName-CooldownType", i.e: "MPUtils-SendMessage"
@@ -56,62 +54,69 @@ public class Cooldown {
     }
 
     /**
-     * Adds a player to the cooldown for a given amount of time.
+     * Adds an item to the cooldown for a given amount of time.
      *
-     * @param playerName The player to add.
+     * @param itemName The item to add to the cooldown.
      * @param amount The amount of time to add the player to the cooldown for.
      * @param timeUnit The timeunit that the amount represents. See {@link TimeUnit}.
      */
-    public void addToCooldown(String playerName, int amount, TimeUnit timeUnit){
-        cooldownYaml.getAccess().set("cooldowns."+cooldownName+"."+playerName,
+    public void addToCooldown(String itemName, int amount, TimeUnit timeUnit){
+        cooldownYaml.getAccess().set("cooldowns."+cooldownName+"."+itemName,
                 System.currentTimeMillis() +
                 java.util.concurrent.TimeUnit.SECONDS.toMillis(TimeUtils.getTotalSeconds((long) amount *timeUnit.getMultiplier())));
         cooldownYaml.save();
     }
 
     /**
-     * Manually removes a player from the cooldown even if it was not finished yet.
+     * Manually removes a item from the cooldown even if it was not finished yet.
      *
-     * @param playerName The player to remove from the cooldown.
+     * @param itemName The item to remove from the cooldown.
      */
-    public void removeFromCooldown(String playerName){
-        cooldownYaml.getAccess().set("cooldowns."+cooldownName+"."+playerName, null);
+    public void removeFromCooldown(String itemName){
+        cooldownYaml.getAccess().set("cooldowns."+cooldownName+"."+itemName, null);
         cooldownYaml.save();
     }
 
     /**
-     * Checks if a player is on cooldown.
+     * Checks if an item is on cooldown.
      * This method will be removed from MPUtils. Please use "{@link #getTimeLeft(String)} {@literal >} 0" instead for
-     * checking if a player is on cooldown.
+     * checking if an item is on cooldown.
      *
-     * @param playerName The player to look for.
-     * @return true if the player is on cooldown and it has not finished.
+     * @param itemName The player to look for.
+     * @return true if the item is on cooldown and it has not finished.
      */
     @Deprecated
-    public boolean isInCooldown(String playerName){
-        return getTimeLeft(playerName) > 0;
+    public boolean isInCooldown(String itemName){
+        return getTimeLeft(itemName) > 0;
     }
 
     /**
-     * Gets the time left for a player to leave cooldown (in ticks).
+     * Gets the time left for an item to leave cooldown (in ticks).
      * As a suggestion, this can be later used on {@link TimeUtils#getTimeString(long)}.
      *
-     * @param playerName The player to look for.
-     * @return The time left for the player to leave the cooldown or 0 if the player was not in cooldown.
+     * @param itemName The player to look for.
+     * @return The time left for the item to leave the cooldown or 0 if the item was not in cooldown.
      */
-    public long getTimeLeft(String playerName){
-        if(!cooldownYaml.getAccess().contains("cooldowns."+cooldownName+"."+playerName)) return 0;
+    public long getTimeLeft(String itemName){
+        if(!cooldownYaml.getAccess().contains("cooldowns."+cooldownName+"."+itemName)) return 0;
 
-        final long timeLeft = cooldownYaml.getAccess().getLong("cooldowns."+cooldownName+"."+playerName) - System.currentTimeMillis();
+        final long timeLeft = cooldownYaml.getAccess().getLong("cooldowns."+cooldownName+"."+itemName) - System.currentTimeMillis();
 
         if(timeLeft <= 0){
-            removeFromCooldown(playerName);
+            removeFromCooldown(itemName);
             return 0;
         }else{
             return java.util.concurrent.TimeUnit.MILLISECONDS.toSeconds(timeLeft)*TimeUnit.SECONDS.getMultiplier();
         }
+    }
 
-
+    /**
+     * Removes every item from the cooldown.
+     */
+    public void removeAll(){
+        if(!cooldownYaml.getAccess().contains("cooldowns."+cooldownName)) return;
+        cooldownYaml.getAccess().set("cooldowns."+cooldownName, null);
+        cooldownYaml.save();
     }
 
 
