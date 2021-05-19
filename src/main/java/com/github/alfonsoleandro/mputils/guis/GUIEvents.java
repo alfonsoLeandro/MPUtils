@@ -36,7 +36,6 @@ public class GUIEvents implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event){
-        Bukkit.broadcastMessage("Inventory click: "+(event instanceof GUIClickEvent));
         if(event.getWhoClicked() instanceof Player && PlayersOnGUIsManager.isInGUI(event.getWhoClicked().getName())){
             GUIAttributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getWhoClicked().getName());
             GUIClickEvent guiClickEvent = new GUIClickEvent(
