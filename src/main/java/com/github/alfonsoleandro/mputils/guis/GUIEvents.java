@@ -31,14 +31,27 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 /**
  * Class used to fire custom events and helping {@link PlayersOnGUIsManager}
  */
-public class Events implements Listener {
+public class GUIEvents implements Listener {
 
 
     @EventHandler
     public void onClick(InventoryClickEvent event){
+        Bukkit.broadcastMessage("Inventory click: "+(event instanceof GUIClickEvent));
         if(event.getWhoClicked() instanceof Player && PlayersOnGUIsManager.isInGUI(event.getWhoClicked().getName())){
             GUIAttributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getWhoClicked().getName());
-            Bukkit.getPluginManager().callEvent(new GUIClickEvent((Player)event.getWhoClicked(), attributes.getGuiType(), attributes.getPage(), event, attributes.getGui().getGuiTags(), attributes.getGui()));
+            GUIClickEvent guiClickEvent = new GUIClickEvent(
+                    event.getView(),
+                    event.getSlotType(),
+                    event.getSlot(),
+                    event.getClick(),
+                    event.getAction(),
+                    event.getHotbarButton(),
+                    attributes.getGuiType(),
+                    attributes.getPage(),
+                    attributes.getGui().getGuiTags(),
+                    attributes.getGui());
+            Bukkit.getPluginManager().callEvent(guiClickEvent);
+            event.setCancelled(guiClickEvent.isCancelled());
         }
     }
 
@@ -46,7 +59,12 @@ public class Events implements Listener {
     public void onClose(InventoryCloseEvent event){
         if(PlayersOnGUIsManager.isInGUI(event.getPlayer().getName())) {
             GUIAttributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getPlayer().getName());
-            Bukkit.getPluginManager().callEvent(new GUICloseEvent((Player) event.getPlayer(), attributes.getGuiType(), attributes.getPage(), event, attributes.getGui().getGuiTags(), attributes.getGui()));
+            Bukkit.getPluginManager().callEvent(new GUICloseEvent(
+                    event.getView(),
+                    attributes.getGuiType(),
+                    attributes.getPage(),
+                    attributes.getGui().getGuiTags(),
+                    attributes.getGui()));
             PlayersOnGUIsManager.removePlayer(event.getPlayer().getName());
         }
     }

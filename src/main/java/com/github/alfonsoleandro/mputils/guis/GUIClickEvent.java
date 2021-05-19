@@ -22,39 +22,54 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.guis;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.InventoryView;
 
 /**
  * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
  * Should be used for turning pages, interactive GUIs and cancelling {@link InventoryClickEvent}
  */
-public class GUIClickEvent extends Event {
+public class GUIClickEvent extends InventoryClickEvent {
 
     private static final HandlerList HANDLERS = new HandlerList();
-    private final Player clicker;
     private final GUIType guiType;
     private final int page;
-    private final InventoryClickEvent event;
     private final String guiTags;
     private final GUI gui;
 
+
     /**
      * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
-     * Should be used for turning pages, interactive GUIs and cancelling {@link InventoryClickEvent}
-     * @param clicker The player that clicked the GUI.
+     * Should be used for turning pages, interactive GUIs and cancelling the {@link InventoryClickEvent}.
+     *
+     * @param view {@link InventoryClickEvent}'s InventoryView.
+     * @param type {@link InventoryClickEvent}'s SlotType.
+     * @param slot {@link InventoryClickEvent}'s clicked slot.
+     * @param click {@link InventoryClickEvent}'s ClickType.
+     * @param action {@link InventoryClickEvent}'s InventoryAction.
+     * @param key {@link InventoryClickEvent}'s hotbar key pressed (if any).
      * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
      * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
-     * @param event The bukkit {@link InventoryClickEvent} fired, for you to modify it at your will.
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
      */
-    public GUIClickEvent(Player clicker, GUIType guiType, int page, InventoryClickEvent event, String guiTags, GUI gui) {
-        this.clicker = clicker;
+    public GUIClickEvent(InventoryView view,
+                         InventoryType.SlotType type,
+                         int slot,
+                         ClickType click,
+                         InventoryAction action,
+                         int key,
+                         GUIType guiType,
+                         int page,
+                         String guiTags,
+                         GUI gui){
+        super(view, type, slot, click, action, key);
         this.guiType = guiType;
         this.page = page;
-        this.event = event;
         this.guiTags = guiTags;
         this.gui = gui;
     }
@@ -71,9 +86,12 @@ public class GUIClickEvent extends Event {
      * Get the player who clicked the inventory.
      *
      * @return Player who clicked.
+     * @deprecated The way this event works has changed, you should now get the {@link org.bukkit.entity.HumanEntity}
+     * that clicked the inventory since now this class extends {@link InventoryClickEvent}.
      */
+    @Deprecated
     public Player getClicker() {
-        return clicker;
+        return (Player) this.getWhoClicked();
     }
 
     /**
@@ -98,16 +116,21 @@ public class GUIClickEvent extends Event {
      * Gets the actual {@link InventoryClickEvent} that was fired when clicking the GUI.
      *
      * @return Said event.
+     * @deprecated The way this event works has changed, you do not need to get the original event
+     * since now this class extends {@link InventoryClickEvent}.
      */
+    @Deprecated
     public InventoryClickEvent getEvent() {
-        return event;
+        return this;
     }
 
     /**
      * Gets the tags added to the GUI when creating an instance of the object.
+     * Deprecated. Please use {@link GUI#getGuiTags()} instead.
      *
      * @return The tags previously entered.
      */
+    @Deprecated
     public String getGuiTags() {
         return guiTags;
     }

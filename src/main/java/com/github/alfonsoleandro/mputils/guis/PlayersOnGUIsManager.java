@@ -48,10 +48,9 @@ public final class PlayersOnGUIsManager {
      * @param playerName The name of the player to add.
      * @param pageNumber The page of the GUI the player is on, or -1 if its not a paginated GUI.
      * @param guiType The GUI type the player is currently on. Either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
-     * @param guiTags Any tags passed to the GUI instance in order to recognize it. Then passed to the {@link GUIClickEvent}.
      * @param gui The GUI instance used to then pass it to {@link GUIClickEvent}.
      */
-    public static void addPlayer(String playerName, int pageNumber, GUIType guiType, String guiTags, GUI gui){
+    public static void addPlayer(String playerName, int pageNumber, GUIType guiType, GUI gui){
         players.remove(playerName);
         players.put(playerName, new GUIAttributes(pageNumber, guiType, gui));
     }

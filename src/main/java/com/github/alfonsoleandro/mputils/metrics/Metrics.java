@@ -27,7 +27,7 @@ import java.util.zip.GZIPOutputStream;
  * <p>
  * Check out https://bStats.org/ to learn more about bStats!
  */
-@SuppressWarnings({"WeakerAccess"})
+@SuppressWarnings({"WeakerAccess", "SpellCheckingInspection"})
 public class Metrics {
 
     static {
@@ -51,7 +51,7 @@ public class Metrics {
     private static final String URL = "https://bStats.org/submitData/bukkit";
 
     // Is bStats enabled on this server?
-    private boolean enabled;
+    private final boolean enabled;
 
     // Should failed requests be logged?
     private static boolean logFailedRequests;

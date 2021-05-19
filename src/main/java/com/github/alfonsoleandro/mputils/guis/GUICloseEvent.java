@@ -21,44 +21,38 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.guis;
 
-
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.InventoryView;
 
 /**
  * Custom event for when a GUI closes, called when a player who is being GUI managed by MPUtils closes a GUI.
  */
-public class GUICloseEvent extends Event {
+public class GUICloseEvent extends InventoryCloseEvent {
 
     private static final HandlerList HANDLERS = new HandlerList();
-    private final Player player;
     private final GUIType guiType;
     private final int page;
-    private final InventoryCloseEvent event;
     private final String guiTags;
     private final GUI gui;
 
-
     /**
-     * Custom event for registering when a player closes a GUI inventory.
+     * Custom event for registering when a player closes a MPUtils GUI inventory.
      *
-     * @param player The player that was using the GUI.
+     * @param transaction {@link InventoryCloseEvent}'s InventoryView.
      * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
      * @param page The page the clicker was on when closing the GUI, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
-     * @param event The bukkit {@link InventoryCloseEvent} fired, for you to modify it at your will.
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
      */
-    public GUICloseEvent(Player player, GUIType guiType, int page, InventoryCloseEvent event, String guiTags, GUI gui) {
-        this.player = player;
+    public GUICloseEvent(InventoryView transaction, GUIType guiType, int page, String guiTags, GUI gui){
+        super(transaction);
         this.guiType = guiType;
         this.page = page;
-        this.event = event;
         this.guiTags = guiTags;
         this.gui = gui;
     }
+
 
     public HandlerList getHandlers() {
         return HANDLERS;
@@ -66,15 +60,6 @@ public class GUICloseEvent extends Event {
 
     public static HandlerList getHandlerList() {
         return HANDLERS;
-    }
-
-    /**
-     * Get the player who clicked the inventory.
-     *
-     * @return Player who clicked.
-     */
-    public Player getPlayer() {
-        return player;
     }
 
     /**
@@ -99,16 +84,21 @@ public class GUICloseEvent extends Event {
      * Gets the actual {@link InventoryCloseEvent} that was fired when clicking the GUI.
      *
      * @return Said event.
+     * @deprecated The way this event works has changed, you do not need to get the original event
+     * since now this class extends {@link InventoryCloseEvent}.
      */
+    @Deprecated
     public InventoryCloseEvent getInventoryCloseEvent() {
-        return event;
+        return this;
     }
 
     /**
      * Gets the tags added to the GUI when creating an instance of the object.
+     * Deprecated. Please use {@link GUI#getGuiTags()} instead.
      *
      * @return The tags previously entered.
      */
+    @Deprecated
     public String getGuiTags() {
         return guiTags;
     }

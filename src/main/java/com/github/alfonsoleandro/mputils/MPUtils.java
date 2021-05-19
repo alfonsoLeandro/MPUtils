@@ -23,10 +23,9 @@ package com.github.alfonsoleandro.mputils;
 
 import com.github.alfonsoleandro.mputils.events.JoinEvent;
 import com.github.alfonsoleandro.mputils.files.YamlFile;
-import com.github.alfonsoleandro.mputils.guis.Events;
+import com.github.alfonsoleandro.mputils.guis.GUIEvents;
 import com.github.alfonsoleandro.mputils.metrics.Metrics;
 import com.github.alfonsoleandro.mputils.string.StringUtils;
-import com.github.alfonsoleandro.mputils.time.Cooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -153,7 +152,7 @@ public final class MPUtils extends JavaPlugin {
      */
     private void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(new Events(), this);
+        pm.registerEvents(new GUIEvents(), this);
         pm.registerEvents(new JoinEvent(this), this);
     }
 

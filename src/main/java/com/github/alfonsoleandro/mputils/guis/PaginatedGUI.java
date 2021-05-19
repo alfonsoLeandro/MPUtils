@@ -322,7 +322,7 @@ public class PaginatedGUI extends GUI{
         setNavBar(page);
         setItemsForPage(page);
         player.openInventory(inventory);
-        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, getGuiTags(), this);
+        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
     }
 
     /**

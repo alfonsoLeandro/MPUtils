@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.github.alfonsoLeandro</groupId>
+    <groupId>com.github.alfonsoleandro</groupId>
     <artifactId>MPUtils</artifactId>
-    <version>1.6.0</version>
+    <version>1.7.0</version>
     <packaging>jar</packaging>
 
     <name>MPUtils</name>
@@ -143,10 +143,6 @@
         <repository>
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
 

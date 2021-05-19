@@ -1,6 +1,6 @@
 # MPUtils
 
-## Descritpion:
+## Description:
 MP Utils is a simple library for helping on the developing of minecraft spigot plugins. This library is thougth to be expanded as I go on other projects and find new things I could add here.
 
 
