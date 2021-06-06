@@ -27,7 +27,7 @@ Developers:
 ```xml
     <dependencies>
         <dependency>
-            <groupId>com.github.alfonsoleandro</groupId>
+            <groupId>com.github.alfonsoLeandro</groupId>
             <artifactId>MPUtils</artifactId>
             <version>VERSION</version>
             <scope>provided</scope>
