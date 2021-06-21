@@ -22,6 +22,7 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.itemstacks;
 
 import com.github.alfonsoleandro.mputils.string.StringUtils;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -46,7 +47,9 @@ public final class MPItemStacks {
     /**
      * Private constructor so this class cannot be instantiated
      */
-    private MPItemStacks(){}
+    private MPItemStacks(){
+        throw new IllegalStateException("MPItemStacks is only a utility class!");
+    }
 
 
     /**
@@ -139,9 +142,12 @@ public final class MPItemStacks {
      * The given string must be provided by {@link #serializeInventory(Inventory)} or have the same format.
      * @param invString The String object that represents an inventory.
      * @return The inventory that the string argument represents.
+     * @throws InvalidConfigurationException If the given String contains a contents String that
+     * is invalid for {@link YamlConfiguration#loadFromString(String)} use.
      */
     public static Inventory deserializeInventory(String invString) throws InvalidConfigurationException {
-        Map<String, Object> inventoryProperties = (Map<String, Object>)new Gson().fromJson(invString, Map.class);
+        Map<String, Object> inventoryProperties = new Gson().fromJson(invString,
+                new TypeToken<Map<String, Object>>(){}.getType());
         String type = (String) inventoryProperties.get("type");
         int size = (Integer) inventoryProperties.get("size");
         ItemStack[] contents = deserializeContents(

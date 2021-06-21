@@ -64,7 +64,7 @@ public class Cooldown {
         cooldownYaml.getAccess().set("cooldowns."+cooldownName+"."+itemName,
                 System.currentTimeMillis() +
                 java.util.concurrent.TimeUnit.SECONDS.toMillis(TimeUtils.getTotalSeconds((long) amount *timeUnit.getMultiplier())));
-        cooldownYaml.save();
+        cooldownYaml.save(true);
     }
 
     /**
@@ -74,7 +74,7 @@ public class Cooldown {
      */
     public void removeFromCooldown(String itemName){
         cooldownYaml.getAccess().set("cooldowns."+cooldownName+"."+itemName, null);
-        cooldownYaml.save();
+        cooldownYaml.save(true);
     }
 
     /**
@@ -116,7 +116,7 @@ public class Cooldown {
     public void removeAll(){
         if(!cooldownYaml.getAccess().contains("cooldowns."+cooldownName)) return;
         cooldownYaml.getAccess().set("cooldowns."+cooldownName, null);
-        cooldownYaml.save();
+        cooldownYaml.save(true);
     }
 
 

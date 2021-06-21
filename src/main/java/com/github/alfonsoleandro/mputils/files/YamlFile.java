@@ -5,6 +5,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -103,12 +104,39 @@ public class YamlFile {
 
     /**
      * Saves the {@link FileConfiguration} object to the file in your plugin's data folder.
+     * @deprecated Please use {@link #save(boolean)} instead. Allows you to decide if you want to save the
+     * file synchronously or asynchronously.
      */
+    @Deprecated
     public void save() {
         try {
             fileConfig.save(file);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Saves the {@link FileConfiguration} object to the file in your plugin's data folder.
+     * @param async Whether to save this file synchronously or asynchronously.
+     */
+    public void save(boolean async) {
+        if(async){
+            new BukkitRunnable(){
+                public void run(){
+                    try {
+                        fileConfig.save(file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.runTaskAsynchronously(plugin);
+        }else{
+            try {
+                fileConfig.save(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
