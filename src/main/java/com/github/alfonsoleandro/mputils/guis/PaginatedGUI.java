@@ -319,10 +319,18 @@ public class PaginatedGUI extends GUI{
     public void openGUI(Player player, int page) {
         if(page > pages) return;
         player.closeInventory();
-        setNavBar(page);
-        setItemsForPage(page);
+        setPage(page);
         player.openInventory(inventory);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
+    }
+
+    /**
+     * Changes the items inside the inventory for the items in the given page.
+     * @param page The page to set the items for.
+     */
+    public void setPage(int page){
+        setNavBar(page);
+        setItemsForPage(page);
     }
 
     /**

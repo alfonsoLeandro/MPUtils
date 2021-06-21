@@ -24,7 +24,7 @@ package com.github.alfonsoleandro.mputils.guis;
 /**
  * Class containing various GUI's details for using on MPUtils' custom events.
  */
-class GUIAttributes {
+public class GUIAttributes {
 
     /**
      * The page number the player is currently on.

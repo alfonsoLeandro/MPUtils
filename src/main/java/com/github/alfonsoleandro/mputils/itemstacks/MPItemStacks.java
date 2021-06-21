@@ -22,11 +22,18 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.itemstacks;
 
 import com.github.alfonsoleandro.mputils.string.StringUtils;
+import com.google.gson.Gson;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -110,5 +117,82 @@ public final class MPItemStacks {
         itemStack.setItemMeta(meta);
 
         return itemStack;
+    }
+
+    /**
+     * Serializes an inventory: saves inventory type, size, and contents.
+     * @param inv The inventory to serialize.
+     * @return A string that can be deserialized using {@link #deserializeInventory(String)}.
+     * @see #serializeContents(ItemStack[])
+     */
+    public static String serializeInventory(Inventory inv){
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("type", inv.getType());
+        properties.put("size", inv.getSize());
+        properties.put("contents", serializeContents(inv.getContents()));
+
+        return new Gson().toJson(properties);
+    }
+
+    /**
+     * Loads an inventory from a given string.
+     * The given string must be provided by {@link #serializeInventory(Inventory)} or have the same format.
+     * @param invString The String object that represents an inventory.
+     * @return The inventory that the string argument represents.
+     */
+    public static Inventory deserializeInventory(String invString) throws InvalidConfigurationException {
+        Map<String, Object> inventoryProperties = (Map<String, Object>)new Gson().fromJson(invString, Map.class);
+        String type = (String) inventoryProperties.get("type");
+        int size = (Integer) inventoryProperties.get("size");
+        ItemStack[] contents = deserializeContents(
+                (String)inventoryProperties.get("contents"),
+                size);
+
+        Inventory inv;
+        if(type.equalsIgnoreCase("CHEST")){
+            inv = Bukkit.createInventory(null, size);
+        }else{
+            inv = Bukkit.createInventory(null, InventoryType.valueOf(type));
+        }
+        inv.setContents(contents);
+
+        return inv;
+    }
+
+
+    /**
+     * Saves an array of ItemStacks to a String, preserves null spaces.
+     * @param contents The contents of an inventory.
+     * @return A string object that represents the given array of ItemStacks.
+     */
+    public static String serializeContents(ItemStack[] contents){
+        YamlConfiguration tempConfig = new YamlConfiguration();
+        for(int i = 0; i < contents.length; i++){
+            ItemStack item = contents[i];
+            tempConfig.set(String.valueOf(i), item);
+        }
+
+        return tempConfig.saveToString();
+    }
+
+
+    /**
+     * Loads an array of ItemStacks from a given String.
+     * The String must be provided by {@link #serializeContents(ItemStack[])} or have the same format.
+     * @param contentsString The contents of the array.
+     * @param invSize The size of the inventory that these contents will be added to.
+     * @return An array of ItemStacks with the size equal to {@code invSize}.
+     * @throws InvalidConfigurationException If the given String is invalid for {@link YamlConfiguration#loadFromString(String)} use.
+     */
+    public static ItemStack[] deserializeContents(String contentsString, int invSize) throws InvalidConfigurationException {
+        YamlConfiguration tempConfig = new YamlConfiguration();
+        tempConfig.loadFromString(contentsString);
+        ItemStack[] contents = new ItemStack[invSize];
+
+        for (int i = 0; i < invSize; i++) {
+            contents[i] = tempConfig.getItemStack(String.valueOf(i));
+        }
+        return contents;
+
     }
 }
