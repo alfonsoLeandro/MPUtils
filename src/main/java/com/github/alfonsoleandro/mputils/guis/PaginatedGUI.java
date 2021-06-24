@@ -35,7 +35,7 @@ import java.util.*;
 public class PaginatedGUI extends GUI{
 
     /**
-     * The total nu,ber of pages this GUI has.
+     * The total number of pages this GUI has.
      */
     private int pages;
     /**

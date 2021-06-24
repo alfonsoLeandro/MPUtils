@@ -31,6 +31,14 @@ import java.util.List;
  */
 public class TimeUtils {
 
+    /**
+     * Private constructor so this class cannot be instantiated
+     */
+    private TimeUtils(){
+        throw new IllegalStateException("TimeUtils is only a utility class!");
+    }
+
+
 
     /**
      * Gets the amount of ticks a given amount of time of the given unit represents.

@@ -21,9 +21,9 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils;
 
-import com.github.alfonsoleandro.mputils.events.JoinEvent;
+import com.github.alfonsoleandro.mputils.listeners.JoinEvent;
 import com.github.alfonsoleandro.mputils.files.YamlFile;
-import com.github.alfonsoleandro.mputils.guis.GUIEvents;
+import com.github.alfonsoleandro.mputils.listeners.GUIEvents;
 import com.github.alfonsoleandro.mputils.metrics.Metrics;
 import com.github.alfonsoleandro.mputils.string.StringUtils;
 import org.bukkit.Bukkit;

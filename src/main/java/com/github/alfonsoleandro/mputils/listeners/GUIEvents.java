@@ -19,11 +19,16 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.github.alfonsoleandro.mputils.guis;
+package com.github.alfonsoleandro.mputils.listeners;
 
+import com.github.alfonsoleandro.mputils.guis.GUIAttributes;
+import com.github.alfonsoleandro.mputils.guis.GUIClickEvent;
+import com.github.alfonsoleandro.mputils.guis.GUICloseEvent;
+import com.github.alfonsoleandro.mputils.guis.PlayersOnGUIsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -34,7 +39,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 public class GUIEvents implements Listener {
 
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onClick(InventoryClickEvent event){
         if(event.getWhoClicked() instanceof Player && PlayersOnGUIsManager.isInGUI(event.getWhoClicked().getName())){
             GUIAttributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getWhoClicked().getName());

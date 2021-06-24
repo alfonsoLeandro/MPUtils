@@ -35,7 +35,7 @@ public class SimpleGUI extends GUI{
     /**
      * Hashmap containing every item that has been added to the GUI.
      */
-    final private HashMap<Integer, ItemStack> items;
+    private final HashMap<Integer, ItemStack> items;
 
 
     /**

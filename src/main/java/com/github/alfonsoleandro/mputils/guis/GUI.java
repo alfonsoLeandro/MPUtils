@@ -38,7 +38,7 @@ public abstract class GUI {
     /**
      * Some extra tags you may add to differentiate between GUIs.
      */
-    final protected String guiTags;
+    protected final String guiTags;
     /**
      * The size for the GUI. In case of a {@link PaginatedGUI} this is the size for each page.
      */

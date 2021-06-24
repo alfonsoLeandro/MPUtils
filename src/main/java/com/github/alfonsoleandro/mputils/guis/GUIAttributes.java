@@ -29,15 +29,15 @@ public class GUIAttributes {
     /**
      * The page number the player is currently on.
      */
-    final private int page;
+    private final int page;
     /**
      * The type of GUI the player has open.
      */
-    final private GUIType guiType;
+    private final GUIType guiType;
     /**
      * The actual GUI object.
      */
-    final private GUI gui;
+    private final GUI gui;
 
     public GUIAttributes(int page, GUIType guiType, GUI gui){
         this.page = page;
