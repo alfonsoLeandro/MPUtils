@@ -19,41 +19,60 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.github.alfonsoleandro.mputils.guis;
+package com.github.alfonsoleandro.mputils.guis.events;
 
+import com.github.alfonsoleandro.mputils.guis.GUI;
+import com.github.alfonsoleandro.mputils.guis.PaginatedGUI;
+import com.github.alfonsoleandro.mputils.guis.SimpleGUI;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
 
 /**
- * Custom event for when a GUI closes, called when a player who is being GUI managed by MPUtils closes a GUI.
- * @deprecated Moved to {@link com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent}.
- * TO BE REMOVED IN THE NEAR FUTURE.
+ * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
+ * Should be used for turning pages, interactive GUIs and cancelling {@link InventoryClickEvent}
  */
-@Deprecated
-public class GUICloseEvent extends InventoryCloseEvent {
+public class GUIClickEvent extends InventoryClickEvent {
 
     private static final HandlerList HANDLERS = new HandlerList();
-    private final GUIType guiType;
-    private final int page;
-    private final GUI gui;
+    protected final GUIType guiType;
+    protected final int page;
+    protected final GUI gui;
+
 
     /**
-     * Custom event for registering when a player closes a MPUtils GUI inventory.
+     * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
+     * Should be used for turning pages, interactive GUIs and cancelling the {@link InventoryClickEvent}.
      *
-     * @param transaction {@link InventoryCloseEvent}'s InventoryView.
+     * @param view {@link InventoryClickEvent}'s InventoryView.
+     * @param type {@link InventoryClickEvent}'s SlotType.
+     * @param slot {@link InventoryClickEvent}'s clicked slot.
+     * @param click {@link InventoryClickEvent}'s ClickType.
+     * @param action {@link InventoryClickEvent}'s InventoryAction.
+     * @param key {@link InventoryClickEvent}'s hotbar key pressed (if any).
      * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
-     * @param page The page the clicker was on when closing the GUI, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
+     * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
      * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
      */
-    public GUICloseEvent(InventoryView transaction, GUIType guiType, int page, GUI gui){
-        super(transaction);
+    public GUIClickEvent(InventoryView view,
+                         InventoryType.SlotType type,
+                         int slot,
+                         ClickType click,
+                         InventoryAction action,
+                         int key,
+                         GUIType guiType,
+                         int page,
+                         GUI gui){
+        super(view, type, slot, click, action, key);
         this.guiType = guiType;
         this.page = page;
         this.gui = gui;
     }
-
 
     public HandlerList getHandlers() {
         return HANDLERS;
@@ -61,6 +80,18 @@ public class GUICloseEvent extends InventoryCloseEvent {
 
     public static HandlerList getHandlerList() {
         return HANDLERS;
+    }
+
+    /**
+     * Get the player who clicked the inventory.
+     *
+     * @return Player who clicked.
+     * @deprecated The way this event works has changed, you should now get the {@link org.bukkit.entity.HumanEntity}
+     * that clicked the inventory since now this class extends {@link InventoryClickEvent}.
+     */
+    @Deprecated
+    public Player getClicker() {
+        return (Player) this.getWhoClicked();
     }
 
     /**
@@ -82,14 +113,14 @@ public class GUICloseEvent extends InventoryCloseEvent {
     }
 
     /**
-     * Gets the actual {@link InventoryCloseEvent} that was fired when clicking the GUI.
+     * Gets the actual {@link InventoryClickEvent} that was fired when clicking the GUI.
      *
      * @return Said event.
      * @deprecated The way this event works has changed, you do not need to get the original event
-     * since now this class extends {@link InventoryCloseEvent}.
+     * since now this class extends {@link InventoryClickEvent}.
      */
     @Deprecated
-    public InventoryCloseEvent getInventoryCloseEvent() {
+    public InventoryClickEvent getEvent() {
         return this;
     }
 

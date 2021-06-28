@@ -21,18 +21,19 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.guis;
 
-/**
- * Enum for representing the available types of GUI objects.
-* @deprecated Moved to {@link com.github.alfonsoleandro.mputils.guis.utils.GUIType}.
- */
-@Deprecated
-public enum GUIType {
-    /**
-     * A GUI that has more than one page.
-     */
-    PAGINATED,
-    /**
-     * A GUI made up of a single page.
-     */
-    SIMPLE
+import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
+
+//TODO
+public class BorderPaginatedGUI extends PaginatedGUI{
+
+    public BorderPaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags, NavigationBar navBar) {
+        super(title, sizePerPage, items, guiTags, navBar);
+    }
+
+    public BorderPaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags) {
+        super(title, sizePerPage, items, guiTags);
+    }
 }

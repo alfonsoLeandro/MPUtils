@@ -19,8 +19,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.github.alfonsoleandro.mputils.guis;
+package com.github.alfonsoleandro.mputils.guis.events;
 
+import com.github.alfonsoleandro.mputils.guis.GUI;
+import com.github.alfonsoleandro.mputils.guis.PaginatedGUI;
+import com.github.alfonsoleandro.mputils.guis.SimpleGUI;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -28,16 +31,13 @@ import org.bukkit.inventory.InventoryView;
 
 /**
  * Custom event for when a GUI closes, called when a player who is being GUI managed by MPUtils closes a GUI.
- * @deprecated Moved to {@link com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent}.
- * TO BE REMOVED IN THE NEAR FUTURE.
  */
-@Deprecated
 public class GUICloseEvent extends InventoryCloseEvent {
 
     private static final HandlerList HANDLERS = new HandlerList();
-    private final GUIType guiType;
-    private final int page;
-    private final GUI gui;
+    protected final GUIType guiType;
+    protected final int page;
+    protected final GUI gui;
 
     /**
      * Custom event for registering when a player closes a MPUtils GUI inventory.

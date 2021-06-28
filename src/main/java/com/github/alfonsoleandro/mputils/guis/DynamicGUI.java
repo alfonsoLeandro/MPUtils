@@ -21,18 +21,26 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.guis;
 
+import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
+import org.bukkit.inventory.ItemStack;
+
 /**
- * Enum for representing the available types of GUI objects.
-* @deprecated Moved to {@link com.github.alfonsoleandro.mputils.guis.utils.GUIType}.
+ * An unordered GUI that is a {@link SimpleGUI} if the amount of items are lesser than 54, or
+ * a {@link PaginatedGUI} in any other case.
  */
-@Deprecated
-public enum GUIType {
-    /**
-     * A GUI that has more than one page.
-     */
-    PAGINATED,
-    /**
-     * A GUI made up of a single page.
-     */
-    SIMPLE
+public class DynamicGUI extends GUI{
+
+    protected DynamicGUI(String title, int size, String guiTags, GUIType guiType) {
+        super(title, size, guiTags, guiType);
+    }
+
+    @Override
+    public void clearInventory() {
+        //TODO
+    }
+
+    @Override
+    public void addItem(ItemStack item) {
+        //TODO
+    }
 }

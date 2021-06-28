@@ -21,13 +21,15 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.guis;
 
+import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
+import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Abstract class inherited by {@link PaginatedGUI} and {@link SimpleGUI}.
+ * Abstract class for defining a GUI's base behaviour.
  */
 public abstract class GUI {
 

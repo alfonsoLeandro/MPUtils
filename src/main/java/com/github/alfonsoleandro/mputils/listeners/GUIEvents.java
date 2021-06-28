@@ -21,10 +21,15 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.listeners;
 
-import com.github.alfonsoleandro.mputils.guis.GUIAttributes;
+import com.github.alfonsoleandro.mputils.guis.GUI;
 import com.github.alfonsoleandro.mputils.guis.GUIClickEvent;
 import com.github.alfonsoleandro.mputils.guis.GUICloseEvent;
-import com.github.alfonsoleandro.mputils.guis.PlayersOnGUIsManager;
+import com.github.alfonsoleandro.mputils.guis.PaginatedGUI;
+import com.github.alfonsoleandro.mputils.guis.events.GUIButtonClickEvent;
+import com.github.alfonsoleandro.mputils.guis.utils.GUIAttributes;
+import com.github.alfonsoleandro.mputils.guis.navigation.GUIButton;
+import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
+import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,21 +48,64 @@ public class GUIEvents implements Listener {
     public void onClick(InventoryClickEvent event){
         if(event.getWhoClicked() instanceof Player && PlayersOnGUIsManager.isInGUI(event.getWhoClicked().getName())){
             GUIAttributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getWhoClicked().getName());
+            GUI gui = attributes.getGui();
+            int rawSlot = event.getRawSlot();
             GUIClickEvent guiClickEvent = new GUIClickEvent(
                     event.getView(),
                     event.getSlotType(),
-                    event.getSlot(),
+                    rawSlot,
                     event.getClick(),
                     event.getAction(),
                     event.getHotbarButton(),
-                    attributes.getGuiType(),
+                    attributes.getGuiType().equals(GUIType.PAGINATED) ?
+                            com.github.alfonsoleandro.mputils.guis.GUIType.PAGINATED :
+                            com.github.alfonsoleandro.mputils.guis.GUIType.SIMPLE,
                     attributes.getPage(),
-                    attributes.getGui().getGuiTags(),
-                    attributes.getGui());
+                    gui);
+            com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent guiClickEvent2 =
+                    new com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent(
+                            event.getView(),
+                            event.getSlotType(),
+                            rawSlot,
+                            event.getClick(),
+                            event.getAction(),
+                            event.getHotbarButton(),
+                            attributes.getGuiType(),
+                            attributes.getPage(),
+                            gui);
+            GUIButtonClickEvent guiButtonClickEvent = null;
+            //TODO: check if other paginated GUIs are instance of PaginatedGUI
+            //TODO: prevent GUIClickEvent when GUI is dynamic and type is simple.
+            if((gui instanceof PaginatedGUI)
+            && (rawSlot > event.getInventory().getSize()-10 &&
+                    rawSlot <= event.getInventory().getSize())) {
+                int buttonSlot = rawSlot-(event.getInventory().getSize()-9);
+                //TODO: get correct buttonSlot when the GUI is instance of BorderPaginatedGUI.
+                GUIButton clickedButton = ((PaginatedGUI)gui).getNavBar().getButtonAt(buttonSlot);
+
+                guiButtonClickEvent = new GUIButtonClickEvent(
+                        event.getView(),
+                        event.getSlotType(),
+                        rawSlot,
+                        event.getClick(),
+                        event.getAction(),
+                        event.getHotbarButton(),
+                        attributes.getGuiType(),
+                        attributes.getPage(),
+                        (PaginatedGUI) gui,
+                        clickedButton,
+                        buttonSlot);
+            }
             Bukkit.getPluginManager().callEvent(guiClickEvent);
-            event.setCancelled(guiClickEvent.isCancelled());
+            Bukkit.getPluginManager().callEvent(guiClickEvent2);
+            if(guiButtonClickEvent != null) Bukkit.getPluginManager().callEvent(guiButtonClickEvent);
+
+            event.setCancelled(guiClickEvent.isCancelled() || guiClickEvent2.isCancelled()
+            || (guiButtonClickEvent != null && guiButtonClickEvent.isCancelled())
+            );
         }
     }
+
 
     @EventHandler
     public void onClose(InventoryCloseEvent event){
@@ -67,7 +115,11 @@ public class GUIEvents implements Listener {
                     event.getView(),
                     attributes.getGuiType(),
                     attributes.getPage(),
-                    attributes.getGui().getGuiTags(),
+                    attributes.getGui()));
+            Bukkit.getPluginManager().callEvent(new com.github.alfonsoleandro.mputils.guis.events.GUICloseEvent(
+                    event.getView(),
+                    attributes.getGuiType(),
+                    attributes.getPage(),
                     attributes.getGui()));
             PlayersOnGUIsManager.removePlayer(event.getPlayer().getName());
         }

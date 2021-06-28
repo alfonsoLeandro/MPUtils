@@ -21,6 +21,7 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.guis;
 
+import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
@@ -28,7 +29,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 
 /**
- * Class for creating a GUI of a single page. Check {@link PaginatedGUI} for a paginated GUI.
+ * Class for creating a GUI of a single page.
+ * @see PaginatedGUI
  */
 public class SimpleGUI extends GUI{
 
@@ -69,6 +71,7 @@ public class SimpleGUI extends GUI{
      *
      * @param item The item to add.
      */
+    @Override
     public void addItem(ItemStack item){
         inventory.addItem(item);
         for(int i = 0; i < guiSize; i++){
