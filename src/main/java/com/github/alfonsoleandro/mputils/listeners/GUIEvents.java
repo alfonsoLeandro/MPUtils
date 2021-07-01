@@ -52,9 +52,8 @@ public class GUIEvents implements Listener {
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onClick(InventoryClickEvent event){
-        int rawSlot = event.getRawSlot();
-        if(rawSlot < 0 || rawSlot > event.getInventory().getSize()) return;
         if(event.getWhoClicked() instanceof Player && PlayersOnGUIsManager.isInGUI(event.getWhoClicked().getName())){
+            int rawSlot = event.getRawSlot();
             GUIAttributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getWhoClicked().getName());
             GUI gui = attributes.getGui();
             //<editor-fold desc="Legacy GUIClickEvent" defaultstate="collapsed">
