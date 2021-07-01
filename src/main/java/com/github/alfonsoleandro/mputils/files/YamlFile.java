@@ -99,7 +99,7 @@ public class YamlFile {
                 fileConfig.set(mapEntry.getKey(), mapEntry.getValue());
             }
         }
-        save();
+        save(true);
     }
 
     /**

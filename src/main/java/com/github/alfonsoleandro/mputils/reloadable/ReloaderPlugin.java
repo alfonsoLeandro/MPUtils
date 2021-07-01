@@ -36,7 +36,7 @@ public abstract class ReloaderPlugin extends JavaPlugin {
      * The collection of {@link Reloadable} classes to reload when the plugin reloads.
      * @see #reload()
      */
-    public final Set<Reloadable> reloadables = new HashSet<>();
+    protected final Set<Reloadable> reloadables = new HashSet<>();
 
     /**
      * Adds a new Reloadable to the reloadables collection.

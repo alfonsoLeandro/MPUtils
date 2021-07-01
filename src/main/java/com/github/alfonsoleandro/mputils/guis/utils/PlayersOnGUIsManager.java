@@ -19,7 +19,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.github.alfonsoleandro.mputils.guis;
+package com.github.alfonsoleandro.mputils.guis.utils;
+
+import com.github.alfonsoleandro.mputils.guis.GUI;
+import com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent;
 
 import java.util.HashMap;
 
@@ -28,6 +31,9 @@ import java.util.HashMap;
  */
 public final class PlayersOnGUIsManager {
 
+    /**
+     * A map of player names that are being managed by this class.
+     */
     private static final HashMap<String, GUIAttributes> players = new HashMap<>();
 
 

@@ -19,7 +19,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.github.alfonsoleandro.mputils.guis;
+package com.github.alfonsoleandro.mputils.guis.utils;
+
+import com.github.alfonsoleandro.mputils.guis.GUI;
+import com.github.alfonsoleandro.mputils.guis.PaginatedGUI;
+import com.github.alfonsoleandro.mputils.guis.SimpleGUI;
 
 /**
  * Class containing various GUI's details for using on MPUtils' custom events.
@@ -29,15 +33,15 @@ public class GUIAttributes {
     /**
      * The page number the player is currently on.
      */
-    final private int page;
+    private final int page;
     /**
      * The type of GUI the player has open.
      */
-    final private GUIType guiType;
+    private final GUIType guiType;
     /**
      * The actual GUI object.
      */
-    final private GUI gui;
+    private final GUI gui;
 
     public GUIAttributes(int page, GUIType guiType, GUI gui){
         this.page = page;

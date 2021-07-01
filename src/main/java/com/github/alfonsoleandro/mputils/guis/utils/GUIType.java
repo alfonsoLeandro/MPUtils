@@ -19,13 +19,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.github.alfonsoleandro.mputils.guis;
+package com.github.alfonsoleandro.mputils.guis.utils;
 
 /**
  * Enum for representing the available types of GUI objects.
-* @deprecated Moved to {@link com.github.alfonsoleandro.mputils.guis.utils.GUIType}.
  */
-@Deprecated
 public enum GUIType {
     /**
      * A GUI that has more than one page.

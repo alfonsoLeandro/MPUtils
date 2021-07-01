@@ -21,13 +21,15 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.guis;
 
+import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
+import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Abstract class inherited by {@link PaginatedGUI} and {@link SimpleGUI}.
+ * Abstract class for defining a GUI's base behaviour.
  */
 public abstract class GUI {
 
@@ -38,13 +40,19 @@ public abstract class GUI {
     /**
      * Some extra tags you may add to differentiate between GUIs.
      */
-    final protected String guiTags;
+    protected final String guiTags;
     /**
      * The size for the GUI. In case of a {@link PaginatedGUI} this is the size for each page.
      */
     protected int guiSize;
 
-
+    /**
+     * Constructor for ANY GUI with its essential features.
+     * @param title The title for the inventory (colors must be applied before).
+     * @param size The size for the inventory.
+     * @param guiTags Any String chosen to distinguish this GUI from another GUI.
+     * @param guiType The type of GUI. Either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
+     */
     protected GUI(String title, int size, String guiTags, GUIType guiType) {
         if(size > 54) size = 54;
         if(size % 9 != 0) size = (int) Math.floor(size / 9.0);
@@ -64,12 +72,13 @@ public abstract class GUI {
      */
     public void openGUI(Player player){
         if(player == null) return;
+        player.closeInventory();
         player.openInventory(inventory);
         PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, this);
     }
 
     /**
-     * Clears the inventory for this GUI object.
+     * Clears the inventory for this GUI object. Leaving it with no items.
      */
     public abstract void clearInventory();
 

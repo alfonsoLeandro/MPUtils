@@ -19,7 +19,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.github.alfonsoleandro.mputils.events;
+package com.github.alfonsoleandro.mputils.listeners;
 
 import com.github.alfonsoleandro.mputils.MPUtils;
 import org.bukkit.ChatColor;
@@ -34,7 +34,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class JoinEvent implements Listener {
 
-    final private MPUtils plugin;
+    private final MPUtils plugin;
 
     public JoinEvent(MPUtils plugin){
         this.plugin = plugin;

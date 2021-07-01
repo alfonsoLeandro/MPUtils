@@ -32,13 +32,15 @@ import org.bukkit.inventory.InventoryView;
 /**
  * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
  * Should be used for turning pages, interactive GUIs and cancelling {@link InventoryClickEvent}
+ * @deprecated Moved to {@link com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent}.
+ * TO BE REMOVED IN THE NEAR FUTURE.
  */
+@Deprecated
 public class GUIClickEvent extends InventoryClickEvent {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final GUIType guiType;
     private final int page;
-    private final String guiTags;
     private final GUI gui;
 
 
@@ -54,7 +56,6 @@ public class GUIClickEvent extends InventoryClickEvent {
      * @param key {@link InventoryClickEvent}'s hotbar key pressed (if any).
      * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
      * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
-     * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
      */
     public GUIClickEvent(InventoryView view,
@@ -65,12 +66,10 @@ public class GUIClickEvent extends InventoryClickEvent {
                          int key,
                          GUIType guiType,
                          int page,
-                         String guiTags,
                          GUI gui){
         super(view, type, slot, click, action, key);
         this.guiType = guiType;
         this.page = page;
-        this.guiTags = guiTags;
         this.gui = gui;
     }
 
@@ -129,10 +128,11 @@ public class GUIClickEvent extends InventoryClickEvent {
      * Deprecated. Please use {@link GUI#getGuiTags()} instead.
      *
      * @return The tags previously entered.
+     * @deprecated Use {@link GUI#getGuiTags()} instead.
      */
     @Deprecated
     public String getGuiTags() {
-        return guiTags;
+        return gui.getGuiTags();
     }
 
     /**
