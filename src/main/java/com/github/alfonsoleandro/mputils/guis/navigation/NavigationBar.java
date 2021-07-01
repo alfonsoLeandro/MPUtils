@@ -21,10 +21,8 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.guis.navigation;
 
-import com.github.alfonsoleandro.mputils.guis.navigation.GUIButton;
 import com.github.alfonsoleandro.mputils.itemstacks.MPItemStacks;
 import com.github.alfonsoleandro.mputils.string.StringUtils;
-import org.apache.commons.lang.NullArgumentException;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
@@ -53,21 +51,25 @@ public class NavigationBar {
     /**
      * Creates a new navigation bar, with the given array of buttons.
      * @param buttons The buttons contained in this navigation bar.
-     * @throws IllegalArgumentException Thrown if the array of buttons is either null or its size is not 9.
+     * @throws IllegalArgumentException Thrown if the size of the given array of buttons is not 9.
      */
     public NavigationBar(GUIButton[] buttons) throws IllegalArgumentException {
-        if(buttons == null) throw new NullArgumentException("The buttons array cannot be null!");
-        if(buttons.length != 9) throw new IllegalArgumentException("There must be 9 buttons in the buttons array");
-        this.buttons = buttons;
+        if(buttons == null){
+            this.buttons = new GUIButton[9];
+            setDefaultButtons();
+        }else {
+            if(buttons.length != 9) throw new IllegalArgumentException("There must be 9 buttons in the buttons array");
+            this.buttons = buttons;
+        }
     }
 
 
     /**
      * Sets the default buttons for this Navigation Bar.
-     * (previous page, empty slot*3, current page, empty slot*3 and next page).
+     * Previous page, empty slot*3, current page, empty slot*3 and next page.
      */
     public void setDefaultButtons(){
-        GUIButton nextPage = new GUIButton("next page",
+        GUIButton nextPage = new GUIButton("DEFAULT:next page",
                 MPItemStacks.newItemStack(Material.ARROW,
                         1,
                         "&6&oNext page &6&l->",
@@ -78,7 +80,7 @@ public class NavigationBar {
                         "&8&l*",
                         new ArrayList<>())
         );
-        GUIButton previousPage = new GUIButton("previous page",
+        GUIButton previousPage = new GUIButton("DEFAULT:previous page",
                 MPItemStacks.newItemStack(Material.ARROW,
                         1,
                         "&6&l<- &6&oPrevious page",
@@ -89,7 +91,7 @@ public class NavigationBar {
                         "&8&l*",
                         new ArrayList<>())
         );
-        GUIButton currentPage = new GUIButton("current page",
+        GUIButton currentPage = new GUIButton("DEFAULT:current page",
                 MPItemStacks.newItemStack(Material.BOOK,
                         1,
                         "&f&lPage: &6%page%&f&l/&6%totalpages%",
@@ -97,7 +99,7 @@ public class NavigationBar {
                 GUIButton.GUIButtonCondition.ALWAYS,
                 null
         );
-        GUIButton emptySlot = new GUIButton("empty slot",
+        GUIButton emptySlot = new GUIButton("DEFAULT:empty slot",
                 MPItemStacks.newItemStack(Material.PAPER,
                         1,
                         "&8&l*",
@@ -137,6 +139,15 @@ public class NavigationBar {
         this.buttons[i] = button;
     }
 
+
+    /**
+     * Gets the button array in this NavigationBar.
+     * @return The array of buttons included in this NavigationBar.
+     */
+    public GUIButton[] getButtons(){
+        return this.buttons;
+    }
+
     /**
      * Adds the navigation bar to the PaginatedGUI.
      * @param inv The GUI inventory.
@@ -146,7 +157,7 @@ public class NavigationBar {
     public void addNavigationBar(Inventory inv, int page, int totalPages){
         int navBarSlot = inv.getSize()-9;
         for(int i = 0; i < 9; i++){
-            inv.setItem(navBarSlot+i, buttons[i].getItem(page, totalPages));
+            inv.setItem(navBarSlot+i, this.buttons[i].getItem(page, totalPages));
         }
     }
 

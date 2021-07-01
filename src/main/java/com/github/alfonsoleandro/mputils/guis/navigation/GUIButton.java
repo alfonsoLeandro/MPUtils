@@ -22,7 +22,6 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.guis.navigation;
 
 import com.github.alfonsoleandro.mputils.itemstacks.MPItemStacks;
-import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -101,7 +100,6 @@ public class GUIButton {
      */
     public ItemStack getItem(int page, int totalPages) {
         ItemStack item = condition.meetsCondition(page ,totalPages) ? this.item : this.backup;
-        Bukkit.broadcastMessage(buttonTags+" meets? "+condition.meetsCondition(page, totalPages));
         return MPItemStacks.replacePlaceholders(item.clone(), getPlaceHoldersMap(page, totalPages));
     }
 

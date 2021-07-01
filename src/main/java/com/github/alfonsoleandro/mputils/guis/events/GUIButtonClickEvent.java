@@ -1,7 +1,9 @@
 package com.github.alfonsoleandro.mputils.guis.events;
 
+import com.github.alfonsoleandro.mputils.guis.GUI;
 import com.github.alfonsoleandro.mputils.guis.PaginatedGUI;
 import com.github.alfonsoleandro.mputils.guis.navigation.GUIButton;
+import com.github.alfonsoleandro.mputils.guis.navigation.Navigable;
 import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import org.bukkit.event.HandlerList;
@@ -22,6 +24,10 @@ public class GUIButtonClickEvent extends GUIClickEvent {
      * The slot the button was in, relative to the navigation bar.
      */
     protected final int navBarSlot;
+    /**
+     * Whether or not the button met its condition when clicked.
+     */
+    protected final boolean metCondition;
 
 
     /**
@@ -35,7 +41,6 @@ public class GUIButtonClickEvent extends GUIClickEvent {
      * @param click {@link InventoryClickEvent}'s ClickType.
      * @param action {@link InventoryClickEvent}'s InventoryAction.
      * @param key {@link InventoryClickEvent}'s hotbar key pressed (if any).
-     * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
      * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
      * @param gui The PaginatedGUI object.
      * @param clickedButton The button that was involved in this event.
@@ -48,14 +53,14 @@ public class GUIButtonClickEvent extends GUIClickEvent {
                                ClickType click,
                                InventoryAction action,
                                int key,
-                               GUIType guiType,
                                int page,
-                               PaginatedGUI gui,
+                               GUI gui,
                                GUIButton clickedButton,
                                int navBarSlot){
-        super(view, type, slot, click, action, key, guiType, page, gui);
+        super(view, type, slot, click, action, key, GUIType.PAGINATED, page, gui);
         this.clickedButton = clickedButton;
         this.navBarSlot = navBarSlot;
+        this.metCondition = clickedButton.getCondition().meetsCondition(page, ((Navigable)gui).getPages());
     }
 
     public HandlerList getHandlers() {
@@ -72,17 +77,23 @@ public class GUIButtonClickEvent extends GUIClickEvent {
      *
      * @return The page number the player was standing on when clicking the GUI.
      */
+    @Override
     public int getPage() {
         return page;
     }
 
     /**
-     * Gets the instance of the GUI object so you can get the navBar items.
+     * Gets the instance of the GUI object involved in this event.
+     * This GUI object can be safely casted to {@link Navigable}.
+     * For the pre included GUI classes, this GUI object will most of the time be an instance of
+     * {@link PaginatedGUI} but not all the time, as it can also be an instance of {@link com.github.alfonsoleandro.mputils.guis.DynamicGUI}
      *
-     * @return Instance of the object {@link PaginatedGUI}.
+     * @return The GUI object that can be safely casted to {@link Navigable}..
+     * .
      */
-    public PaginatedGUI getGui() {
-        return (PaginatedGUI) gui;
+    @Override
+    public GUI getGui() {
+        return gui;
     }
 
     /**
@@ -93,7 +104,6 @@ public class GUIButtonClickEvent extends GUIClickEvent {
         return this.clickedButton;
     }
 
-
     /**
      * Gets the slot of the button that was clicked.
      * Can be used to get the button using {@link NavigationBar#getButtonAt(int)}.
@@ -101,5 +111,13 @@ public class GUIButtonClickEvent extends GUIClickEvent {
      */
     public int getNavBarSlot(){
         return this.navBarSlot;
+    }
+
+    /**
+     * Gets whether or not the button met its condition needed for showing its main item or not.
+     * @return True if the button met tis condition and was showing its main item the moment it was clicked.
+     */
+    public boolean buttonMetCondition() {
+        return metCondition;
     }
 }

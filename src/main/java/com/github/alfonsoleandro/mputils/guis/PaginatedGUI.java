@@ -22,11 +22,12 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.guis;
 
 import com.github.alfonsoleandro.mputils.guis.navigation.GUIButton;
+import com.github.alfonsoleandro.mputils.guis.navigation.Navigable;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
 import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
 import com.github.alfonsoleandro.mputils.itemstacks.MPItemStacks;
-import org.bukkit.Material;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -36,31 +37,31 @@ import java.util.*;
  * Class for creating a paginated GUI with unlimited pages.
  * Dynamically updates the number of pages according to the given List of ItemStacks.
  */
-public class PaginatedGUI extends GUI{
+public class PaginatedGUI extends GUI implements Navigable {
 
     /**
      * The total number of pages this GUI has.
      */
-    private int pages;
+    protected int pages;
     /**
      * The total list of items throughout the entire GUI.
      */
-    private List<ItemStack> items;
+    protected List<ItemStack> items;
     /**
      * The list of {@link ItemStack} per page.
      */
-    private HashMap<Integer, List<ItemStack>> pagesOfItems;
+    protected HashMap<Integer, List<ItemStack>> pagesOfItems;
     /**
      * The navigation bar present in this GUI.
      */
-    private NavigationBar navBar;
+    protected NavigationBar navBar;
 
     /**
      * Creates a GUI of any size bigger than 9 and smaller that 54 slots, with ability to have various pages and a navigation bar in the last row.
      * Will create the gui, and set the default navBar items.
      *
      * @param title       The title for the GUI, not colorized by default.
-     * @param sizePerPage The size of each page, must be multiple of 9, bigger than 9 and smaller than 54.
+     * @param sizePerPage The size of each page, must be multiple of 9, between (included) 9 and 54.
      * @param items       The list of all items to show in the GUI throughout all pages.
      * @param guiTags     Any string tags you may want to add in order to differentiate a GUI from another.
      * @param navBar      The navBar to use for this GUI.
@@ -90,8 +91,11 @@ public class PaginatedGUI extends GUI{
      * Adds an item to this GUI at the end of the list of items.
      * @param item The item to add.
      */
+    @Override
     public void addItem(ItemStack item){
         this.items.add(item);
+        //Test
+        updateItemsPerPage(items);
     }
 
 
@@ -131,9 +135,11 @@ public class PaginatedGUI extends GUI{
      * replaces the %page%, %nextpage%, %previouspage% and %totalpages% placeholders.
      *
      * @param page The current open page, used for placeholders.
+     * @deprecated Renamed to {@link #setNavBarForPage(int)}.
      */
+    @Deprecated
     public void setNavBar(int page) {
-        this.navBar.addNavigationBar(inventory, page, pages);
+        this.setNavBarForPage(page);
     }
 
     /**
@@ -287,20 +293,29 @@ public class PaginatedGUI extends GUI{
      * @param page   The page of the GUI to open for the player.
      */
     public void openGUI(Player player, int page) {
+        if(player == null) return;
         if(page > pages) return;
         player.closeInventory();
-        setPage(page);
+        setPage(player, page);
         player.openInventory(inventory);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
     }
 
     /**
      * Changes the items inside the inventory for the items in the given page.
+     * @param player The player to set the GUI page for.
      * @param page The page to set the items for.
      */
-    public void setPage(int page){
+    @Override
+    public void setPage(Player player, int page){
         setItemsForPage(page);
-        setNavBar(page);
+        setNavBarForPage(page);
+        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
+    }
+
+    @Override
+    public void setNavBarForPage(int page) {
+        this.navBar.addNavigationBar(inventory, page, pages);
     }
 
     /**
@@ -312,17 +327,17 @@ public class PaginatedGUI extends GUI{
         List<ItemStack> itemsOnPage = pagesOfItems.get(page);
 
         if(itemsOnPage == null || itemsOnPage.isEmpty()){
+            Bukkit.broadcastMessage("Case 1 items");
             for(int i = 0; i < guiSize -9; i++){
-                inventory.setItem(i, new ItemStack(Material.AIR));
+                inventory.setItem(i, null);
             }
-            return;
-        }
-
-        for(int i = 0; i < guiSize -9; i++){
-            if(i < itemsOnPage.size()) {
-                inventory.setItem(i, itemsOnPage.get(i));
-            }else{
-                inventory.setItem(i, new ItemStack(Material.AIR));
+        }else{
+            for(int i = 0; i < guiSize -9; i++) {
+                if(i < itemsOnPage.size()) {
+                    inventory.setItem(i, itemsOnPage.get(i));
+                } else {
+                    inventory.setItem(i, null);
+                }
             }
         }
     }
@@ -330,6 +345,7 @@ public class PaginatedGUI extends GUI{
     /**
      * Clears the inventory and the item list for this PaginatedGUI.
      */
+    @Override
     public void clearInventory(){
         this.inventory.clear();
         this.items.clear();
@@ -359,6 +375,7 @@ public class PaginatedGUI extends GUI{
      * Gets the navigation bar object that this GUI is currently using.
      * @return The NavigationBar object being used.
      */
+    @Override
     public NavigationBar getNavBar(){
         return this.navBar;
     }
@@ -368,6 +385,7 @@ public class PaginatedGUI extends GUI{
      * @param navBar The navigation bar you want this GUI to use.
      * @see NavigationBar
      */
+    @Override
     public void setNavBar(NavigationBar navBar){
         this.navBar = navBar;
     }
