@@ -99,6 +99,7 @@ public class SimpleGUI extends GUI{
     /**
      * Removes all the items from the inventory.
      */
+    @Override
     public void clearInventory(){
         inventory.clear();
         items.clear();
