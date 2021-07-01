@@ -141,7 +141,10 @@ public class DynamicGUI extends Navigable {
      * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
      */
     public void setItemsForPage(int page){
-        List<ItemStack> itemsOnPage = items.subList(54*page, Math.min(items.size(), (54*page)+54));
+        List<ItemStack> itemsOnPage = isPaginated ?
+                items.subList(45*page, Math.min(items.size(), (45*page)+45))
+                :
+                items;
         int lastSlot = isPaginated ? guiSize-9 : guiSize;
 
         if(itemsOnPage.isEmpty()){
@@ -184,7 +187,7 @@ public class DynamicGUI extends Navigable {
      */
     @Override
     public int getPages(){
-        if(isPaginated) return (items.size()/54)+1;
+        if(isPaginated) return (int) Math.ceil(items.size()/45.0);
         return -1;
     }
 }
