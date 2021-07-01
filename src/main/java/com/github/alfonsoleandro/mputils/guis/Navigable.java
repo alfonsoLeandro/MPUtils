@@ -2,6 +2,7 @@ package com.github.alfonsoleandro.mputils.guis;
 
 import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
 import org.bukkit.entity.Player;
+import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 
 /**
  * Represents a GUI that can be navigable (has Navigation bar and pages).
@@ -23,9 +24,10 @@ public abstract class Navigable extends GUI{
      * @param title   The title for the inventory (colors must be applied before).
      * @param size    The size for the inventory.
      * @param guiTags Any String chosen to distinguish this GUI from another GUI.
-     * @param guiType The type of GUI. Either {@link com.github.alfonsoleandro.mputils.guis.utils.GUIType#SIMPLE} or {@link com.github.alfonsoleandro.mputils.guis.utils.GUIType#PAGINATED}.
+     * @param guiType The type of GUI. Either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
+     * @param navBar The {@link NavigationBar} object that goes with this Navigable GUI.
      */
-    protected Navigable(String title, int size, String guiTags, com.github.alfonsoleandro.mputils.guis.utils.GUIType guiType, NavigationBar navBar) {
+    protected Navigable(String title, int size, String guiTags, GUIType guiType, NavigationBar navBar) {
         super(title, size, guiTags, guiType);
         this.navBar = navBar;
     }
