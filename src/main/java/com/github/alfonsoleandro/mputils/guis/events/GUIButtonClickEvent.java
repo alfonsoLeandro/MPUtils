@@ -1,9 +1,8 @@
 package com.github.alfonsoleandro.mputils.guis.events;
 
-import com.github.alfonsoleandro.mputils.guis.GUI;
+import com.github.alfonsoleandro.mputils.guis.Navigable;
 import com.github.alfonsoleandro.mputils.guis.PaginatedGUI;
 import com.github.alfonsoleandro.mputils.guis.navigation.GUIButton;
-import com.github.alfonsoleandro.mputils.guis.navigation.Navigable;
 import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import org.bukkit.event.HandlerList;
@@ -54,13 +53,13 @@ public class GUIButtonClickEvent extends GUIClickEvent {
                                InventoryAction action,
                                int key,
                                int page,
-                               GUI gui,
+                               Navigable gui,
                                GUIButton clickedButton,
                                int navBarSlot){
         super(view, type, slot, click, action, key, GUIType.PAGINATED, page, gui);
         this.clickedButton = clickedButton;
         this.navBarSlot = navBarSlot;
-        this.metCondition = clickedButton.getCondition().meetsCondition(page, ((Navigable)gui).getPages());
+        this.metCondition = clickedButton.getCondition().meetsCondition(page, gui.getPages());
     }
 
     public HandlerList getHandlers() {
@@ -84,16 +83,14 @@ public class GUIButtonClickEvent extends GUIClickEvent {
 
     /**
      * Gets the instance of the GUI object involved in this event.
-     * This GUI object can be safely casted to {@link Navigable}.
      * For the pre included GUI classes, this GUI object will most of the time be an instance of
      * {@link PaginatedGUI} but not all the time, as it can also be an instance of {@link com.github.alfonsoleandro.mputils.guis.DynamicGUI}
      *
-     * @return The GUI object that can be safely casted to {@link Navigable}..
-     * .
+     * @return The Navigable GUI object.
      */
     @Override
-    public GUI getGui() {
-        return gui;
+    public Navigable getGui() {
+        return (Navigable) gui;
     }
 
     /**

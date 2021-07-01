@@ -21,7 +21,6 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.guis;
 
-import com.github.alfonsoleandro.mputils.guis.navigation.Navigable;
 import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
@@ -36,24 +35,20 @@ import java.util.List;
  * An unordered GUI that is a {@link SimpleGUI} if the amount of items is less than 54, or
  * a {@link PaginatedGUI} in any other case.
  */
-public class DynamicGUI extends GUI implements Navigable {
+public class DynamicGUI extends Navigable {
 
     /**
      * The title for the GUI. Use on {@link #checkSize()}.
      */
-    protected String title;
+    protected final String title;
     /**
      * The list of items contained in this GUI.
      */
-    protected List<ItemStack> items;
+    protected final List<ItemStack> items;
     /**
      * Whether or not this GUI has more than one page.
      */
     protected boolean isPaginated;
-    /**
-     * The navigation bar used when this GUI has more than one page.
-     */
-    protected NavigationBar navBar;
 
     /**
      * Creates a new DynamicGUI with the default navigation bar.
@@ -71,11 +66,9 @@ public class DynamicGUI extends GUI implements Navigable {
      * @param navBar The navigation bar to use in this GUI when it has more than one page.
      */
     public DynamicGUI(String title, String guiTags, NavigationBar navBar){
-        super(title, 9, guiTags, GUIType.SIMPLE);
+        super(title, 9, guiTags, GUIType.SIMPLE, navBar);
         this.title = title;
         this.items = new ArrayList<>();
-        this.navBar = navBar;
-
     }
 
     /**
@@ -184,37 +177,6 @@ public class DynamicGUI extends GUI implements Navigable {
         }
     }
 
-
-    /**
-     * Updates the navigation bar, called when the GUI is opened for an user, replicates the navBar items and
-     * replaces the %page%, %nextpage%, %previouspage% and %totalpages% placeholders.
-     *
-     * @param page The current open page, used for placeholders.
-     */
-    @Override
-    public void setNavBarForPage(int page) {
-        this.navBar.addNavigationBar(inventory, page, getPages());
-    }
-
-
-    /**
-     * Gets the navigation bar object that this GUI is currently using.
-     * @return The NavigationBar object being used.
-     */
-    @Override
-    public NavigationBar getNavBar(){
-        return this.navBar;
-    }
-
-    /**
-     * Sets the navigation bar that this GUI will be using.
-     * @param navBar The navigation bar you want this GUI to use.
-     * @see NavigationBar
-     */
-    @Override
-    public void setNavBar(NavigationBar navBar){
-        this.navBar = navBar;
-    }
 
     /**
      * Gets the amount of pages on this DynamicGUI.

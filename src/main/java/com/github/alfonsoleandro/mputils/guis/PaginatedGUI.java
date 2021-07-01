@@ -22,7 +22,6 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.guis;
 
 import com.github.alfonsoleandro.mputils.guis.navigation.GUIButton;
-import com.github.alfonsoleandro.mputils.guis.navigation.Navigable;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
 import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
@@ -37,12 +36,8 @@ import java.util.*;
  * Class for creating a paginated GUI with unlimited pages.
  * Dynamically updates the number of pages according to the given List of ItemStacks.
  */
-public class PaginatedGUI extends GUI implements Navigable {
+public class PaginatedGUI extends Navigable{
 
-    /**
-     * The total number of pages this GUI has.
-     */
-    protected int pages;
     /**
      * The total list of items throughout the entire GUI.
      */
@@ -51,10 +46,6 @@ public class PaginatedGUI extends GUI implements Navigable {
      * The list of {@link ItemStack} per page.
      */
     protected HashMap<Integer, List<ItemStack>> pagesOfItems;
-    /**
-     * The navigation bar present in this GUI.
-     */
-    protected NavigationBar navBar;
 
     /**
      * Creates a GUI of any size bigger than 9 and smaller that 54 slots, with ability to have various pages and a navigation bar in the last row.
@@ -67,10 +58,9 @@ public class PaginatedGUI extends GUI implements Navigable {
      * @param navBar      The navBar to use for this GUI.
      */
     public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags, NavigationBar navBar) {
-        super(title, sizePerPage, guiTags, GUIType.PAGINATED);
+        super(title, sizePerPage, guiTags, GUIType.PAGINATED, navBar);
 
         this.items = items;
-        this.navBar = navBar;
         updateItemsPerPage(items);
     }
 
@@ -94,7 +84,6 @@ public class PaginatedGUI extends GUI implements Navigable {
     @Override
     public void addItem(ItemStack item){
         this.items.add(item);
-        //Test
         updateItemsPerPage(items);
     }
 
@@ -122,6 +111,99 @@ public class PaginatedGUI extends GUI implements Navigable {
 
 
     /**
+     * Changes the size of each GUI page.
+     *
+     * @param size The size for each GUI page.
+     */
+    public void setSizePerPage(int size) {
+        this.guiSize = size;
+        updateItemsPerPage(items);
+    }
+
+
+    /**
+     * Opens the GUI for a certain player in a specific page, sets the placeholders for the navBar items and lets the
+     * {@link PlayersOnGUIsManager} know there is a player with open GUI.
+     *
+     * @param player The player to open the GUI for.
+     * @param page   The page of the GUI to open for the player.
+     */
+    public void openGUI(Player player, int page) {
+        if(player == null) return;
+        if(page > pages) return;
+        player.closeInventory();
+        setPage(player, page);
+        player.openInventory(inventory);
+        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
+    }
+
+    /**
+     * Changes the items inside the inventory for the items in the given page.
+     * @param player The player to set the GUI page for.
+     * @param page The page to set the items for.
+     */
+    @Override
+    public void setPage(Player player, int page){
+        setItemsForPage(page);
+        setNavBarForPage(page);
+        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
+    }
+
+    /**
+     * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
+     *
+     * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
+     */
+    public void setItemsForPage(int page){
+        List<ItemStack> itemsOnPage = pagesOfItems.get(page);
+
+        if(itemsOnPage == null || itemsOnPage.isEmpty()){
+            Bukkit.broadcastMessage("Case 1 items");
+            for(int i = 0; i < guiSize -9; i++){
+                inventory.setItem(i, null);
+            }
+        }else{
+            for(int i = 0; i < guiSize -9; i++) {
+                if(i < itemsOnPage.size()) {
+                    inventory.setItem(i, itemsOnPage.get(i));
+                } else {
+                    inventory.setItem(i, null);
+                }
+            }
+        }
+    }
+
+    /**
+     * Clears the inventory and the item list for this PaginatedGUI.
+     */
+    @Override
+    public void clearInventory(){
+        this.inventory.clear();
+        this.items.clear();
+    }
+
+
+    /**
+     * Opens this PaginatedGUI in page 0 for the given player.
+     * @param player The player to open the GUI for.
+     * @see #openGUI(Player, int)
+     */
+    @Override
+    public void openGUI(Player player){
+        this.openGUI(player, 0);
+    }
+
+
+    /**
+     * Gets a list of all the items contained throughout all the pages in this GUI.
+     * @return The list of items.
+     */
+    public List<ItemStack> getItems(){
+        return this.items;
+    }
+
+    //<editor-fold desc="Deprecated methods" defaultstate="collapsed">
+    /**
      * Sets the default items for the navBar buttons.
      * @deprecated Now in NavigationBar class ({@link NavigationBar#setDefaultButtons()}).
      */
@@ -140,16 +222,6 @@ public class PaginatedGUI extends GUI implements Navigable {
     @Deprecated
     public void setNavBar(int page) {
         this.setNavBarForPage(page);
-    }
-
-    /**
-     * Changes the size of each GUI page.
-     *
-     * @param size The size for each GUI page.
-     */
-    public void setSizePerPage(int size) {
-        this.guiSize = size;
-        updateItemsPerPage(items);
     }
 
 
@@ -279,119 +351,6 @@ public class PaginatedGUI extends GUI implements Navigable {
 
 
     /**
-     * @return The total number of pages in the GUI.
-     */
-    public int getPages(){
-        return this.pages;
-    }
-
-    /**
-     * Opens the GUI for a certain player in a specific page, sets the placeholders for the navBar items and lets the
-     * {@link PlayersOnGUIsManager} know there is a player with open GUI.
-     *
-     * @param player The player to open the GUI for.
-     * @param page   The page of the GUI to open for the player.
-     */
-    public void openGUI(Player player, int page) {
-        if(player == null) return;
-        if(page > pages) return;
-        player.closeInventory();
-        setPage(player, page);
-        player.openInventory(inventory);
-        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
-    }
-
-    /**
-     * Changes the items inside the inventory for the items in the given page.
-     * @param player The player to set the GUI page for.
-     * @param page The page to set the items for.
-     */
-    @Override
-    public void setPage(Player player, int page){
-        setItemsForPage(page);
-        setNavBarForPage(page);
-        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
-    }
-
-    @Override
-    public void setNavBarForPage(int page) {
-        this.navBar.addNavigationBar(inventory, page, pages);
-    }
-
-    /**
-     * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
-     *
-     * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
-     */
-    public void setItemsForPage(int page){
-        List<ItemStack> itemsOnPage = pagesOfItems.get(page);
-
-        if(itemsOnPage == null || itemsOnPage.isEmpty()){
-            Bukkit.broadcastMessage("Case 1 items");
-            for(int i = 0; i < guiSize -9; i++){
-                inventory.setItem(i, null);
-            }
-        }else{
-            for(int i = 0; i < guiSize -9; i++) {
-                if(i < itemsOnPage.size()) {
-                    inventory.setItem(i, itemsOnPage.get(i));
-                } else {
-                    inventory.setItem(i, null);
-                }
-            }
-        }
-    }
-
-    /**
-     * Clears the inventory and the item list for this PaginatedGUI.
-     */
-    @Override
-    public void clearInventory(){
-        this.inventory.clear();
-        this.items.clear();
-    }
-
-
-    /**
-     * Opens this PaginatedGUI in page 0 for the given player.
-     * @param player The player to open the GUI for.
-     * @see #openGUI(Player, int)
-     */
-    @Override
-    public void openGUI(Player player){
-        this.openGUI(player, 0);
-    }
-
-
-    /**
-     * Gets a list of all the items contained throughout all the pages in this GUI.
-     * @return The list of items.
-     */
-    public List<ItemStack> getItems(){
-        return this.items;
-    }
-
-    /**
-     * Gets the navigation bar object that this GUI is currently using.
-     * @return The NavigationBar object being used.
-     */
-    @Override
-    public NavigationBar getNavBar(){
-        return this.navBar;
-    }
-
-    /**
-     * Sets the navigation bar that this GUI will be using.
-     * @param navBar The navigation bar you want this GUI to use.
-     * @see NavigationBar
-     */
-    @Override
-    public void setNavBar(NavigationBar navBar){
-        this.navBar = navBar;
-    }
-
-
-    /**
      * Gets a Map with every placeholder available for this object with every corresponding value.
      * @param page The page the GUI is in.
      * @return A map containing every placeholder and every value.
@@ -407,5 +366,6 @@ public class PaginatedGUI extends GUI implements Navigable {
 
         return placeholders;
     }
+    //</editor-fold>
 
 }

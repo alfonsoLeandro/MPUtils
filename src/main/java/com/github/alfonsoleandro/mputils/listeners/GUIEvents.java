@@ -23,7 +23,6 @@ package com.github.alfonsoleandro.mputils.listeners;
 
 import com.github.alfonsoleandro.mputils.guis.*;
 import com.github.alfonsoleandro.mputils.guis.events.GUIButtonClickEvent;
-import com.github.alfonsoleandro.mputils.guis.navigation.Navigable;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIAttributes;
 import com.github.alfonsoleandro.mputils.guis.navigation.GUIButton;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
@@ -104,7 +103,7 @@ public class GUIEvents implements Listener {
                             event.getAction(),
                             event.getHotbarButton(),
                             attributes.getPage(),
-                            gui,
+                            (Navigable)gui,
                             clickedButton,
                             buttonSlot);
                     //</editor-fold>
@@ -124,7 +123,7 @@ public class GUIEvents implements Listener {
                                 event.getAction(),
                                 event.getHotbarButton(),
                                 attributes.getPage(),
-                                gui,
+                                (Navigable)gui,
                                 clickedButton,
                                 buttonSlot);
                         //</editor-fold>

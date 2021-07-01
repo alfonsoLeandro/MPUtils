@@ -1,7 +1,6 @@
 package com.github.alfonsoleandro.mputils.guis.navigation;
 
 import com.github.alfonsoleandro.mputils.itemstacks.MPItemStacks;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
