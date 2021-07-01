@@ -1,5 +1,6 @@
 package com.github.alfonsoleandro.mputils.guis.navigation;
 
+import com.github.alfonsoleandro.mputils.guis.BorderPaginatedGUI;
 import com.github.alfonsoleandro.mputils.itemstacks.MPItemStacks;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -7,10 +8,13 @@ import org.bukkit.inventory.Inventory;
 import java.util.ArrayList;
 
 /**
- * Special {@link NavigationBar} used in {@link com.github.alfonsoleandro.mputils.guis.BorderPaginatedGUI}.
+ * Special {@link NavigationBar} used in {@link BorderPaginatedGUI}.
  */
 public class BorderGUINavigationBar extends NavigationBar {
 
+    /**
+     * The array of buttons that go in the border of the {@link BorderPaginatedGUI}.
+     */
     protected final GUIButton[] borderButtons;
 
     /**

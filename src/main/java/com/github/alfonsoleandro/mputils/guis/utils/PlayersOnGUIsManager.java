@@ -31,6 +31,9 @@ import java.util.HashMap;
  */
 public final class PlayersOnGUIsManager {
 
+    /**
+     * A map of player names that are being managed by this class.
+     */
     private static final HashMap<String, GUIAttributes> players = new HashMap<>();
 
 
