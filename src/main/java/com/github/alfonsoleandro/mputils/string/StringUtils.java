@@ -24,8 +24,8 @@ package com.github.alfonsoleandro.mputils.string;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utility class loaded with useful string tools
@@ -46,38 +46,15 @@ public class StringUtils {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[MPUtils] There was an error while colorizing a string, check your config");
             return "";
         }
-        final char[] chars = string.toCharArray();
-        final List<String> hexColors = new ArrayList<>();
-
-        //Check every character on the string looking for the "(colorCode)#" combination
-        //length-1 in order to ensure there are 2 characters to look for
-        outer: for (int i = 0; i < chars.length-1; i++) {
-            if(chars[i] == alternateColorCode && chars[i+1] == '#'){
-                final StringBuilder builder = new StringBuilder();
-
-                //find the color combination #RRGGBB
-                for (int j = i+1; j < i+8; j++) {
-                    if(j < chars.length) {
-                        builder.append(chars[j]);
-                    }else{
-                        break outer;
-                    }
-                }
-                //Try adding the hex colors, if version < 1.16.1 it will still apply the usual colors
-                // (translateAlternateColorCodes) and return
-                try{
-                    net.md_5.bungee.api.ChatColor.of(builder.toString());
-                    hexColors.add(builder.toString());
-                }catch (Error | Exception e){
-                    if(e instanceof NoSuchMethodError){
-                        return ChatColor.translateAlternateColorCodes(alternateColorCode, string);
-                    }
-                }
+        Pattern pattern = Pattern.compile("&#[0-9a-fA-F]{6}");
+        Matcher matcher = pattern.matcher(string);
+        while(matcher.find()){
+            try {
+                string = string.replace(matcher.group(), net.md_5.bungee.api.ChatColor.of(matcher.group().replace("&", "")).toString());
+            }catch (Error | Exception e){
+                //Version < 1.16.1 = No RGB
+                break;
             }
-
-        }
-        for(String hex : hexColors){
-            string = string.replace(alternateColorCode+hex, String.valueOf(net.md_5.bungee.api.ChatColor.of(hex)));
         }
 
         return ChatColor.translateAlternateColorCodes(alternateColorCode, string);
