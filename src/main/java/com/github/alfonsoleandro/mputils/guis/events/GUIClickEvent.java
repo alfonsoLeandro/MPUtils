@@ -43,6 +43,7 @@ public class GUIClickEvent extends InventoryClickEvent {
     protected final GUIType guiType;
     protected final int page;
     protected final GUI gui;
+    protected final boolean isButtonClick;
 
 
     /**
@@ -58,6 +59,7 @@ public class GUIClickEvent extends InventoryClickEvent {
      * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
      * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
      * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
+     * @param isButtonClick Whether or not a Button was clicked and therefore called {@link GUIButtonClickEvent}.
      */
     public GUIClickEvent(InventoryView view,
                          InventoryType.SlotType type,
@@ -67,11 +69,13 @@ public class GUIClickEvent extends InventoryClickEvent {
                          int key,
                          GUIType guiType,
                          int page,
-                         GUI gui){
+                         GUI gui,
+                         boolean isButtonClick){
         super(view, type, slot, click, action, key);
         this.guiType = guiType;
         this.page = page;
         this.gui = gui;
+        this.isButtonClick = isButtonClick;
     }
 
     public HandlerList getHandlers() {
@@ -143,5 +147,13 @@ public class GUIClickEvent extends InventoryClickEvent {
      */
     public GUI getGui() {
         return gui;
+    }
+
+    /**
+     * Checks if a {@link GUIButtonClickEvent} was fired from the same click event this event was fired.
+     * @return true if a {@link GUIButtonClickEvent} was called.
+     */
+    public boolean isButtonClick(){
+        return this.isButtonClick;
     }
 }

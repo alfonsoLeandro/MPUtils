@@ -56,7 +56,7 @@ public class GUIButtonClickEvent extends GUIClickEvent {
                                Navigable gui,
                                GUIButton clickedButton,
                                int navBarSlot){
-        super(view, type, slot, click, action, key, GUIType.PAGINATED, page, gui);
+        super(view, type, slot, click, action, key, GUIType.PAGINATED, page, gui, true);
         this.clickedButton = clickedButton;
         this.navBarSlot = navBarSlot;
         this.metCondition = clickedButton.getCondition().meetsCondition(page, gui.getPages());

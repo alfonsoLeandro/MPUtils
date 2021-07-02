@@ -70,19 +70,6 @@ public class GUIEvents implements Listener {
                     attributes.getPage(),
                     gui);
             //</editor-fold>
-            //<editor-fold desc="GUIClickEvent" defaultstate="collapsed">
-            com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent guiClickEvent2 =
-                    new com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent(
-                            event.getView(),
-                            event.getSlotType(),
-                            rawSlot,
-                            event.getClick(),
-                            event.getAction(),
-                            event.getHotbarButton(),
-                            attributes.getGuiType(),
-                            attributes.getPage(),
-                            gui);
-            //</editor-fold>
             GUIButtonClickEvent guiButtonClickEvent = null;
             if(rawSlot < event.getInventory().getSize()
             && attributes.getGuiType().equals(GUIType.PAGINATED)
@@ -130,6 +117,22 @@ public class GUIEvents implements Listener {
                 }
 
             }
+
+            //<editor-fold desc="GUIClickEvent" defaultstate="collapsed">
+            com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent guiClickEvent2 =
+                    new com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent(
+                            event.getView(),
+                            event.getSlotType(),
+                            rawSlot,
+                            event.getClick(),
+                            event.getAction(),
+                            event.getHotbarButton(),
+                            attributes.getGuiType(),
+                            attributes.getPage(),
+                            gui,
+                            guiButtonClickEvent != null);
+            //</editor-fold>
+
             //<editor-fold desc="Call events" defaultstate="collapsed">
             Bukkit.getPluginManager().callEvent(guiClickEvent);
             Bukkit.getPluginManager().callEvent(guiClickEvent2);
