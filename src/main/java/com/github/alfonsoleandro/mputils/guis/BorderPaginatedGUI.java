@@ -31,7 +31,7 @@ import java.util.List;
 
 /**
  * Class for creating a paginated GUI with a simple border all around the items inside itself.
- * See example here: TODO:ADD LINK
+ * See example here: https://imgur.com/a/DZDMsqU
  */
 public class BorderPaginatedGUI extends PaginatedGUI {
 
