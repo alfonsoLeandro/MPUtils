@@ -52,7 +52,7 @@ public class BorderGUINavigationBar extends NavigationBar {
     @Override
     public GUIButton getButtonAt(int i){
         if(i < 9) return this.buttons[i];
-        return this.borderButtons[i-10];
+        return this.borderButtons[i-9];
     }
 
     /**
@@ -65,7 +65,7 @@ public class BorderGUINavigationBar extends NavigationBar {
         if(i < 9) {
             this.buttons[i] = button;
         }else{
-            this.borderButtons[i-10] = button;
+            this.borderButtons[i-9] = button;
         }
     }
 
