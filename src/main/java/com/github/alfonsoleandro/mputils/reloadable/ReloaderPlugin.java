@@ -42,8 +42,16 @@ public abstract class ReloaderPlugin extends JavaPlugin {
      * Adds a new Reloadable to the reloadables collection.
      * @param reloadable The {@link Reloadable} to add.
      */
-    public final void registerReloadable(Reloadable reloadable){
+    public void registerReloadable(Reloadable reloadable){
         this.reloadables.add(reloadable);
+    }
+
+    /**
+     * Removes a Reloadable from the reloadables collection.
+     * @param reloadable The {@link Reloadable} to remove.
+     */
+    public void unRegisterReloadable(Reloadable reloadable){
+        this.reloadables.remove(reloadable);
     }
 
     /**

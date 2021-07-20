@@ -79,33 +79,33 @@ public class TimeUtils {
 
 
         if(weeks > 0){
-            String s = weeks + " " +
+            String s = weeks +
                     (weeks > 1 ? "%weeks%" : "%week%");
 
             args.add(s);
         }
 
         if(days > 0){
-            String s = days + " " +
+            String s = days +
                     (days > 1 ? "%days%" : "%day%");
 
             args.add(s);
         }
 
         if(hours > 0){
-            String s = hours + " " +
+            String s = hours +
                     (hours > 1 ? "%hours%" : "%hour%");
 
             args.add(s);
         }
 
         if(minutes > 0){
-            String s = minutes + " " +
+            String s = minutes +
                     (minutes > 1 ? "%minutes%" : "%minute%");
             args.add(s);
         }
 
-        String s = (seconds >= 0 ? seconds : 0) + " " +
+        String s = (seconds >= 0 ? seconds : 0) +
                 (seconds == 0 || seconds > 1 ? "%seconds%" : "%second%");
         args.add(s);
 
