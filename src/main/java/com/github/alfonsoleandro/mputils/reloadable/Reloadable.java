@@ -36,8 +36,17 @@ public abstract class Reloadable {
 
     /**
      * Reloads this reloadable class.
+     * @deprecated Use {@link #reload(boolean)} instead.
      */
-    public abstract void reload();
+    @Deprecated
+    public void reload(){}
+
+    /**
+     * Reloads this reloadable class.
+     * @param deep Whether or not this reload will be deep
+     *             (Some actions may impact performance more than others and they are not to be reloaded every time)
+     */
+    public abstract void reload(boolean deep);
 
 
 }

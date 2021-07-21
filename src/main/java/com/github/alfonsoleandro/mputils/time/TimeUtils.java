@@ -39,7 +39,6 @@ public class TimeUtils {
     }
 
 
-
     /**
      * Gets the amount of ticks a given amount of time of the given unit represents.
      * @param amount The amount of time of the given time unit.
