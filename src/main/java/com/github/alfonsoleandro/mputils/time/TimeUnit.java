@@ -77,9 +77,10 @@ public enum TimeUnit {
 
 
     /**
-     * Gets a timeUnit by its alias.
+     * Gets a timeUnit by its alias (t/T = ticks, m/M = minutes, h/H = hours, d/D = days,
+     * w/W = weeks, any other case = seconds).
      * @param alias The alias the timeunit is known by.
-     * @return The timeUnit
+     * @return The timeUnit the given char represents.
      */
     public static TimeUnit getByAlias(char alias){
         switch (alias){

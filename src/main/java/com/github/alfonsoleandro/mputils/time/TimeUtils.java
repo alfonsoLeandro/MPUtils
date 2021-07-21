@@ -51,6 +51,19 @@ public class TimeUtils {
     }
 
     /**
+     * Gets the amount of ticks a given string represents.
+     * @param timeString The string representing an amount of time. Must be in a "XT" format, where X
+     *                   is any positive integer and T is a time format.
+     * @return The value in ticks of the given time amount.
+     * @see TimeUnit
+     */
+    public static int getTicks(String timeString){
+        if(timeString == null || timeString.isEmpty() || timeString.length() < 2) return 0;
+        return getTicks(Integer.parseInt(timeString.substring(0, timeString.length()-1)),
+                TimeUnit.getByAlias(timeString.charAt(timeString.length()-1)));
+    }
+
+    /**
      * Gets the amount of ticks a given amount of time of the given unit represents.
      * @param amount The amount of time of the given time unit.
      * @param timeUnit The char representing the timeunit for the given amount.
