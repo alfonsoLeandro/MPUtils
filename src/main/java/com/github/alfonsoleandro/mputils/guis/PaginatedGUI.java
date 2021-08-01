@@ -26,7 +26,6 @@ import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
 import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
 import com.github.alfonsoleandro.mputils.itemstacks.MPItemStacks;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -65,7 +64,7 @@ public class PaginatedGUI extends Navigable{
     }
 
     /**
-     * Creates a GUI of any size bigger than 9 and smaller that 54 slots, with ability to have various pages and a navigation bar in the last row.
+     * Creates a GUI of any size bigger than 9 and smaller than 54 slots, with ability to have various pages and a navigation bar in the last row.
      * Will create the gui, and set the default navBar items. (Uses default navbar).
      *
      * @param title       The title for the GUI, not colorized by default.
@@ -158,7 +157,6 @@ public class PaginatedGUI extends Navigable{
         List<ItemStack> itemsOnPage = pagesOfItems.get(page);
 
         if(itemsOnPage == null || itemsOnPage.isEmpty()){
-            Bukkit.broadcastMessage("Case 1 items");
             for(int i = 0; i < guiSize -9; i++){
                 inventory.setItem(i, null);
             }
