@@ -132,11 +132,7 @@ public class MessageSender<E extends Enum<?>> extends Reloadable {
      *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
      */
     public void send(@NotNull CommandSender sender, @NotNull E message, String... replacements){
-        String msg = messages.get(message);
-        for(int i = 0; i < replacements.length; i++){
-            msg = msg.replace(replacements[i], replacements[++i]);
-        }
-        send(sender, msg);
+        send(sender, getString(message, replacements));
     }
 
     /**
@@ -147,10 +143,8 @@ public class MessageSender<E extends Enum<?>> extends Reloadable {
      *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
      */
     public void broadcast(@Nullable Player excluded, @NotNull E message, String... replacements){
-        String msg = messages.get(message);
-        for(int i = 0; i < replacements.length; i++){
-            msg = msg.replace(replacements[i], replacements[++i]);
-        }
+        String msg = getString(message, replacements);
+
         for(Player toSend : Bukkit.getOnlinePlayers()) {
             if(toSend.equals(excluded)) continue;
             send(toSend, msg);
@@ -170,17 +164,11 @@ public class MessageSender<E extends Enum<?>> extends Reloadable {
     public void title(@NotNull Player player, @Nullable E title, @Nullable E subtitle, int stay, String... replacements){
         String ttl = null;
         if(title != null) {
-            ttl = messages.get(title);
-            for (int i = 0; i < replacements.length; i++) {
-                ttl = ttl.replace(replacements[i], replacements[++i]);
-            }
+            ttl = getString(title, replacements);
         }
         String sub = null;
         if(subtitle != null) {
-            sub = messages.get(subtitle);
-            for (int i = 0; i < replacements.length; i++) {
-                sub = sub.replace(replacements[i], replacements[++i]);
-            }
+            sub = getString(subtitle, replacements);
         }
         player.sendTitle(ttl == null ? "" : StringUtils.colorizeString(ttl),
                 sub == null ? "" : StringUtils.colorizeString(sub),
@@ -214,6 +202,21 @@ public class MessageSender<E extends Enum<?>> extends Reloadable {
                 4,
                 stay,
                 4);
+    }
+
+    /**
+     * Gets the string that goes with the given enum value ("message").
+     * @param message The enum value.
+     * @param replacements The string to replace from the message and its replacements in the following format:
+     *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
+     * @return The string that goes with the given message with the given strings replaced.
+     */
+    public String getString(E message, String... replacements){
+        String msg = messages.get(message);
+        for (int i = 0; i < replacements.length; i++) {
+            msg = msg.replace(replacements[i], replacements[++i]);
+        }
+        return msg;
     }
 
 
