@@ -63,6 +63,7 @@ public abstract class ReloaderPlugin extends JavaPlugin {
     public void reload(){
         this.reloadables.forEach(r -> r.reload(false));
     }
+
     /**
      * Reloads every reloadable class, reloading the plugin.
      * @param deep Whether the reload will be deep

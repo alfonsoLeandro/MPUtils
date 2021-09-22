@@ -22,6 +22,10 @@ import java.util.Map;
 public class MessageSender<E extends Enum<?>> extends Reloadable {
 
     /**
+     * The plugin using this manager's main class.
+     */
+    private final ReloaderPlugin plugin;
+    /**
      * A map containing every configurable message.
      */
     private final Map<E, String> messages = new HashMap<>();
@@ -32,7 +36,7 @@ public class MessageSender<E extends Enum<?>> extends Reloadable {
     /**
      * The {@link YamlFile} object that will contain every message listed in the enum.
      */
-    private final YamlFile messagesYamlFile;
+    private YamlFile messagesYamlFile;
     /**
      * The string that will go before every message for the path inside the file.
      * Example: message "some message" messagesPath "messages" the message "SOME_MESSAGE" will be found under
@@ -63,6 +67,7 @@ public class MessageSender<E extends Enum<?>> extends Reloadable {
     public MessageSender(ReloaderPlugin plugin, E[] messagesEnumValues,
                          YamlFile messagesYamlFile, String messagesPath, @Nullable String prefixPath) {
         super(plugin);
+        this.plugin = plugin;
         this.messagesEnumValues = messagesEnumValues;
         this.messagesYamlFile = messagesYamlFile;
         this.messagesPath = messagesPath;
@@ -212,10 +217,14 @@ public class MessageSender<E extends Enum<?>> extends Reloadable {
     }
 
 
-
-
+    /**
+     * Reloads every reloadable class, reloading the plugin.
+     * @param deep True to re define the value of {@link #messagesYamlFile}. Usually not necessary.
+     * @see Reloadable
+     */
     @Override
     public void reload(boolean deep) {
+        if(deep) this.messagesYamlFile = new YamlFile(plugin, this.messagesYamlFile.getFileName());
         this.loadMessages();
     }
 
