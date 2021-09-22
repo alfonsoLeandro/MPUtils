@@ -43,8 +43,8 @@ public abstract class Reloadable {
 
     /**
      * Reloads this reloadable class.
-     * @param deep Whether or not this reload will be deep
-     *             (Some actions may impact performance more than others and they are not to be reloaded every time)
+     * @param deep Whether the reload will be deep
+     *             (Some actions may impact performance more than others, and they are not to be reloaded every time)
      */
     public abstract void reload(boolean deep);
 

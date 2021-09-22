@@ -65,8 +65,8 @@ public abstract class ReloaderPlugin extends JavaPlugin {
     }
     /**
      * Reloads every reloadable class, reloading the plugin.
-     * @param deep Whether or not this reload will be deep
-     *             (Some actions may have a bigger performance impact than others and they are not to be reloaded every time)
+     * @param deep Whether the reload will be deep
+     *             (Some actions may impact performance more than others, and they are not to be reloaded every time)
      * @see Reloadable
      */
     public void reload(boolean deep){
