@@ -1,6 +1,7 @@
 package com.github.alfonsoleandro.mputils.managers;
 
 import com.github.alfonsoleandro.mputils.files.YamlFile;
+import com.github.alfonsoleandro.mputils.misc.MessageEnum;
 import com.github.alfonsoleandro.mputils.reloadable.Reloadable;
 import com.github.alfonsoleandro.mputils.reloadable.ReloaderPlugin;
 import com.github.alfonsoleandro.mputils.string.StringUtils;
@@ -19,7 +20,7 @@ import java.util.Map;
  * Messages manager. Should manage every message a plugin can send. Includes several message sending methods.
  * @param <E> The Enum supposed to contain every configurable message included in a configuration file.
  */
-public class MessageSender<E extends Enum<?>> extends Reloadable {
+public class MessageSender<E extends MessageEnum> extends Reloadable {
 
     /**
      * The plugin using this manager's main class.
@@ -213,6 +214,7 @@ public class MessageSender<E extends Enum<?>> extends Reloadable {
      */
     public String getString(E message, String... replacements){
         String msg = messages.get(message);
+        if(msg == null) msg = message.getDefault();
         for (int i = 0; i < replacements.length; i++) {
             msg = msg.replace(replacements[i], replacements[++i]);
         }
