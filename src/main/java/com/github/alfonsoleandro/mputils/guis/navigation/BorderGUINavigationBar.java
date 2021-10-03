@@ -30,7 +30,7 @@ public class BorderGUINavigationBar extends NavigationBar {
      * Creates a new navigation bar, with the given array of buttons.
      * @param buttons The buttons contained in this navigation bar.
      * @param borderButtons The buttons that go in the border of the BorderGUI.
-     * @throws IllegalArgumentException Thrown if the size of any of the arrays is incorrect
+     * @throws IllegalArgumentException Thrown if the size of the arrays is incorrect
      * (9 for the buttons, 17 for the border buttons).
      */
     public BorderGUINavigationBar(GUIButton[] buttons, GUIButton[] borderButtons) throws IllegalArgumentException {

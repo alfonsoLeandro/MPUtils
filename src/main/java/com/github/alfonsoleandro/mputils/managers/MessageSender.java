@@ -42,7 +42,9 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      * The string that will go before every message for the path inside the file.
      * Example: message "some message" messagesPath "messages" the message "SOME_MESSAGE" will be found under
      * "messages.some message".
+     * @deprecated Should now be grabbed from {@link MessageEnum#getPath()}
      */
+    @Deprecated
     private final String messagesPath;
     /**
      * The path where the prefix is located (if any) inside the same file that contains the messages.
@@ -64,7 +66,9 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      * @param messagesPath The path where the messages will be found under inside the given YamlFile.
      * @param prefixPath The path where the prefix (string before every message) will be found inside the given YamlFile.
      *                   Can be null (messages will not have a prefix by default).
+     * @deprecated Now the message path should be specified inside the enum {@link MessageEnum}.
      */
+    @Deprecated
     public MessageSender(ReloaderPlugin plugin, E[] messagesEnumValues,
                          YamlFile messagesYamlFile, String messagesPath, @Nullable String prefixPath) {
         super(plugin);
@@ -84,11 +88,33 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      *                           after the given path. Keep in mind that "_" will be replaced for " " and the string
      *                           will be in lower case.
      * @param messagesYamlFile The YamlFile where the messages will be taken from.
-     * @param messagesPath The path where the messages will be found under inside the given YamlFile.
+     **/
+    public MessageSender(@NotNull ReloaderPlugin plugin, @NotNull E[] messagesEnumValues,
+                         @NotNull YamlFile messagesYamlFile) {
+        this(plugin, messagesEnumValues, messagesYamlFile, null);
+    }
+
+
+    /**
+     * Creates a new instance of the message sender.
+     * @param plugin The plugin using this manager's main class instance.
+     * @param messagesEnumValues The values from the enum containing the messages, each
+     *                           of these values will be used later to load the messages from the given yaml file
+     *                           after the given path. Keep in mind that "_" will be replaced for " " and the string
+     *                           will be in lower case.
+     * @param messagesYamlFile The YamlFile where the messages will be taken from.
+     * @param prefixPath The path where the prefix (string before every message) will be found inside the given YamlFile.
+     *                   Can be null (messages will not have a prefix by default).
      */
     public MessageSender(@NotNull ReloaderPlugin plugin, @NotNull E[] messagesEnumValues,
-                         @NotNull YamlFile messagesYamlFile, @NotNull String messagesPath) {
-        this(plugin, messagesEnumValues, messagesYamlFile, messagesPath, null);
+                         @NotNull YamlFile messagesYamlFile, @Nullable String prefixPath) {
+        super(plugin);
+        this.plugin = plugin;
+        this.messagesEnumValues = messagesEnumValues;
+        this.messagesYamlFile = messagesYamlFile;
+        this.messagesPath = null;
+        this.prefixPath = prefixPath;
+        loadMessages();
     }
 
 
@@ -101,10 +127,17 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
         this.prefix = prefixPath == null ? null : messages.getString(prefixPath);
 
-        for(E message : messagesEnumValues){
-            this.messages.put(message,
-                    messages.getString(this.messagesPath+"."+
-                            message.toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
+        if(this.messagesPath != null) {
+            for (E message : messagesEnumValues) {
+                this.messages.put(message,
+                        messages.getString(this.messagesPath + "." +
+                                message.toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
+            }
+        }else{
+            for (E message : messagesEnumValues) {
+                this.messages.put(message,
+                        messages.getString(message.getPath()));
+            }
         }
     }
 

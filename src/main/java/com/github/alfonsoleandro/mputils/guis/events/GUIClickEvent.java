@@ -32,6 +32,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
@@ -59,7 +60,7 @@ public class GUIClickEvent extends InventoryClickEvent {
      * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
      * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
      * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
-     * @param isButtonClick Whether or not a Button was clicked and therefore called {@link GUIButtonClickEvent}.
+     * @param isButtonClick Whether a Button was clicked and therefore called {@link GUIButtonClickEvent}.
      */
     public GUIClickEvent(InventoryView view,
                          InventoryType.SlotType type,
@@ -78,11 +79,11 @@ public class GUIClickEvent extends InventoryClickEvent {
         this.isButtonClick = isButtonClick;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 
-    public static HandlerList getHandlerList() {
+    public static @NotNull HandlerList getHandlerList() {
         return HANDLERS;
     }
 
@@ -141,7 +142,7 @@ public class GUIClickEvent extends InventoryClickEvent {
     }
 
     /**
-     * Gets the instance of the GUI object so you can get the navBar items.
+     * Gets the instance of the GUI object, so you can get the navBar items.
      *
      * @return Instance of the object {@link SimpleGUI} or {@link PaginatedGUI}.
      */

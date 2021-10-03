@@ -28,6 +28,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
@@ -73,11 +74,11 @@ public class GUIClickEvent extends InventoryClickEvent {
         this.gui = gui;
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 
-    public static HandlerList getHandlerList() {
+    public static @NotNull HandlerList getHandlerList() {
         return HANDLERS;
     }
 
@@ -136,7 +137,7 @@ public class GUIClickEvent extends InventoryClickEvent {
     }
 
     /**
-     * Gets the instance of the GUI object so you can get the navBar items.
+     * Gets the instance of the GUI object, so you can get the navBar items.
      *
      * @return Instance of the object {@link SimpleGUI} or {@link PaginatedGUI}.
      */

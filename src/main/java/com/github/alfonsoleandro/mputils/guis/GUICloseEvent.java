@@ -25,6 +25,7 @@ import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.InventoryView;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Custom event for when a GUI closes, called when a player who is being GUI managed by MPUtils closes a GUI.
@@ -55,11 +56,11 @@ public class GUICloseEvent extends InventoryCloseEvent {
     }
 
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 
-    public static HandlerList getHandlerList() {
+    public static @NotNull HandlerList getHandlerList() {
         return HANDLERS;
     }
 
@@ -106,7 +107,7 @@ public class GUICloseEvent extends InventoryCloseEvent {
     }
 
     /**
-     * Gets the instance of the GUI object so you can get the navBar items.
+     * Gets the instance of the GUI object, so you can get the navBar items.
      *
      * @return Instance of the object {@link SimpleGUI} or {@link PaginatedGUI}.
      */

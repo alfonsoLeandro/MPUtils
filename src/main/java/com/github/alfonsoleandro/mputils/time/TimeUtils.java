@@ -57,7 +57,7 @@ public class TimeUtils {
      * @see TimeUnit
      */
     public static int getTicks(String timeString){
-        if(timeString == null || timeString.isEmpty() || timeString.length() < 2) return 0;
+        if(timeString == null || timeString.length() < 2) return 0;
         return getTicks(Integer.parseInt(timeString.substring(0, timeString.length()-1)),
                 TimeUnit.getByAlias(timeString.charAt(timeString.length()-1)));
     }
@@ -77,7 +77,7 @@ public class TimeUtils {
      * From this string you will need to replace %weeks%, %week%, %days%, %day%, %hours%, %hour%, %minutes%,
      * %minute%, %seconds%, %second% and %and% placeholders.
      * @param ticks The amount of ticks to translate
-     * @return A string with an w,d,h,m and s format.
+     * @return A string with a w,d,h,m and s format.
      */
     public static String getTimeString(long ticks){
         List<String> args = new ArrayList<>();
@@ -144,7 +144,7 @@ public class TimeUtils {
     }
 
     /**
-     * Gets only the amount of seconds (between 0 and 59) an amount of ticks represent.
+     * Gets only the amount of seconds (between 0 and 59) an amount of ticks represents.
      * @param ticks The amount of ticks.
      * @return A number between 0 and 59 representing the seconds for the given amount of ticks.
      */
@@ -153,7 +153,7 @@ public class TimeUtils {
     }
 
     /**
-     * Gets only the amount of minutes (between 0 and 59) an amount of ticks represent.
+     * Gets only the amount of minutes (between 0 and 59) an amount of ticks represents.
      * @param ticks The amount of ticks.
      * @return A number between 0 and 59 representing the minutes for the given amount of ticks.
      */
@@ -162,7 +162,7 @@ public class TimeUtils {
     }
 
     /**
-     * Gets only the amount of hours (between 0 and 23) an amount of ticks represent.
+     * Gets only the amount of hours (between 0 and 23) an amount of ticks represents.
      * @param ticks The amount of ticks.
      * @return A number between 0 and 23 representing the hours for the given amount of ticks.
      */
@@ -171,7 +171,7 @@ public class TimeUtils {
     }
 
     /**
-     * Gets only the amount of days (between 0 and 6) an amount of ticks represent.
+     * Gets only the amount of days (between 0 and 6) an amount of ticks represents.
      * @param ticks The amount of ticks.
      * @return A number between 0 and 6 representing the days for the given amount of ticks.
      */
@@ -180,7 +180,7 @@ public class TimeUtils {
     }
 
     /**
-     * Gets only the amount of weeks an amount of ticks represent.
+     * Gets only the amount of weeks an amount of ticks represents.
      * @param ticks The amount of ticks.
      * @return A number representing the weeks for the given amount of ticks.
      */

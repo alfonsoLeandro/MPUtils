@@ -47,7 +47,7 @@ public class DynamicGUI extends Navigable {
      */
     protected final List<ItemStack> items;
     /**
-     * Whether or not this GUI has more than one page.
+     * Whether this GUI has more than one page.
      */
     protected boolean isPaginated;
 

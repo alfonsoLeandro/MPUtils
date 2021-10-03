@@ -68,7 +68,7 @@ public class Cooldown {
     }
 
     /**
-     * Manually removes a item from the cooldown even if it was not finished yet.
+     * Manually removes an item from the cooldown even if it was not finished yet.
      *
      * @param itemName The item to remove from the cooldown.
      */
@@ -83,7 +83,7 @@ public class Cooldown {
      * checking if an item is on cooldown.
      *
      * @param itemName The player to look for.
-     * @return true if the item is on cooldown and it has not finished.
+     * @return true if the item is on cooldown, and it has not finished.
      */
     @Deprecated
     public boolean isInCooldown(String itemName){

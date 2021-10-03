@@ -22,7 +22,7 @@ MP Utils is a simple library for helping on the developing of minecraft spigot p
 <a name="installation"></a>
 ## Installation
 Developers:
-  Add the following maven dependecy to your pom.xml file:
+  Add the following maven dependency to your pom.xml file:
 
 ```xml
     <dependencies>
@@ -48,7 +48,7 @@ You can find this info in the wiki page. [Usage](https://github.com/alfonsoLeand
 
 <a name="author"></a>
 ## About the author
-My name is Leandro Alfonso, I am 19 years old and I live in Uruguay. I am currently a software engineering student at [UCU](https://ucu.edu.uy).
+My name is Leandro Alfonso, I am 19 years old, and I live in Uruguay. I am currently a software engineering student at [UCU](https://ucu.edu.uy).
 If you have any issues or doubts do not hesitate to contact me by the following means:
  - [Gmail](mailto:leandroalfonsoporley@gmail.com)
  - Discord (lelesape#3612)

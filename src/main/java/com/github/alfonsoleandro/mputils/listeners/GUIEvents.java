@@ -50,6 +50,7 @@ public class GUIEvents implements Listener {
             36,44);
 
 
+    @SuppressWarnings("deprecation") //Support older MPUtils versions
     @EventHandler (priority = EventPriority.LOWEST)
     public void onClick(InventoryClickEvent event){
         if(event.getWhoClicked() instanceof Player && PlayersOnGUIsManager.isInGUI(event.getWhoClicked().getName())){
@@ -146,6 +147,7 @@ public class GUIEvents implements Listener {
     }
 
 
+    @SuppressWarnings("deprecation") //Support older MPUtils versions.
     @EventHandler
     public void onClose(InventoryCloseEvent event){
         if(PlayersOnGUIsManager.isInGUI(event.getPlayer().getName())) {

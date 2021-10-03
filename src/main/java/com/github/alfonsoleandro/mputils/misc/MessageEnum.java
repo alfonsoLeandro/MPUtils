@@ -8,6 +8,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public interface MessageEnum{
 
+
+    /**
+     * Gets the path where a message should be found inside a given configuration file.
+     * @return The path where to find a message.
+     */
+    @NotNull String getPath();
+
+
     /**
      * Gets the default value for a message in case the value from the file returns null.
      * @return A default value for this message in case the configurable value returns null.

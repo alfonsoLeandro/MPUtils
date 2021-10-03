@@ -31,7 +31,7 @@ public class YamlFile {
      */
     private final FileConfiguration fileConfig;
     /**
-     * The file name in your resources folder.
+     * The file name in your resources' folder.
      */
     private String fileName;
     /**

@@ -47,7 +47,7 @@ public class PaginatedGUI extends Navigable{
     protected HashMap<Integer, List<ItemStack>> pagesOfItems;
 
     /**
-     * Creates a GUI of any size bigger than 9 and smaller that 54 slots, with ability to have various pages and a navigation bar in the last row.
+     * Creates a GUI of any size bigger than 9 and smaller than 54 slots, with ability to have various pages and a navigation bar in the last row.
      * Will create the gui, and set the default navBar items.
      *
      * @param title       The title for the GUI, not colorized by default.
@@ -211,7 +211,7 @@ public class PaginatedGUI extends Navigable{
     }
 
     /**
-     * Updates the navigation bar, called when the GUI is opened for an user, replicates the navBar items and
+     * Updates the navigation bar, called when the GUI is opened for a user, replicates the navBar items and
      * replaces the %page%, %nextpage%, %previouspage% and %totalpages% placeholders.
      *
      * @param page The current open page, used for placeholders.
@@ -224,10 +224,10 @@ public class PaginatedGUI extends Navigable{
 
 
     /**
-     * Choose whether or not do you want an item in the mid slot of the navigation bar (last row),
+     * Choose whether do you want an item in the medium slot of the navigation bar (last row),
      * usually used for telling the player the page they are on.
      *
-     * @param hasCurrentPageItem true if you want the item to be shown, or false if you want the mid slot to be the same as navBar item {@link PaginatedGUI#setNavbarItem(ItemStack)}
+     * @param hasCurrentPageItem true if you want the item to be shown, or false if you want the medium slot to be the same as navBar item {@link PaginatedGUI#setNavbarItem(ItemStack)}
      * @deprecated Please use {@link GUIButton.GUIButtonCondition} instead.
      */
     @Deprecated

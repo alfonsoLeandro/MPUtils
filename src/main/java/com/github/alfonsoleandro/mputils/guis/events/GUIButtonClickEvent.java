@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
+import org.jetbrains.annotations.NotNull;
 
 public class GUIButtonClickEvent extends GUIClickEvent {
 
@@ -24,7 +25,7 @@ public class GUIButtonClickEvent extends GUIClickEvent {
      */
     protected final int navBarSlot;
     /**
-     * Whether or not the button met its condition when clicked.
+     * Whether the button met its condition when clicked.
      */
     protected final boolean metCondition;
 
@@ -62,11 +63,11 @@ public class GUIButtonClickEvent extends GUIClickEvent {
         this.metCondition = clickedButton.getCondition().meetsCondition(page, gui.getPages());
     }
 
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 
-    public static HandlerList getHandlerList() {
+    public static @NotNull HandlerList getHandlerList() {
         return HANDLERS;
     }
 
@@ -95,7 +96,7 @@ public class GUIButtonClickEvent extends GUIClickEvent {
 
     /**
      * Gets the button involved in this event.
-     * @return The button responsible of triggering this event.
+     * @return The button responsible for triggering this event.
      */
     public GUIButton getClickedButton(){
         return this.clickedButton;
@@ -111,8 +112,8 @@ public class GUIButtonClickEvent extends GUIClickEvent {
     }
 
     /**
-     * Gets whether or not the button met its condition needed for showing its main item or not.
-     * @return True if the button met tis condition and was showing its main item the moment it was clicked.
+     * Gets whether the button met its condition needed for showing its main item or not.
+     * @return True if the button met its condition and was showing its main item the moment it was clicked.
      */
     public boolean buttonMetCondition() {
         return metCondition;

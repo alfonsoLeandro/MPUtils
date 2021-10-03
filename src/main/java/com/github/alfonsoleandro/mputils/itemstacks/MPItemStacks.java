@@ -93,7 +93,7 @@ public final class MPItemStacks {
     }
 
     /**
-     * Helps on the making of a new {@link ItemStack} setting its lore an display name.
+     * Helps on the making of a new {@link ItemStack} setting its lore a display name.
      * Colorizes the lore and display name using {@link StringUtils#colorizeString(char, String)} using {@literal '&'} as the alternateColorCode.
      *
      * @param material The material for the ItemStack.
