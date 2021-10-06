@@ -170,7 +170,7 @@ public class DynamicGUI extends Navigable {
     public void checkSize(){
         int previousSize = this.guiSize;
         if(items.size() <= 54){
-            this.guiSize = (int) Math.ceil(items.size()/9.0)*9;
+            this.guiSize = Math.max((int)Math.ceil(items.size()/9.0)*9, 9);
             this.isPaginated = false;
         }else{
             this.guiSize = 54;
