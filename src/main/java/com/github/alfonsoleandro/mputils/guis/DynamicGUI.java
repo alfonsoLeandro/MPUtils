@@ -191,4 +191,13 @@ public class DynamicGUI extends Navigable {
         if(isPaginated) return (int) Math.ceil(items.size()/45.0);
         return -1;
     }
+
+    /**
+     * Checks whether this GUI is paginated.
+     * Same as doing {@code DynamicGUI#getPages() > -1}.
+     * @return True if this GUI has more than one page.
+     */
+    public boolean isPaginated(){
+        return this.isPaginated;
+    }
 }
