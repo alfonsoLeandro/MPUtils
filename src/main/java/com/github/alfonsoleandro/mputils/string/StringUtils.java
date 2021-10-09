@@ -60,7 +60,42 @@ public class StringUtils {
         return ChatColor.translateAlternateColorCodes(alternateColorCode, string);
     }
 
+
+    /**
+     * Calls {@link #colorizeString(char, String)} using '&' as the alternate color code.
+     * Supports & and any number from 0 through 9, or any letter with 'a' through 'f' or
+     * any RGB hex color code of 6 digits using the format '&#RRGGBB'.
+     * @param string The string to apply color to.
+     * @return The given string, but with color codes replaced with the color they represent.
+     */
     public static String colorizeString(String string){
         return colorizeString('&', string);
+    }
+
+
+    /**
+     * Checks if a string is either null or empty ("").
+     * @param string The string to check.
+     * @return true if the string is null or empty, false otherwise.
+     */
+    public static boolean isNullOrEmpty(String string){
+        return string == null || string.isEmpty();
+    }
+
+
+    /**
+     * Counts the amount of time a string is present in another string.
+     * @param string The string where to count matches.
+     * @param subString The string that should be found in the first string to count one more match.
+     * @return 0 if any of the parameter Strings is null or empty, in other case,
+     * the amount of time the second string is found in the first string.
+     */
+    public static int countMatches(String string, String subString){
+        if(isNullOrEmpty(string)) return 0;
+        if(isNullOrEmpty(subString)) return 0;
+
+        String string2 = string.replace(subString, "");
+
+        return (string.length() - string2.length())/subString.length();
     }
 }
