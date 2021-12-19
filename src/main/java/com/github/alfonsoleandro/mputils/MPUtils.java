@@ -49,7 +49,7 @@ public final class MPUtils extends JavaPlugin {
     /**
      * The version string from the plugin.yml file.
      */
-    final private  String version = pdfFile.getVersion();
+    final private  String version = this.pdfFile.getVersion();
     /**
      * The latest available version on spigot.
      */
@@ -76,10 +76,10 @@ public final class MPUtils extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        send("&aEnabled&f. Version: &e" + version);
-        send("&fThank you for using my plugin! &a" + pdfFile.getName() + "&f By " + pdfFile.getAuthors().get(0));
+        send("&aEnabled&f. Version: &e" + this.version);
+        send("&fThank you for using my plugin! &a" + this.pdfFile.getName() + "&f By " + this.pdfFile.getAuthors().get(0));
         send("&fJoin my discord server at &chttps://discordapp.com/invite/ZznhQud");
-        send("Please consider subscribing to my yt channel: &c" + pdfFile.getWebsite());
+        send("Please consider subscribing to my yt channel: &c" + this.pdfFile.getWebsite());
         registerConfig();
         registerCooldown();
         registerEvents();
@@ -92,31 +92,31 @@ public final class MPUtils extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        send("&cDisabled&f. Version: &e" + version);
-        send("&fThank you for using my plugin! &a" + pdfFile.getName() + "&f By " + pdfFile.getAuthors().get(0));
+        send("&cDisabled&f. Version: &e" + this.version);
+        send("&fThank you for using my plugin! &a" + this.pdfFile.getName() + "&f By " + this.pdfFile.getAuthors().get(0));
         send("&fJoin my discord server at &chttps://discordapp.com/invite/ZznhQud");
-        send("Please consider subscribing to my yt channel: &c" + pdfFile.getWebsite());
+        send("Please consider subscribing to my yt channel: &c" + this.pdfFile.getWebsite());
     }
 
     /**
      * Registers the config file for this plugin.
      */
     private void registerConfig(){
-        configYaml = new YamlFile(this, "config.yml");
+        this.configYaml = new YamlFile(this, "config.yml");
     }
 
     /**
      * Registers the cooldown file for this plugin.
      */
     private void registerCooldown(){
-        cooldownYaml = new YamlFile(this, "cooldowns.yml");
+        this.cooldownYaml = new YamlFile(this, "cooldowns.yml");
     }
 
     /**
      * Tries to start the metrics system.
      */
     private void startMetrics(){
-        if(configYaml.getAccess().getBoolean("config.metrics enabled")) {
+        if(this.configYaml.getAccess().getBoolean("config.metrics enabled")) {
             new Metrics(this, 8825);
         }else{
             send("&cMetrics are disabled");
@@ -134,11 +134,11 @@ public final class MPUtils extends JavaPlugin {
             final int timed_out = 1250;
             con.setConnectTimeout(timed_out);
             con.setReadTimeout(timed_out);
-            latestVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-            if (latestVersion.length() <= 7) {
-                if(!version.equals(latestVersion)){
+            this.latestVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
+            if (this.latestVersion.length() <= 7) {
+                if(!this.version.equals(this.latestVersion)){
                     String exclamation = "&e&l(&4&l!&e&l)";
-                    send(exclamation +" &cThere is a new version available. &e(&7"+latestVersion+"&e)");
+                    send(exclamation +" &cThere is a new version available. &e(&7"+ this.latestVersion +"&e)");
                     send(exclamation +" &cDownload it here: &fhttp://bit.ly/MPUtils");
                 }
             }
@@ -161,7 +161,7 @@ public final class MPUtils extends JavaPlugin {
      * @return The version String.
      */
     public String getVersion() {
-        return version;
+        return this.version;
     }
 
     /**
@@ -169,7 +169,7 @@ public final class MPUtils extends JavaPlugin {
      * @return The latest available version or null if the updateChecker failed.
      */
     public String getLatestVersion(){
-        return latestVersion;
+        return this.latestVersion;
     }
 
     /**
@@ -177,6 +177,6 @@ public final class MPUtils extends JavaPlugin {
      * @return The YAMLFile object containing the cooldown's File and FileConfiguration objects.
      */
     public YamlFile getCooldownYaml(){
-        return cooldownYaml;
+        return this.cooldownYaml;
     }
 }

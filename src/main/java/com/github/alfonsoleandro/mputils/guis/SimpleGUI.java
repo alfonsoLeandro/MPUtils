@@ -50,7 +50,7 @@ public class SimpleGUI extends GUI{
      */
     public SimpleGUI(String title, int size, String guiTags){
         super(title, size, guiTags, GUIType.SIMPLE);
-        items = new HashMap<>();
+        this.items = new HashMap<>();
     }
 
     /**
@@ -61,9 +61,9 @@ public class SimpleGUI extends GUI{
      * @param item The item to be put.
      */
     public void setItem(int index, ItemStack item){
-        if(index >= guiSize || index < 0) return;
-        inventory.setItem(index, item);
-        items.put(index, item);
+        if(index >= this.guiSize || index < 0) return;
+        this.inventory.setItem(index, item);
+        this.items.put(index, item);
     }
 
     /**
@@ -73,11 +73,11 @@ public class SimpleGUI extends GUI{
      */
     @Override
     public void addItem(ItemStack item){
-        inventory.addItem(item);
-        for(int i = 0; i < guiSize; i++){
-            ItemStack inI = inventory.getItem(i);
+        this.inventory.addItem(item);
+        for(int i = 0; i < this.guiSize; i++){
+            ItemStack inI = this.inventory.getItem(i);
             if(inI != null && inI.isSimilar(item)){
-                items.put(i, item);
+                this.items.put(i, item);
             }
         }
     }
@@ -89,9 +89,9 @@ public class SimpleGUI extends GUI{
      * @param title The new title to use.
      */
     public void setTitle(String title){
-        inventory = Bukkit.createInventory(null, guiSize, title);
-        for(int i : items.keySet()){
-           inventory.setItem(i, items.get(i));
+        this.inventory = Bukkit.createInventory(null, this.guiSize, title);
+        for(int i : this.items.keySet()){
+            this.inventory.setItem(i, this.items.get(i));
         }
 
     }
@@ -101,8 +101,8 @@ public class SimpleGUI extends GUI{
      */
     @Override
     public void clearInventory(){
-        inventory.clear();
-        items.clear();
+        this.inventory.clear();
+        this.items.clear();
     }
 
     /**

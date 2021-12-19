@@ -61,10 +61,10 @@ public class Cooldown {
      * @param timeUnit The timeunit that the amount represents. See {@link TimeUnit}.
      */
     public void addToCooldown(String itemName, int amount, TimeUnit timeUnit){
-        cooldownYaml.getAccess().set("cooldowns."+cooldownName+"."+itemName,
+        this.cooldownYaml.getAccess().set("cooldowns."+ this.cooldownName +"."+itemName,
                 System.currentTimeMillis() +
                 java.util.concurrent.TimeUnit.SECONDS.toMillis(TimeUtils.getTotalSeconds((long) amount *timeUnit.getMultiplier())));
-        cooldownYaml.save(true);
+        this.cooldownYaml.save(true);
     }
 
     /**
@@ -73,8 +73,8 @@ public class Cooldown {
      * @param itemName The item to remove from the cooldown.
      */
     public void removeFromCooldown(String itemName){
-        cooldownYaml.getAccess().set("cooldowns."+cooldownName+"."+itemName, null);
-        cooldownYaml.save(true);
+        this.cooldownYaml.getAccess().set("cooldowns."+ this.cooldownName +"."+itemName, null);
+        this.cooldownYaml.save(true);
     }
 
     /**
@@ -98,9 +98,9 @@ public class Cooldown {
      * @return The time left for the item to leave the cooldown or 0 if the item was not in cooldown.
      */
     public long getTimeLeft(String itemName){
-        if(!cooldownYaml.getAccess().contains("cooldowns."+cooldownName+"."+itemName)) return 0;
+        if(!this.cooldownYaml.getAccess().contains("cooldowns."+ this.cooldownName +"."+itemName)) return 0;
 
-        final long timeLeft = cooldownYaml.getAccess().getLong("cooldowns."+cooldownName+"."+itemName) - System.currentTimeMillis();
+        final long timeLeft = this.cooldownYaml.getAccess().getLong("cooldowns."+ this.cooldownName +"."+itemName) - System.currentTimeMillis();
 
         if(timeLeft <= 0){
             removeFromCooldown(itemName);
@@ -114,9 +114,9 @@ public class Cooldown {
      * Removes every item from the cooldown.
      */
     public void removeAll(){
-        if(!cooldownYaml.getAccess().contains("cooldowns."+cooldownName)) return;
-        cooldownYaml.getAccess().set("cooldowns."+cooldownName, null);
-        cooldownYaml.save(true);
+        if(!this.cooldownYaml.getAccess().contains("cooldowns."+ this.cooldownName)) return;
+        this.cooldownYaml.getAccess().set("cooldowns."+ this.cooldownName, null);
+        this.cooldownYaml.save(true);
     }
 
 

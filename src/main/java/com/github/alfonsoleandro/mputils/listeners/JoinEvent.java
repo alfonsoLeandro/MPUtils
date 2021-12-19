@@ -46,8 +46,8 @@ public class JoinEvent implements Listener {
         final String exclamation = "&e&l(&4&l!&e&l)";
         final String prefix = "&f[&aMPUtils&f]";
 
-        if(player.isOp() && !plugin.getVersion().equals(plugin.getLatestVersion())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix+" "+exclamation+" &4New version available &7(&e"+plugin.getLatestVersion()+"&7)"));
+        if(player.isOp() && !this.plugin.getVersion().equals(this.plugin.getLatestVersion())) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix+" "+exclamation+" &4New version available &7(&e"+ this.plugin.getLatestVersion()+"&7)"));
             player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix+" "+exclamation+" &fhttp://bit.ly/2If90hb") );
         }
     }

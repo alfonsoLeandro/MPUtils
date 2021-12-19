@@ -70,7 +70,7 @@ public class GUICloseEvent extends InventoryCloseEvent {
      * @return the type of GUI, either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
      */
     public GUIType getGuiType() {
-        return guiType;
+        return this.guiType;
     }
 
     /**
@@ -79,7 +79,7 @@ public class GUICloseEvent extends InventoryCloseEvent {
      * @return -1 if {@link GUIType} is equal to {@link GUIType#SIMPLE} or the page number in any other case.
      */
     public int getPage() {
-        return page;
+        return this.page;
     }
 
     /**
@@ -103,7 +103,7 @@ public class GUICloseEvent extends InventoryCloseEvent {
      */
     @Deprecated
     public String getGuiTags() {
-        return gui.getGuiTags();
+        return this.gui.getGuiTags();
     }
 
     /**
@@ -112,6 +112,6 @@ public class GUICloseEvent extends InventoryCloseEvent {
      * @return Instance of the object {@link SimpleGUI} or {@link PaginatedGUI}.
      */
     public GUI getGui() {
-        return gui;
+        return this.gui;
     }
 }

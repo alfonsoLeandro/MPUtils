@@ -72,7 +72,7 @@ public class GUIButton {
      * @return The identifying string for this button object.
      */
     public String getButtonTags() {
-        return buttonTags;
+        return this.buttonTags;
     }
 
     /**
@@ -80,7 +80,7 @@ public class GUIButton {
      * @return An ItemStack that represents this button, with no placeholders replaced.
      */
     public ItemStack getRawItem() {
-        return item;
+        return this.item;
     }
 
     /**
@@ -99,7 +99,7 @@ public class GUIButton {
      * @return Either the item or the backup item.
      */
     public ItemStack getItem(int page, int totalPages) {
-        ItemStack item = condition.meetsCondition(page ,totalPages) ? this.item : this.backup;
+        ItemStack item = this.condition.meetsCondition(page ,totalPages) ? this.item : this.backup;
         return MPItemStacks.replacePlaceholders(item.clone(), getPlaceHoldersMap(page, totalPages));
     }
 

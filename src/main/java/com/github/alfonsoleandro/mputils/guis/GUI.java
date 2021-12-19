@@ -73,7 +73,7 @@ public abstract class GUI {
     public void openGUI(Player player){
         if(player == null) return;
         player.closeInventory();
-        player.openInventory(inventory);
+        player.openInventory(this.inventory);
         PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, this);
     }
 

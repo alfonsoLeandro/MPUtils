@@ -68,17 +68,17 @@ public class BorderPaginatedGUI extends PaginatedGUI {
     @Override
     public void updateItemsPerPage(List<ItemStack> items) {
         this.items = items;
-        pagesOfItems = new HashMap<>();
+        this.pagesOfItems = new HashMap<>();
         List<ItemStack> itemsOnAPage = new ArrayList<>();
         for (ItemStack item : items) {
             if(itemsOnAPage.size() >= 28) {
-                pagesOfItems.put(pagesOfItems.size(), itemsOnAPage);
+                this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
                 itemsOnAPage = new ArrayList<>();
             }
             itemsOnAPage.add(item);
         }
-        if(!itemsOnAPage.isEmpty()) pagesOfItems.put(pagesOfItems.size(), itemsOnAPage);
-        pages = pagesOfItems.size();
+        if(!itemsOnAPage.isEmpty()) this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
+        this.pages = this.pagesOfItems.size();
     }
 
     /**
@@ -120,7 +120,7 @@ public class BorderPaginatedGUI extends PaginatedGUI {
      */
     @Override
     public void setItemsForPage(int page){
-        List<ItemStack> itemsOnPage = pagesOfItems.get(page);
+        List<ItemStack> itemsOnPage = this.pagesOfItems.get(page);
         int[] itemSlots = new int[]{10,11,12,13,14,15,16,
         19,20,21,22,23,24,25,
         28,29,30,31,32,33,34,
@@ -128,14 +128,14 @@ public class BorderPaginatedGUI extends PaginatedGUI {
 
         if(itemsOnPage == null || itemsOnPage.isEmpty()){
             for(int i : itemSlots){
-                inventory.setItem(i, null);
+                this.inventory.setItem(i, null);
             }
         }else{
             for(int i = 0; i < itemSlots.length; i++) {
                 if(i < itemsOnPage.size()) {
-                    inventory.setItem(itemSlots[i], itemsOnPage.get(i));
+                    this.inventory.setItem(itemSlots[i], itemsOnPage.get(i));
                 } else {
-                    inventory.setItem(itemSlots[i], null);
+                    this.inventory.setItem(itemSlots[i], null);
                 }
             }
         }

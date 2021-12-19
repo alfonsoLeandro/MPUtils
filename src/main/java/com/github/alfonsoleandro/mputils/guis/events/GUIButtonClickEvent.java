@@ -79,7 +79,7 @@ public class GUIButtonClickEvent extends GUIClickEvent {
      */
     @Override
     public int getPage() {
-        return page;
+        return this.page;
     }
 
     /**
@@ -91,7 +91,7 @@ public class GUIButtonClickEvent extends GUIClickEvent {
      */
     @Override
     public Navigable getGui() {
-        return (Navigable) gui;
+        return (Navigable) this.gui;
     }
 
     /**
@@ -116,6 +116,6 @@ public class GUIButtonClickEvent extends GUIClickEvent {
      * @return True if the button met its condition and was showing its main item the moment it was clicked.
      */
     public boolean buttonMetCondition() {
-        return metCondition;
+        return this.metCondition;
     }
 }

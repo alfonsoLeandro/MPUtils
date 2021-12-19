@@ -123,18 +123,18 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      */
     private void loadMessages() {
         this.messages.clear();
-        FileConfiguration messages = messagesYamlFile.getAccess();
+        FileConfiguration messages = this.messagesYamlFile.getAccess();
 
-        this.prefix = prefixPath == null ? null : messages.getString(prefixPath);
+        this.prefix = this.prefixPath == null ? null : messages.getString(this.prefixPath);
 
         if(this.messagesPath != null) {
-            for (E message : messagesEnumValues) {
+            for (E message : this.messagesEnumValues) {
                 this.messages.put(message,
                         messages.getString(this.messagesPath + "." +
                                 message.toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
             }
         }else{
-            for (E message : messagesEnumValues) {
+            for (E message : this.messagesEnumValues) {
                 this.messages.put(message,
                         messages.getString(message.getPath()));
             }
@@ -147,7 +147,7 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      * @param msg The String to send.
      */
     public void send(@NotNull CommandSender sender, @NotNull String msg){
-        sender.sendMessage(StringUtils.colorizeString((prefix == null ? "" : prefix+" ")+msg));
+        sender.sendMessage(StringUtils.colorizeString((this.prefix == null ? "" : this.prefix +" ")+msg));
     }
 
     /**
@@ -183,7 +183,7 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
             if(toSend.equals(excluded)) continue;
             send(toSend, msg);
         }
-        Bukkit.getConsoleSender().sendMessage(StringUtils.colorizeString((prefix == null ? "" : prefix+" ")+msg));
+        Bukkit.getConsoleSender().sendMessage(StringUtils.colorizeString((this.prefix == null ? "" : this.prefix +" ")+msg));
     }
 
     /**
@@ -246,7 +246,7 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      * @return The string that goes with the given message with the given strings replaced.
      */
     public String getString(E message, String... replacements){
-        String msg = messages.get(message);
+        String msg = this.messages.get(message);
         if(msg == null) msg = message.getDefault();
         for (int i = 0; i < replacements.length; i++) {
             msg = msg.replace(replacements[i], replacements[++i]);
@@ -262,7 +262,7 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      */
     @Override
     public void reload(boolean deep) {
-        if(deep) this.messagesYamlFile = new YamlFile(plugin, this.messagesYamlFile.getFileName());
+        if(deep) this.messagesYamlFile = new YamlFile(this.plugin, this.messagesYamlFile.getFileName());
         this.loadMessages();
     }
 

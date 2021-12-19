@@ -100,7 +100,7 @@ public class GUIClickEvent extends InventoryClickEvent {
      * @return the type of GUI, either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
      */
     public GUIType getGuiType() {
-        return guiType;
+        return this.guiType;
     }
 
     /**
@@ -109,7 +109,7 @@ public class GUIClickEvent extends InventoryClickEvent {
      * @return -1 if {@link GUIType} is equal to {@link GUIType#SIMPLE} or the page number in any other case.
      */
     public int getPage() {
-        return page;
+        return this.page;
     }
 
     /**
@@ -133,7 +133,7 @@ public class GUIClickEvent extends InventoryClickEvent {
      */
     @Deprecated
     public String getGuiTags() {
-        return gui.getGuiTags();
+        return this.gui.getGuiTags();
     }
 
     /**
@@ -142,6 +142,6 @@ public class GUIClickEvent extends InventoryClickEvent {
      * @return Instance of the object {@link SimpleGUI} or {@link PaginatedGUI}.
      */
     public GUI getGui() {
-        return gui;
+        return this.gui;
     }
 }

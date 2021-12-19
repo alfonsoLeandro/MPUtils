@@ -54,7 +54,7 @@ public class GUIAttributes {
      * @return The GUI page number or -1 if the {@link GUIType} is equal to {@link SimpleGUI}.
      */
     public int getPage() {
-        return page;
+        return this.page;
     }
 
     /**
@@ -62,7 +62,7 @@ public class GUIAttributes {
      * @return Either {@link SimpleGUI} or {@link PaginatedGUI}.
      */
     public GUIType getGuiType() {
-        return guiType;
+        return this.guiType;
     }
 
     /**
@@ -70,7 +70,7 @@ public class GUIAttributes {
      * @return The GUI object.
      */
     public GUI getGui(){
-        return gui;
+        return this.gui;
     }
 
 }

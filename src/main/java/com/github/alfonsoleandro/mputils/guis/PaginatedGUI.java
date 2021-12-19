@@ -83,7 +83,7 @@ public class PaginatedGUI extends Navigable{
     @Override
     public void addItem(ItemStack item){
         this.items.add(item);
-        updateItemsPerPage(items);
+        updateItemsPerPage(this.items);
     }
 
 
@@ -95,17 +95,17 @@ public class PaginatedGUI extends Navigable{
      */
     public void updateItemsPerPage(List<ItemStack> items) {
         this.items = items;
-        pagesOfItems = new HashMap<>();
+        this.pagesOfItems = new HashMap<>();
         List<ItemStack> itemsOnAPage = new ArrayList<>();
         for (ItemStack item : items) {
-            if(itemsOnAPage.size() >= guiSize - 9) {
-                pagesOfItems.put(pagesOfItems.size(), itemsOnAPage);
+            if(itemsOnAPage.size() >= this.guiSize - 9) {
+                this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
                 itemsOnAPage = new ArrayList<>();
             }
             itemsOnAPage.add(item);
         }
-        if(!itemsOnAPage.isEmpty()) pagesOfItems.put(pagesOfItems.size(), itemsOnAPage);
-        pages = pagesOfItems.size();
+        if(!itemsOnAPage.isEmpty()) this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
+        this.pages = this.pagesOfItems.size();
     }
 
 
@@ -116,7 +116,7 @@ public class PaginatedGUI extends Navigable{
      */
     public void setSizePerPage(int size) {
         this.guiSize = size;
-        updateItemsPerPage(items);
+        updateItemsPerPage(this.items);
     }
 
 
@@ -129,10 +129,10 @@ public class PaginatedGUI extends Navigable{
      */
     public void openGUI(Player player, int page) {
         if(player == null) return;
-        if(page > pages) return;
+        if(page > this.pages) return;
         player.closeInventory();
         setPage(player, page);
-        player.openInventory(inventory);
+        player.openInventory(this.inventory);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
     }
 
@@ -154,18 +154,18 @@ public class PaginatedGUI extends Navigable{
      * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
      */
     public void setItemsForPage(int page){
-        List<ItemStack> itemsOnPage = pagesOfItems.get(page);
+        List<ItemStack> itemsOnPage = this.pagesOfItems.get(page);
 
         if(itemsOnPage == null || itemsOnPage.isEmpty()){
-            for(int i = 0; i < guiSize -9; i++){
-                inventory.setItem(i, null);
+            for(int i = 0; i < this.guiSize -9; i++){
+                this.inventory.setItem(i, null);
             }
         }else{
-            for(int i = 0; i < guiSize -9; i++) {
+            for(int i = 0; i < this.guiSize -9; i++) {
                 if(i < itemsOnPage.size()) {
-                    inventory.setItem(i, itemsOnPage.get(i));
+                    this.inventory.setItem(i, itemsOnPage.get(i));
                 } else {
-                    inventory.setItem(i, null);
+                    this.inventory.setItem(i, null);
                 }
             }
         }
@@ -303,7 +303,7 @@ public class PaginatedGUI extends Navigable{
     @Deprecated
     public ItemStack getPreviousPageItem(int page){
         return MPItemStacks.replacePlaceholders(this.navBar.getButtonAt(0).getRawItem().clone(),
-                getPlaceHoldersMap(page, pages));
+                getPlaceHoldersMap(page, this.pages));
     }
 
 
@@ -317,7 +317,7 @@ public class PaginatedGUI extends Navigable{
      */
     @Deprecated
     public ItemStack getNavBarItem(int page){
-        return this.navBar.getButtonAt(1).getItem(page, pages);
+        return this.navBar.getButtonAt(1).getItem(page, this.pages);
     }
 
     /**
@@ -330,7 +330,7 @@ public class PaginatedGUI extends Navigable{
      */
     @Deprecated
     public ItemStack getCurrentPageItem(int page){
-        return this.navBar.getButtonAt(4).getItem(page, pages);
+        return this.navBar.getButtonAt(4).getItem(page, this.pages);
     }
 
     /**
@@ -344,7 +344,7 @@ public class PaginatedGUI extends Navigable{
     @Deprecated
     public ItemStack getNextPageItem(int page){
         return MPItemStacks.replacePlaceholders(this.navBar.getButtonAt(8).getRawItem().clone(),
-                getPlaceHoldersMap(page, pages));
+                getPlaceHoldersMap(page, this.pages));
     }
 
 

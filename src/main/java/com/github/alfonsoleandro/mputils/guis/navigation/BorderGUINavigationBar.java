@@ -85,7 +85,7 @@ public class BorderGUINavigationBar extends NavigationBar {
      * Sets the default border buttons for this BorderedGUINavigationBar.
      */
     public void setDefaultBorderButtons(){
-        if(borderButtons == null) return;
+        if(this.borderButtons == null) return;
         GUIButton guiBorder = new GUIButton("DEFAULT:guiBorder",
                 MPItemStacks.newItemStack(Material.PAPER,
                         1,

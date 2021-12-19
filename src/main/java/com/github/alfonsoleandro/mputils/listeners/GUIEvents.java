@@ -96,8 +96,8 @@ public class GUIEvents implements Listener {
                     //</editor-fold>
 
                 }else if(gui instanceof BorderPaginatedGUI) {
-                    if(borderGUIButtonSlots.contains(rawSlot)) {
-                        buttonSlot = borderGUIButtonSlots.indexOf(rawSlot)+10;
+                    if(this.borderGUIButtonSlots.contains(rawSlot)) {
+                        buttonSlot = this.borderGUIButtonSlots.indexOf(rawSlot)+10;
                         GUIButton clickedButton = ((Navigable)gui).getNavBar()
                                 .getButtonAt(buttonSlot);
 

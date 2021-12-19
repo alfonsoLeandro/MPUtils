@@ -100,13 +100,13 @@ public class DynamicGUI extends Navigable {
     public void openGUI(Player player){
         if(player == null) return;
         player.closeInventory();
-        if(isPaginated){
+        if(this.isPaginated){
             setPage(player, 0);
         }else {
             setItemsForPage(0);
             PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, this);
         }
-        player.openInventory(inventory);
+        player.openInventory(this.inventory);
     }
 
     /**
@@ -115,7 +115,7 @@ public class DynamicGUI extends Navigable {
      * @param page The page to try to open the GUi in.
      */
     public void openGUI(Player player, int page){
-        if(!isPaginated){
+        if(!this.isPaginated){
             openGUI(player);
             return;
         }
@@ -142,22 +142,22 @@ public class DynamicGUI extends Navigable {
      * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
      */
     public void setItemsForPage(int page){
-        List<ItemStack> itemsOnPage = isPaginated ?
-                items.subList(45*page, Math.min(items.size(), (45*page)+45))
+        List<ItemStack> itemsOnPage = this.isPaginated ?
+                this.items.subList(45*page, Math.min(this.items.size(), (45*page)+45))
                 :
-                items;
-        int lastSlot = isPaginated ? guiSize-9 : guiSize;
+                this.items;
+        int lastSlot = this.isPaginated ? this.guiSize -9 : this.guiSize;
 
         if(itemsOnPage.isEmpty()){
             for(int i = 0; i < lastSlot; i++){
-                inventory.setItem(i, null);
+                this.inventory.setItem(i, null);
             }
         }else{
             for(int i = 0; i < lastSlot; i++) {
                 if(i < itemsOnPage.size()) {
-                    inventory.setItem(i, itemsOnPage.get(i));
+                    this.inventory.setItem(i, itemsOnPage.get(i));
                 } else {
-                    inventory.setItem(i, null);
+                    this.inventory.setItem(i, null);
                 }
             }
         }
@@ -169,8 +169,8 @@ public class DynamicGUI extends Navigable {
      */
     public void checkSize(){
         int previousSize = this.guiSize;
-        if(items.size() <= 54){
-            this.guiSize = Math.max((int)Math.ceil(items.size()/9.0)*9, 9);
+        if(this.items.size() <= 54){
+            this.guiSize = Math.max((int)Math.ceil(this.items.size()/9.0)*9, 9);
             this.isPaginated = false;
         }else{
             this.guiSize = 54;
@@ -188,7 +188,7 @@ public class DynamicGUI extends Navigable {
      */
     @Override
     public int getPages(){
-        if(isPaginated) return (int) Math.ceil(items.size()/45.0);
+        if(this.isPaginated) return (int) Math.ceil(this.items.size()/45.0);
         return -1;
     }
 

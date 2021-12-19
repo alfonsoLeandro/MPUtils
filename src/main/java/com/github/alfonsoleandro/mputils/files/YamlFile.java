@@ -77,14 +77,14 @@ public class YamlFile {
      */
     public void loadFileConfiguration() {
         try {
-            if (Strings.isNullOrEmpty(fileName))
+            if (Strings.isNullOrEmpty(this.fileName))
                 throw new NullPointerException(
                         "File name is empty or null.");
-            if (!fileName.endsWith(".yml")) {
-                fileName += ".yml";
+            if (!this.fileName.endsWith(".yml")) {
+                this.fileName += ".yml";
             }
 
-            fileConfig.load(file);
+            this.fileConfig.load(this.file);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -94,9 +94,9 @@ public class YamlFile {
      *  Fills the config file with some given keys and values.
      */
     public void refillNodes() {
-        for (Map.Entry<String, String> mapEntry : mapRefill.entrySet()) {
-            if (!fileConfig.isSet(mapEntry.getKey())) {
-                fileConfig.set(mapEntry.getKey(), mapEntry.getValue());
+        for (Map.Entry<String, String> mapEntry : this.mapRefill.entrySet()) {
+            if (!this.fileConfig.isSet(mapEntry.getKey())) {
+                this.fileConfig.set(mapEntry.getKey(), mapEntry.getValue());
             }
         }
         save(true);
@@ -110,7 +110,7 @@ public class YamlFile {
     @Deprecated
     public void save() {
         try {
-            fileConfig.save(file);
+            this.fileConfig.save(this.file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -125,15 +125,15 @@ public class YamlFile {
             new BukkitRunnable(){
                 public void run(){
                     try {
-                        fileConfig.save(file);
+                        YamlFile.this.fileConfig.save(YamlFile.this.file);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-            }.runTaskAsynchronously(plugin);
+            }.runTaskAsynchronously(this.plugin);
         }else{
             try {
-                fileConfig.save(file);
+                this.fileConfig.save(this.file);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -144,8 +144,8 @@ public class YamlFile {
      * Saves the default values from your resources' file.
      */
     public void saveDefault() {
-        if (!file.exists()) {
-            plugin.saveResource(fileName, false);
+        if (!this.file.exists()) {
+            this.plugin.saveResource(this.fileName, false);
         }
     }
 
@@ -154,7 +154,7 @@ public class YamlFile {
      * @return The File object.
      */
     public File getFile() {
-        return file;
+        return this.file;
     }
 
     /**
@@ -162,7 +162,7 @@ public class YamlFile {
      * @return the file name.
      */
     public String getFileName() {
-        return fileName;
+        return this.fileName;
     }
 
     /**
@@ -170,6 +170,6 @@ public class YamlFile {
      * @return The FileConfiguration object.
      */
     public FileConfiguration getAccess() {
-        return fileConfig;
+        return this.fileConfig;
     }
 }

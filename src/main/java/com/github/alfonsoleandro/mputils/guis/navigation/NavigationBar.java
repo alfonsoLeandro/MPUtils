@@ -109,15 +109,15 @@ public class NavigationBar {
         );
 
 
-        buttons[0] = previousPage;
-        buttons[1] = emptySlot;
-        buttons[2] = emptySlot;
-        buttons[3] = emptySlot;
-        buttons[4] = currentPage;
-        buttons[5] = emptySlot;
-        buttons[6] = emptySlot;
-        buttons[7] = emptySlot;
-        buttons[8] = nextPage;
+        this.buttons[0] = previousPage;
+        this.buttons[1] = emptySlot;
+        this.buttons[2] = emptySlot;
+        this.buttons[3] = emptySlot;
+        this.buttons[4] = currentPage;
+        this.buttons[5] = emptySlot;
+        this.buttons[6] = emptySlot;
+        this.buttons[7] = emptySlot;
+        this.buttons[8] = nextPage;
     }
 
 
@@ -127,7 +127,7 @@ public class NavigationBar {
      * @return The button in the given position.
      */
     public GUIButton getButtonAt(int i){
-        return buttons[i];
+        return this.buttons[i];
     }
 
     /**
