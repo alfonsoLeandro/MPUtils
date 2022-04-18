@@ -23,7 +23,10 @@ package com.github.alfonsoleandro.mputils.guis.utils;
 
 import com.github.alfonsoleandro.mputils.guis.GUI;
 import com.github.alfonsoleandro.mputils.guis.events.GUIClickEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -78,6 +81,18 @@ public final class PlayersOnGUIsManager {
      */
     public static boolean isInGUI(String playerName){
         return players.containsKey(playerName);
+    }
+
+    /**
+     *  Forcibly removes all players from this manager and closes their inventories.
+     */
+    public static void removeAll(){
+        for(String playerName : new ArrayList<>( players.keySet())){
+            removePlayer(playerName);
+            Player player = Bukkit.getPlayerExact(playerName);
+            if(player == null) continue;
+            player.closeInventory();
+        }
     }
 
 

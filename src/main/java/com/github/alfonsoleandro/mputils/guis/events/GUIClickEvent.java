@@ -1,5 +1,4 @@
-/*
-Copyright (c) 2020 Leandro Alfonso
+/*Copyright (c) 2022 Leandro Alfonso
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -13,7 +12,7 @@ copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
@@ -21,9 +20,8 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.guis.events;
 
+import com.github.alfonsoleandro.mputils.guis.DynamicGUI;
 import com.github.alfonsoleandro.mputils.guis.GUI;
-import com.github.alfonsoleandro.mputils.guis.PaginatedGUI;
-import com.github.alfonsoleandro.mputils.guis.SimpleGUI;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -144,10 +142,31 @@ public class GUIClickEvent extends InventoryClickEvent {
     /**
      * Gets the instance of the GUI object, so you can get the navBar items.
      *
-     * @return Instance of the object {@link SimpleGUI} or {@link PaginatedGUI}.
+     * @return Instance of the GUI object.
      */
     public GUI getGui() {
         return this.gui;
+    }
+
+    /**
+     * Gets the true index of the clicked slot, if it was a usable slot.
+     * i.e: in a paginated gui, the first slot of the second page would be slot number 45.
+     * @return -1 if the click is outside the menu, or inside the navigation bar, the usable slot index in other case.
+     */
+    public int getTrueSlotClicked(){
+        // Click outside the GUI.
+        if(getRawSlot() >= this.gui.getSize()) return -1;
+        if(this.guiType.equals(GUIType.SIMPLE)){
+            return getRawSlot();
+        }else{
+            // Navbar click.
+            if(getRawSlot() >= this.gui.getSize()-9) return -1;
+            if(this.gui instanceof DynamicGUI && !((DynamicGUI)this.gui).isPaginated()){
+                return getRawSlot();
+            }else{
+                return getRawSlot() + 45*(this.page);
+            }
+        }
     }
 
     /**

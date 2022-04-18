@@ -139,7 +139,7 @@ public final class MPUtils extends JavaPlugin {
                 if(!this.version.equals(this.latestVersion)){
                     String exclamation = "&e&l(&4&l!&e&l)";
                     send(exclamation +" &cThere is a new version available. &e(&7"+ this.latestVersion +"&e)");
-                    send(exclamation +" &cDownload it here: &fhttp://bit.ly/MPUtils");
+                    send(exclamation + " &cDownload it here: &fhttps://bit.ly/MPUtils");
                 }
             }
         } catch (Exception ex) {

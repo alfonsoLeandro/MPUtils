@@ -57,6 +57,14 @@ public abstract class Navigable extends GUI{
     public abstract void setPage(Player player, int page);
 
     /**
+     * Opens the GUI in the given page for a given player.
+     * @param player The player to open the GUI for.
+     * @param page The page to open the GUI in.
+     * @since 1.10.0
+     */
+    public abstract void openGUI(Player player, int page);
+
+    /**
      * Updates the navigation bar, called when the GUI is opened for a user, replicates the navBar items and
      * replaces the %page%, %nextpage%, %previouspage% and %totalpages% placeholders.
      *
