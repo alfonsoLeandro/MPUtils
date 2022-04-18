@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2020 Leandro Alfonso
+Copyright (c) 2022 Leandro Alfonso
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -13,7 +13,7 @@ copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * An unordered GUI that is a {@link SimpleGUI} if the amount of items is less than 54, or
  * a {@link PaginatedGUI} in any other case.
- * See an example here: https://imgur.com/a/oS9UsJc
+ * See an example here: <a href="https://imgur.com/a/oS9UsJc">https://imgur.com/a/oS9UsJc</a>
  */
 public class DynamicGUI extends Navigable {
 
