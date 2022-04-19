@@ -41,7 +41,7 @@ public class InventoryUtils {
      * @return true if the item can be added to the given inventory.
      * @since 1.10.0
      */
-    public boolean canAdd(ItemStack item, Inventory inv){
+    public static boolean canAdd(ItemStack item, Inventory inv){
         if(inv.firstEmpty() != -1) return true;
 
         for (int i = 0; i < inv.getSize(); i++) {

@@ -62,9 +62,9 @@ public class StringUtils {
 
 
     /**
-     * Calls {@link #colorizeString(char, String)} using '&' as the alternate color code.
-     * Supports & and any number from 0 through 9, or any letter with 'a' through 'f' or
-     * any RGB hex color code of 6 digits using the format '&#RRGGBB'.
+     * Calls {@link #colorizeString(char, String)} using {@literal '&'} as the alternate color code.
+     * Supports {@literal &} and any number from 0 through 9, or any letter with 'a' through 'f' or
+     * any RGB hex color code of 6 digits using the format {@literal '&#RRGGBB'}.
      * @param string The string to apply color to.
      * @return The given string, but with color codes replaced with the color they represent.
      */
