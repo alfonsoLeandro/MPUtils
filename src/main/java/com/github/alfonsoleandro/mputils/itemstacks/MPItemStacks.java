@@ -32,6 +32,8 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -117,6 +119,36 @@ public final class MPItemStacks {
         }
         meta.setLore(resultingLore);
         
+        itemStack.setItemMeta(meta);
+
+        return itemStack;
+    }
+
+    /**
+     * Changes a given {@link ItemStack}'s lore and display name.
+     * Colorizes the lore and display name using {@link StringUtils#colorizeString(char, String)} using {@literal '&'} as the alternateColorCode.
+     *
+     * @param itemStack The original ItemStack.
+     * @param displayName The display nam for the item. Set to null to leave unmodified.
+     * @param lore The lore to be added. Set to null to leave unmodified.
+     * @return The same ItemStack with the given properties.
+     */
+    public static ItemStack rename(@NotNull ItemStack itemStack, @Nullable String displayName, @Nullable List<String> lore){
+        if(!itemStack.hasItemMeta()) return itemStack;
+        ItemMeta meta = itemStack.getItemMeta();
+        assert meta != null;
+
+        if(displayName != null) {
+            meta.setDisplayName(StringUtils.colorizeString('&', displayName));
+        }
+        if(lore != null) {
+            List<String> resultingLore = new ArrayList<>();
+            for (String line : lore) {
+                resultingLore.add(StringUtils.colorizeString('&', line));
+            }
+            meta.setLore(resultingLore);
+        }
+
         itemStack.setItemMeta(meta);
 
         return itemStack;
