@@ -28,7 +28,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Utility class loaded with useful string tools
+ * Utility class loaded with useful string tools.
+ * @since 0.9.0
  */
 public class StringUtils {
 

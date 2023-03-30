@@ -31,6 +31,7 @@ import java.util.Map;
  * Class that represents a clickable button inside the Navigation bar of a PaginatedGUI.
  * @see NavigationBar
  * @see com.github.alfonsoleandro.mputils.guis.PaginatedGUI
+ * @since 1.8.1
  */
 public class GUIButton {
 

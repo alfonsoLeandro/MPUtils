@@ -35,6 +35,7 @@ import java.util.List;
  * An unordered GUI that is a {@link SimpleGUI} if the amount of items is less than 54, or
  * a {@link PaginatedGUI} in any other case.
  * See an example here: <a href="https://imgur.com/a/oS9UsJc">https://imgur.com/a/oS9UsJc</a>
+ * @since 1.8.1
  */
 public class DynamicGUI extends Navigable {
 

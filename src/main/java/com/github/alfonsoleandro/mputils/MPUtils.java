@@ -38,7 +38,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * MPUtils' main class.
+ * MPUtils' main class. Nothing useful here.
+ * @since 0.9.0
  */
 public final class MPUtils extends JavaPlugin {
 
