@@ -28,21 +28,25 @@ public abstract class Reloadable {
 
     /**
      * Creates a new Reloadable and registers it in the given {@link ReloaderPlugin}.
+     *
      * @param plugin The {@link ReloaderPlugin} to register this Reloadable in.
      */
-    public Reloadable(ReloaderPlugin plugin){
+    public Reloadable(ReloaderPlugin plugin) {
         plugin.registerReloadable(this);
     }
 
     /**
      * Reloads this reloadable class.
+     *
      * @deprecated Use {@link #reload(boolean)} instead.
      */
     @Deprecated
-    public void reload(){}
+    public void reload() {
+    }
 
     /**
      * Reloads this reloadable class.
+     *
      * @param deep Whether the reload will be deep
      *             (Some actions may impact performance more than others, and they are not to be reloaded every time)
      */

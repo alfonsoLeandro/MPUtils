@@ -35,6 +35,7 @@ import java.util.List;
  * An unordered GUI that is a {@link SimpleGUI} if the amount of items is less than 54, or
  * a {@link PaginatedGUI} in any other case.
  * See an example here: <a href="https://imgur.com/a/oS9UsJc">https://imgur.com/a/oS9UsJc</a>
+ *
  * @since 1.8.1
  */
 public class DynamicGUI extends Navigable {
@@ -54,7 +55,8 @@ public class DynamicGUI extends Navigable {
 
     /**
      * Creates a new DynamicGUI with the default navigation bar.
-     * @param title The title for the GUI.
+     *
+     * @param title   The title for the GUI.
      * @param guiTags The unique String that will identify this GUI and help distinguish it from another GUIs.
      */
     public DynamicGUI(String title, String guiTags) {
@@ -63,11 +65,12 @@ public class DynamicGUI extends Navigable {
 
     /**
      * Creates a new DynamicGUI with the given navigation bar.
-     * @param title The title for the GUI.
+     *
+     * @param title   The title for the GUI.
      * @param guiTags The unique String that will identify this GUI and help distinguish it from another GUIs.
-     * @param navBar The navigation bar to use in this GUI when it has more than one page.
+     * @param navBar  The navigation bar to use in this GUI when it has more than one page.
      */
-    public DynamicGUI(String title, String guiTags, NavigationBar navBar){
+    public DynamicGUI(String title, String guiTags, NavigationBar navBar) {
         super(title, 9, guiTags, GUIType.SIMPLE, navBar);
         this.title = title;
         this.items = new ArrayList<>();
@@ -84,6 +87,7 @@ public class DynamicGUI extends Navigable {
 
     /**
      * Adds an item to the item list.
+     *
      * @param item The item to add.
      */
     @Override
@@ -95,15 +99,16 @@ public class DynamicGUI extends Navigable {
     /**
      * Opens the GUI for the given player. In case the GUI has more than one page,
      * this will open the GUI in the page number 0.
+     *
      * @param player The player to open the GUI for.
      */
     @Override
-    public void openGUI(Player player){
-        if(player == null) return;
+    public void openGUI(Player player) {
+        if (player == null) return;
         player.closeInventory();
-        if(this.isPaginated){
+        if (this.isPaginated) {
             setPage(player, 0);
-        }else {
+        } else {
             setItemsForPage(0);
             PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, this);
         }
@@ -112,11 +117,12 @@ public class DynamicGUI extends Navigable {
 
     /**
      * Opens the GUI in the given page if the gui is paginated, in other case opens the first page.
+     *
      * @param player The player to open the GUI for.
-     * @param page The page to try to open the GUi in.
+     * @param page   The page to try to open the GUi in.
      */
-    public void openGUI(Player player, int page){
-        if(!this.isPaginated){
+    public void openGUI(Player player, int page) {
+        if (!this.isPaginated) {
             openGUI(player);
             return;
         }
@@ -126,11 +132,12 @@ public class DynamicGUI extends Navigable {
 
     /**
      * Changes the items inside the inventory for the items in the given page.
+     *
      * @param player The player to set the GUI page for.
-     * @param page The page to set the items for.
+     * @param page   The page to set the items for.
      */
     @Override
-    public void setPage(Player player, int page){
+    public void setPage(Player player, int page) {
         setItemsForPage(page);
         setNavBarForPage(page);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
@@ -142,20 +149,20 @@ public class DynamicGUI extends Navigable {
      *
      * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
      */
-    public void setItemsForPage(int page){
+    public void setItemsForPage(int page) {
         List<ItemStack> itemsOnPage = this.isPaginated ?
-                this.items.subList(45*page, Math.min(this.items.size(), (45*page)+45))
+                this.items.subList(45 * page, Math.min(this.items.size(), (45 * page) + 45))
                 :
                 this.items;
-        int lastSlot = this.isPaginated ? this.guiSize -9 : this.guiSize;
+        int lastSlot = this.isPaginated ? this.guiSize - 9 : this.guiSize;
 
-        if(itemsOnPage.isEmpty()){
-            for(int i = 0; i < lastSlot; i++){
+        if (itemsOnPage.isEmpty()) {
+            for (int i = 0; i < lastSlot; i++) {
                 this.inventory.setItem(i, null);
             }
-        }else{
-            for(int i = 0; i < lastSlot; i++) {
-                if(i < itemsOnPage.size()) {
+        } else {
+            for (int i = 0; i < lastSlot; i++) {
+                if (i < itemsOnPage.size()) {
                     this.inventory.setItem(i, itemsOnPage.get(i));
                 } else {
                     this.inventory.setItem(i, null);
@@ -168,16 +175,16 @@ public class DynamicGUI extends Navigable {
     /**
      * Checks and corrects the size of the GUI, checking whether this GUI will be Paginated or Simple.
      */
-    public void checkSize(){
+    public void checkSize() {
         int previousSize = this.guiSize;
-        if(this.items.size() <= 54){
-            this.guiSize = Math.max((int)Math.ceil(this.items.size()/9.0)*9, 9);
+        if (this.items.size() <= 54) {
+            this.guiSize = Math.max((int) Math.ceil(this.items.size() / 9.0) * 9, 9);
             this.isPaginated = false;
-        }else{
+        } else {
             this.guiSize = 54;
             this.isPaginated = true;
         }
-        if(this.guiSize != previousSize){
+        if (this.guiSize != previousSize) {
             this.inventory = Bukkit.createInventory(null, this.guiSize, this.title);
         }
     }
@@ -185,20 +192,22 @@ public class DynamicGUI extends Navigable {
 
     /**
      * Gets the amount of pages on this DynamicGUI.
+     *
      * @return -1 if this GUI is not paginated, the amount of pages in any other case.
      */
     @Override
-    public int getPages(){
-        if(this.isPaginated) return (int) Math.ceil(this.items.size()/45.0);
+    public int getPages() {
+        if (this.isPaginated) return (int) Math.ceil(this.items.size() / 45.0);
         return -1;
     }
 
     /**
      * Checks whether this GUI is paginated.
      * Same as doing {@code DynamicGUI#getPages() > -1}.
+     *
      * @return True if this GUI has more than one page.
      */
-    public boolean isPaginated(){
+    public boolean isPaginated() {
         return this.isPaginated;
     }
 }

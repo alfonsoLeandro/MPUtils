@@ -39,6 +39,7 @@ import java.net.URL;
 
 /**
  * MPUtils' main class. Nothing useful here.
+ *
  * @since 0.9.0
  */
 public final class MPUtils extends JavaPlugin {
@@ -50,7 +51,7 @@ public final class MPUtils extends JavaPlugin {
     /**
      * The version string from the plugin.yml file.
      */
-    final private  String version = this.pdfFile.getVersion();
+    final private String version = this.pdfFile.getVersion();
     /**
      * The latest available version on spigot.
      */
@@ -66,10 +67,11 @@ public final class MPUtils extends JavaPlugin {
 
     /**
      * Sends a message to the console with colors and prefix.
+     *
      * @param msg The message to be sent.
      */
-    private void send(String msg){
-        Bukkit.getConsoleSender().sendMessage(StringUtils.colorizeString('&', "&f[&aMPUtils&f] "+msg));
+    private void send(String msg) {
+        Bukkit.getConsoleSender().sendMessage(StringUtils.colorizeString('&', "&f[&aMPUtils&f] " + msg));
     }
 
     /**
@@ -102,24 +104,24 @@ public final class MPUtils extends JavaPlugin {
     /**
      * Registers the config file for this plugin.
      */
-    private void registerConfig(){
+    private void registerConfig() {
         this.configYaml = new YamlFile(this, "config.yml");
     }
 
     /**
      * Registers the cooldown file for this plugin.
      */
-    private void registerCooldown(){
+    private void registerCooldown() {
         this.cooldownYaml = new YamlFile(this, "cooldowns.yml");
     }
 
     /**
      * Tries to start the metrics system.
      */
-    private void startMetrics(){
-        if(this.configYaml.getAccess().getBoolean("config.metrics enabled")) {
+    private void startMetrics() {
+        if (this.configYaml.getAccess().getBoolean("config.metrics enabled")) {
             new Metrics(this, 8825);
-        }else{
+        } else {
             send("&cMetrics are disabled");
             send("&cPlease consider setting &ametrics enabled &cto &atrue &cin config");
         }
@@ -128,7 +130,7 @@ public final class MPUtils extends JavaPlugin {
     /**
      * Checks for updates using the spigot api.
      */
-    private void updateChecker(){
+    private void updateChecker() {
         try {
             HttpURLConnection con = (HttpURLConnection) new URL(
                     "https://api.spigotmc.org/legacy/update.php?resource=82788").openConnection();
@@ -137,9 +139,9 @@ public final class MPUtils extends JavaPlugin {
             con.setReadTimeout(timed_out);
             this.latestVersion = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
             if (this.latestVersion.length() <= 7) {
-                if(!this.version.equals(this.latestVersion)){
+                if (!this.version.equals(this.latestVersion)) {
                     String exclamation = "&e&l(&4&l!&e&l)";
-                    send(exclamation +" &cThere is a new version available. &e(&7"+ this.latestVersion +"&e)");
+                    send(exclamation + " &cThere is a new version available. &e(&7" + this.latestVersion + "&e)");
                     send(exclamation + " &cDownload it here: &fhttps://bit.ly/MPUtils");
                 }
             }
@@ -159,6 +161,7 @@ public final class MPUtils extends JavaPlugin {
 
     /**
      * Gets this plugin's current installed version.
+     *
      * @return The version String.
      */
     public String getVersion() {
@@ -167,17 +170,19 @@ public final class MPUtils extends JavaPlugin {
 
     /**
      * Gets the latest available version from spigot.
+     *
      * @return The latest available version or null if the updateChecker failed.
      */
-    public String getLatestVersion(){
+    public String getLatestVersion() {
         return this.latestVersion;
     }
 
     /**
      * Gets the cooldown YAMLFile object.
+     *
      * @return The YAMLFile object containing the cooldown's File and FileConfiguration objects.
      */
-    public YamlFile getCooldownYaml(){
+    public YamlFile getCooldownYaml() {
         return this.cooldownYaml;
     }
 }

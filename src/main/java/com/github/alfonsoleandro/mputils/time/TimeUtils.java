@@ -34,41 +34,44 @@ public class TimeUtils {
     /**
      * Private constructor so this class cannot be instantiated
      */
-    private TimeUtils(){
+    private TimeUtils() {
         throw new IllegalStateException("TimeUtils is only a utility class!");
     }
 
 
     /**
      * Gets the amount of ticks a given amount of time of the given unit represents.
-     * @param amount The amount of time of the given time unit.
+     *
+     * @param amount   The amount of time of the given time unit.
      * @param timeUnit The timeunit for the given amount.
      * @return The value in ticks of the given time amount.
      */
-    public static int getTicks(int amount, TimeUnit timeUnit){
+    public static int getTicks(int amount, TimeUnit timeUnit) {
         return amount * timeUnit.getMultiplier();
     }
 
     /**
      * Gets the amount of ticks a given string represents.
+     *
      * @param timeString The string representing an amount of time. Must be in a "XT" format, where X
      *                   is any positive integer and T is a time format.
      * @return The value in ticks of the given time amount.
      * @see TimeUnit
      */
-    public static int getTicks(String timeString){
-        if(timeString == null || timeString.length() < 2) return 0;
-        return getTicks(Integer.parseInt(timeString.substring(0, timeString.length()-1)),
-                TimeUnit.getByAlias(timeString.charAt(timeString.length()-1)));
+    public static int getTicks(String timeString) {
+        if (timeString == null || timeString.length() < 2) return 0;
+        return getTicks(Integer.parseInt(timeString.substring(0, timeString.length() - 1)),
+                TimeUnit.getByAlias(timeString.charAt(timeString.length() - 1)));
     }
 
     /**
      * Gets the amount of ticks a given amount of time of the given unit represents.
-     * @param amount The amount of time of the given time unit.
+     *
+     * @param amount   The amount of time of the given time unit.
      * @param timeUnit The char representing the timeunit for the given amount.
      * @return The value in ticks of the given time amount.
      */
-    public static int getTicks(int amount, char timeUnit){
+    public static int getTicks(int amount, char timeUnit) {
         return getTicks(amount, TimeUnit.getByAlias(timeUnit));
     }
 
@@ -76,10 +79,11 @@ public class TimeUtils {
      * Translates and amount of ticks into weeks, days, hours, minutes and seconds.
      * From this string you will need to replace %weeks%, %week%, %days%, %day%, %hours%, %hour%, %minutes%,
      * %minute%, %seconds%, %second% and %and% placeholders.
+     *
      * @param ticks The amount of ticks to translate
      * @return A string with a w,d,h,m and s format.
      */
-    public static String getTimeString(long ticks){
+    public static String getTimeString(long ticks) {
         List<String> args = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
@@ -90,28 +94,28 @@ public class TimeUtils {
         final long seconds = getSeconds(ticks);
 
 
-        if(weeks > 0){
+        if (weeks > 0) {
             String s = weeks +
                     (weeks > 1 ? "%weeks%" : "%week%");
 
             args.add(s);
         }
 
-        if(days > 0){
+        if (days > 0) {
             String s = days +
                     (days > 1 ? "%days%" : "%day%");
 
             args.add(s);
         }
 
-        if(hours > 0){
+        if (hours > 0) {
             String s = hours +
                     (hours > 1 ? "%hours%" : "%hour%");
 
             args.add(s);
         }
 
-        if(minutes > 0){
+        if (minutes > 0) {
             String s = minutes +
                     (minutes > 1 ? "%minutes%" : "%minute%");
             args.add(s);
@@ -124,8 +128,8 @@ public class TimeUtils {
 
         for (int i = 0; i < args.size(); i++) {
 
-            if(args.size() > 1 && i != 0) {
-                sb.append(i == args.size()-1 ? " "+"%and%"+" " : ", ");
+            if (args.size() > 1 && i != 0) {
+                sb.append(i == args.size() - 1 ? " " + "%and%" + " " : ", ");
             }
 
             sb.append(args.get(i));
@@ -136,58 +140,63 @@ public class TimeUtils {
 
     /**
      * Gets the total amount of seconds a given amount of ticks represents.
+     *
      * @param ticks The ticks to translate to seconds.
      * @return The amount of seconds the given amount of ticks represent.
      */
-    public static long getTotalSeconds(long ticks){
-        return ticks/20;
+    public static long getTotalSeconds(long ticks) {
+        return ticks / 20;
     }
 
     /**
      * Gets only the amount of seconds (between 0 and 59) an amount of ticks represents.
+     *
      * @param ticks The amount of ticks.
      * @return A number between 0 and 59 representing the seconds for the given amount of ticks.
      */
-    public static long getSeconds(long ticks){
-        return java.util.concurrent.TimeUnit.SECONDS.toSeconds(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.MINUTES.toSeconds(getMinutes(ticks)) - java.util.concurrent.TimeUnit.HOURS.toSeconds(getHours(ticks)) - java.util.concurrent.TimeUnit.DAYS.toSeconds(getDays(ticks)) - java.util.concurrent.TimeUnit.DAYS.toSeconds(getWeeks(ticks)*7);
+    public static long getSeconds(long ticks) {
+        return java.util.concurrent.TimeUnit.SECONDS.toSeconds(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.MINUTES.toSeconds(getMinutes(ticks)) - java.util.concurrent.TimeUnit.HOURS.toSeconds(getHours(ticks)) - java.util.concurrent.TimeUnit.DAYS.toSeconds(getDays(ticks)) - java.util.concurrent.TimeUnit.DAYS.toSeconds(getWeeks(ticks) * 7);
     }
 
     /**
      * Gets only the amount of minutes (between 0 and 59) an amount of ticks represents.
+     *
      * @param ticks The amount of ticks.
      * @return A number between 0 and 59 representing the minutes for the given amount of ticks.
      */
-    public static long getMinutes(long ticks){
-        return java.util.concurrent.TimeUnit.SECONDS.toMinutes(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.HOURS.toMinutes(getHours(ticks)) - java.util.concurrent.TimeUnit.DAYS.toMinutes(getDays(ticks)) - java.util.concurrent.TimeUnit.DAYS.toMinutes(getWeeks(ticks)*7);
+    public static long getMinutes(long ticks) {
+        return java.util.concurrent.TimeUnit.SECONDS.toMinutes(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.HOURS.toMinutes(getHours(ticks)) - java.util.concurrent.TimeUnit.DAYS.toMinutes(getDays(ticks)) - java.util.concurrent.TimeUnit.DAYS.toMinutes(getWeeks(ticks) * 7);
     }
 
     /**
      * Gets only the amount of hours (between 0 and 23) an amount of ticks represents.
+     *
      * @param ticks The amount of ticks.
      * @return A number between 0 and 23 representing the hours for the given amount of ticks.
      */
-    public static long getHours(long ticks){
-        return java.util.concurrent.TimeUnit.SECONDS.toHours(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.DAYS.toHours(getDays(ticks)) - java.util.concurrent.TimeUnit.DAYS.toHours(getWeeks(ticks)*7);
+    public static long getHours(long ticks) {
+        return java.util.concurrent.TimeUnit.SECONDS.toHours(getTotalSeconds(ticks)) - java.util.concurrent.TimeUnit.DAYS.toHours(getDays(ticks)) - java.util.concurrent.TimeUnit.DAYS.toHours(getWeeks(ticks) * 7);
     }
 
     /**
      * Gets only the amount of days (between 0 and 6) an amount of ticks represents.
+     *
      * @param ticks The amount of ticks.
      * @return A number between 0 and 6 representing the days for the given amount of ticks.
      */
-    public static long getDays(long ticks){
-        return java.util.concurrent.TimeUnit.SECONDS.toDays(getTotalSeconds(ticks)) - getWeeks(ticks)*7;
+    public static long getDays(long ticks) {
+        return java.util.concurrent.TimeUnit.SECONDS.toDays(getTotalSeconds(ticks)) - getWeeks(ticks) * 7;
     }
 
     /**
      * Gets only the amount of weeks an amount of ticks represents.
+     *
      * @param ticks The amount of ticks.
      * @return A number representing the weeks for the given amount of ticks.
      */
-    public static long getWeeks(long ticks){
-        return java.util.concurrent.TimeUnit.SECONDS.toDays(getTotalSeconds(ticks))/7;
+    public static long getWeeks(long ticks) {
+        return java.util.concurrent.TimeUnit.SECONDS.toDays(getTotalSeconds(ticks)) / 7;
     }
-
 
 
 }

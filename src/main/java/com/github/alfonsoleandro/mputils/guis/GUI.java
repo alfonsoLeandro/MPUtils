@@ -48,16 +48,17 @@ public abstract class GUI {
 
     /**
      * Constructor for ANY GUI with its essential features.
-     * @param title The title for the inventory (colors must be applied before).
-     * @param size The size for the inventory.
+     *
+     * @param title   The title for the inventory (colors must be applied before).
+     * @param size    The size for the inventory.
      * @param guiTags Any String chosen to distinguish this GUI from another GUI.
      * @param guiType The type of GUI. Either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
      */
     protected GUI(String title, int size, String guiTags, GUIType guiType) {
-        if(size > 54) size = 54;
-        if(size % 9 != 0) size = (int) Math.floor(size / 9.0);
-        if(guiType.equals(GUIType.PAGINATED) && size < 18) size = 18;
-        if(size < 9) size = 9;
+        if (size > 54) size = 54;
+        if (size % 9 != 0) size = (int) Math.floor(size / 9.0);
+        if (guiType.equals(GUIType.PAGINATED) && size < 18) size = 18;
+        if (size < 9) size = 9;
 
 
         this.guiSize = size;
@@ -68,10 +69,11 @@ public abstract class GUI {
     /**
      * Opens the GUI for the given player. In case the GUI is an instance of {@link PaginatedGUI}
      * this will open the GUI in the page number 0.
+     *
      * @param player The player to open the GUI for.
      */
-    public void openGUI(Player player){
-        if(player == null) return;
+    public void openGUI(Player player) {
+        if (player == null) return;
         player.closeInventory();
         player.openInventory(this.inventory);
         PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, this);
@@ -84,24 +86,27 @@ public abstract class GUI {
 
     /**
      * Adds an item to the item list.
+     *
      * @param item The item to add.
      */
     public abstract void addItem(ItemStack item);
 
     /**
      * Get the unique tags for this GUI.
+     *
      * @return The GuiTags String for this GUI.
      */
-    public String getGuiTags(){
+    public String getGuiTags() {
         return this.guiTags;
     }
 
 
     /**
      * Get the size for this GUI, in case of {@link PaginatedGUI}, the given size is the size per page.
+     *
      * @return The size of this GUI.
      */
-    public int getSize(){
+    public int getSize() {
         return this.guiSize;
     }
 }

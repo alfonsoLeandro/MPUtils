@@ -34,43 +34,48 @@ public abstract class ReloaderPlugin extends JavaPlugin {
 
     /**
      * The collection of {@link Reloadable} classes to reload when the plugin reloads.
+     *
      * @see #reload()
      */
     protected final Set<Reloadable> reloadables = new HashSet<>();
 
     /**
      * Adds a new Reloadable to the reloadables collection.
+     *
      * @param reloadable The {@link Reloadable} to add.
      */
-    public void registerReloadable(Reloadable reloadable){
+    public void registerReloadable(Reloadable reloadable) {
         this.reloadables.add(reloadable);
     }
 
     /**
      * Removes a Reloadable from the reloadables collection.
+     *
      * @param reloadable The {@link Reloadable} to remove.
      */
-    public void unRegisterReloadable(Reloadable reloadable){
+    public void unRegisterReloadable(Reloadable reloadable) {
         this.reloadables.remove(reloadable);
     }
 
     /**
      * Reloads every reloadable class, reloading the plugin.
+     *
      * @see Reloadable
      * @deprecated Use {@link #reload(boolean)} instead.
      */
     @Deprecated
-    public void reload(){
+    public void reload() {
         this.reloadables.forEach(r -> r.reload(false));
     }
 
     /**
      * Reloads every reloadable class, reloading the plugin.
+     *
      * @param deep Whether the reload will be deep
      *             (Some actions may impact performance more than others, and they are not to be reloaded every time)
      * @see Reloadable
      */
-    public void reload(boolean deep){
+    public void reload(boolean deep) {
         this.reloadables.forEach(r -> r.reload(deep));
     }
 }

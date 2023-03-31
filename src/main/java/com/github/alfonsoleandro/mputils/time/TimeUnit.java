@@ -30,24 +30,23 @@ public enum TimeUnit {
     /**
      * Seconds, conformed by 20 ticks.
      */
-    SECONDS(TICKS.multiplier*20),
+    SECONDS(TICKS.multiplier * 20),
     /**
      * Minutes, conformed by 60 seconds, 1,200 ticks.
      */
-    MINUTES(SECONDS.multiplier*60),
+    MINUTES(SECONDS.multiplier * 60),
     /**
      * Hours, conformed by 60 minutes, 1,200 seconds, 72,000 ticks.
      */
-    HOURS(MINUTES.multiplier*60),
+    HOURS(MINUTES.multiplier * 60),
     /**
      * Days, conformed by 24 hours, 3,600 minutes, 216,000 seconds, 1,728,000 ticks.
      */
-    DAYS(HOURS.multiplier*24),
+    DAYS(HOURS.multiplier * 24),
     /**
      * Weeks, conformed by 7 days 168 hours, 25,200 minutes, 1,512,000 seconds, 12,096,000 ticks.
      */
-    WEEKS(DAYS.multiplier*7);
-
+    WEEKS(DAYS.multiplier * 7);
 
 
     /**
@@ -79,11 +78,12 @@ public enum TimeUnit {
     /**
      * Gets a timeUnit by its alias (t/T = ticks, m/M = minutes, h/H = hours, d/D = days,
      * w/W = weeks, any other case = seconds).
+     *
      * @param alias The alias the timeunit is known by.
      * @return The timeUnit the given char represents.
      */
-    public static TimeUnit getByAlias(char alias){
-        switch (alias){
+    public static TimeUnit getByAlias(char alias) {
+        switch (alias) {
             case 't':
             case 'T':
                 return TICKS;

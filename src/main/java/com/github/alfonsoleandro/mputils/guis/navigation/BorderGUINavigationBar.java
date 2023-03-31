@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 /**
  * Special {@link NavigationBar} used in {@link BorderPaginatedGUI}.
+ *
  * @since 1.8.1
  */
 public class BorderGUINavigationBar extends NavigationBar {
@@ -42,7 +43,7 @@ public class BorderGUINavigationBar extends NavigationBar {
     /**
      * Creates a new Navigation Bar with the default items.
      */
-    public BorderGUINavigationBar(){
+    public BorderGUINavigationBar() {
         super();
         this.borderButtons = new GUIButton[17];
         setDefaultBorderButtons();
@@ -50,44 +51,48 @@ public class BorderGUINavigationBar extends NavigationBar {
 
     /**
      * Creates a new navigation bar, with the given array of buttons.
-     * @param buttons The buttons contained in this navigation bar.
+     *
+     * @param buttons       The buttons contained in this navigation bar.
      * @param borderButtons The buttons that go in the border of the BorderGUI.
      * @throws IllegalArgumentException Thrown if the size of the arrays is incorrect
-     * (9 for the buttons, 17 for the border buttons).
+     *                                  (9 for the buttons, 17 for the border buttons).
      */
     public BorderGUINavigationBar(GUIButton[] buttons, GUIButton[] borderButtons) throws IllegalArgumentException {
         super(buttons);
-        if(borderButtons == null){
+        if (borderButtons == null) {
             this.borderButtons = new GUIButton[17];
             setDefaultBorderButtons();
-        }else {
-            if(borderButtons.length != 9) throw new IllegalArgumentException("There must be 17 buttons in the border buttons array");
+        } else {
+            if (borderButtons.length != 9)
+                throw new IllegalArgumentException("There must be 17 buttons in the border buttons array");
             this.borderButtons = buttons;
         }
     }
 
     /**
      * Gets the button in the given position.
+     *
      * @param i The position of the button relative to the navigation bar (0-25).
      * @return The button in the given position.
      */
     @Override
-    public GUIButton getButtonAt(int i){
-        if(i < 9) return this.buttons[i];
-        return this.borderButtons[i-9];
+    public GUIButton getButtonAt(int i) {
+        if (i < 9) return this.buttons[i];
+        return this.borderButtons[i - 9];
     }
 
     /**
      * Sets the button in the given position.
-     * @param i The position of the button relative to the navigation bar (0-25).
+     *
+     * @param i      The position of the button relative to the navigation bar (0-25).
      * @param button The new button.
      */
     @Override
-    public void setButtonAt(int i, GUIButton button){
-        if(i < 9) {
+    public void setButtonAt(int i, GUIButton button) {
+        if (i < 9) {
             this.buttons[i] = button;
-        }else{
-            this.borderButtons[i-9] = button;
+        } else {
+            this.borderButtons[i - 9] = button;
         }
     }
 
@@ -98,7 +103,7 @@ public class BorderGUINavigationBar extends NavigationBar {
      * empty slot*17 for the GUI border.
      */
     @Override
-    public void setDefaultButtons(){
+    public void setDefaultButtons() {
         super.setDefaultButtons();
         this.setDefaultBorderButtons();
     }
@@ -106,8 +111,8 @@ public class BorderGUINavigationBar extends NavigationBar {
     /**
      * Sets the default border buttons for this BorderedGUINavigationBar.
      */
-    public void setDefaultBorderButtons(){
-        if(this.borderButtons == null) return;
+    public void setDefaultBorderButtons() {
+        if (this.borderButtons == null) return;
         GUIButton guiBorder = new GUIButton("DEFAULT:guiBorder",
                 MPItemStacks.newItemStack(Material.PAPER,
                         1,
@@ -116,27 +121,28 @@ public class BorderGUINavigationBar extends NavigationBar {
                 GUIButton.GUIButtonCondition.ALWAYS,
                 null);
 
-        for(int i = 0; i < 17; i++){
+        for (int i = 0; i < 17; i++) {
             this.borderButtons[i] = guiBorder;
         }
     }
 
     /**
      * Adds the navigation bar to the PaginatedGUI.
-     * @param inv The GUI inventory.
-     * @param page The page the GUI is going to open in.
+     *
+     * @param inv        The GUI inventory.
+     * @param page       The page the GUI is going to open in.
      * @param totalPages The total amount of pages of the PaginatedGUI.
      */
     @Override
-    public void addNavigationBar(Inventory inv, int page, int totalPages){
+    public void addNavigationBar(Inventory inv, int page, int totalPages) {
         int btnSlot = 0;
         for (int i = 45; i < 54; i++) {
             inv.setItem(i, this.buttons[btnSlot].getItem(page, totalPages));
             btnSlot++;
         }
         btnSlot = 0;
-        for(int i = 0; i < 45; i++){
-            if(i< 9 || i%9 == 0 || (i+1)%9 == 0){
+        for (int i = 0; i < 45; i++) {
+            if (i < 9 || i % 9 == 0 || (i + 1) % 9 == 0) {
                 inv.setItem(i, this.borderButtons[btnSlot].getItem(page, totalPages));
                 btnSlot++;
             }
@@ -145,9 +151,10 @@ public class BorderGUINavigationBar extends NavigationBar {
 
     /**
      * Gets the array of buttons that make up the border of the GUI this Navigation bar belongs to.
+     *
      * @return The array of buttons from the border of this NavigationBar.
      */
-    public GUIButton[] getBorderButtons(){
+    public GUIButton[] getBorderButtons() {
         return this.borderButtons;
     }
 

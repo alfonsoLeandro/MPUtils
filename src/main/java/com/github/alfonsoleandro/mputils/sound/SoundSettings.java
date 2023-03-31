@@ -25,6 +25,7 @@ import org.bukkit.Sound;
 
 /**
  * Settings for a specific sound.
+ *
  * @see SoundUtils
  * @since 1.10.0
  */
@@ -36,8 +37,8 @@ public class SoundSettings {
 
     public SoundSettings(String sound, double volume, double pitch) {
         this.sound = Sound.valueOf(sound);
-        this.volume = (float)volume;
-        this.pitch = (float)pitch;
+        this.volume = (float) volume;
+        this.pitch = (float) pitch;
     }
 
 

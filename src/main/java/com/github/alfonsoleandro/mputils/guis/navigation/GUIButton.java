@@ -29,6 +29,7 @@ import java.util.Map;
 
 /**
  * Class that represents a clickable button inside the Navigation bar of a PaginatedGUI.
+ *
  * @see NavigationBar
  * @see com.github.alfonsoleandro.mputils.guis.PaginatedGUI
  * @since 1.8.1
@@ -54,10 +55,11 @@ public class GUIButton {
 
     /**
      * Creates a new GUIButton. These are clickable slots inside the Navigation Bar.
+     *
      * @param buttonTags A string that identifies this buttons to distinguish it from another buttons.
-     * @param item The item to show if the condition is met.
-     * @param condition The condition to meet for the item to show.
-     * @param backup The item to show if the condition was not met.
+     * @param item       The item to show if the condition is met.
+     * @param condition  The condition to meet for the item to show.
+     * @param backup     The item to show if the condition was not met.
      * @see NavigationBar
      * @see GUIButtonCondition
      */
@@ -70,6 +72,7 @@ public class GUIButton {
 
     /**
      * Gets the tag associated with this button.
+     *
      * @return The identifying string for this button object.
      */
     public String getButtonTags() {
@@ -78,6 +81,7 @@ public class GUIButton {
 
     /**
      * Gets the raw (no placeholders replaced) item for this button.
+     *
      * @return An ItemStack that represents this button, with no placeholders replaced.
      */
     public ItemStack getRawItem() {
@@ -86,34 +90,38 @@ public class GUIButton {
 
     /**
      * Gets the raw (no placeholders replaced) backup item for this button (item shown if the condition is not met).
+     *
      * @return An ItemStack that represents this button, with no placeholders replaced, when the condition is not met.
      */
-    public ItemStack getBackup(){
+    public ItemStack getBackup() {
         return this.backup;
     }
 
     /**
      * Gets the item to show for this button.
      * If the condition is met, the main item is shown, in other case, the backup item is shown.
-     * @param page The number of page this button will belong to.
+     *
+     * @param page       The number of page this button will belong to.
      * @param totalPages The total number of pages the GUI this button will be shown has.
      * @return Either the item or the backup item.
      */
     public ItemStack getItem(int page, int totalPages) {
-        ItemStack item = this.condition.meetsCondition(page ,totalPages) ? this.item : this.backup;
+        ItemStack item = this.condition.meetsCondition(page, totalPages) ? this.item : this.backup;
         return MPItemStacks.replacePlaceholders(item.clone(), getPlaceHoldersMap(page, totalPages));
     }
 
     /**
      * Gets the condition that this button needs to meet in order to show the main item.
+     *
      * @return The condition for this button to show its main item.
      */
-    public GUIButtonCondition getCondition(){
+    public GUIButtonCondition getCondition() {
         return this.condition;
     }
 
     /**
      * Sets the main item of this button.
+     *
      * @param item The new main item.
      */
     public void setItem(ItemStack item) {
@@ -122,17 +130,19 @@ public class GUIButton {
 
     /**
      * Sets the condition for this button to show its main item.
+     *
      * @param condition The new condition.
      */
-    public void setCondition(GUIButtonCondition condition){
+    public void setCondition(GUIButtonCondition condition) {
         this.condition = condition;
     }
 
     /**
      * Sets the item to show if the condition is not met.
+     *
      * @param backup The new backup item.
      */
-    public void setBackupItem(ItemStack backup){
+    public void setBackupItem(ItemStack backup) {
         this.backup = backup;
     }
 
@@ -174,16 +184,17 @@ public class GUIButton {
 
         /**
          * Checks to see if the given variables meets the condition.
-         * @param page The current page the GUi is opened in.
+         *
+         * @param page       The current page the GUi is opened in.
          * @param totalPages The total number of pages this GUI has.
          * @return true if the condition is met.
          */
-        public boolean meetsCondition(int page, int totalPages){
+        public boolean meetsCondition(int page, int totalPages) {
             switch (this) {
                 case ALWAYS:
                     return true;
                 case HAS_NEXT_PAGE:
-                    return page+1 < totalPages;
+                    return page + 1 < totalPages;
                 case HAS_PREVIOUS_PAGE:
                     return page > 0;
             }

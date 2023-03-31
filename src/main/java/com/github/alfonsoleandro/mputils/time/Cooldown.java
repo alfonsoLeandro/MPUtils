@@ -48,7 +48,7 @@ public class Cooldown {
      * @param cooldownName The name to be given to this cooldown, used for saving to the cooldown file.
      *                     Suggested cooldownName is "PluginName-CooldownType", i.e: "MPUtils-SendMessage"
      */
-    public Cooldown(String cooldownName){
+    public Cooldown(String cooldownName) {
         this.cooldownName = cooldownName;
         this.cooldownYaml = JavaPlugin.getPlugin(MPUtils.class).getCooldownYaml();
     }
@@ -57,13 +57,13 @@ public class Cooldown {
      * Adds an item to the cooldown for a given amount of time.
      *
      * @param itemName The item to add to the cooldown.
-     * @param amount The amount of time to add the player to the cooldown for.
+     * @param amount   The amount of time to add the player to the cooldown for.
      * @param timeUnit The timeunit that the amount represents. See {@link TimeUnit}.
      */
-    public void addToCooldown(String itemName, int amount, TimeUnit timeUnit){
-        this.cooldownYaml.getAccess().set("cooldowns."+ this.cooldownName +"."+itemName,
+    public void addToCooldown(String itemName, int amount, TimeUnit timeUnit) {
+        this.cooldownYaml.getAccess().set("cooldowns." + this.cooldownName + "." + itemName,
                 System.currentTimeMillis() +
-                java.util.concurrent.TimeUnit.SECONDS.toMillis(TimeUtils.getTotalSeconds((long) amount *timeUnit.getMultiplier())));
+                        java.util.concurrent.TimeUnit.SECONDS.toMillis(TimeUtils.getTotalSeconds((long) amount * timeUnit.getMultiplier())));
         this.cooldownYaml.save(true);
     }
 
@@ -72,8 +72,8 @@ public class Cooldown {
      *
      * @param itemName The item to remove from the cooldown.
      */
-    public void removeFromCooldown(String itemName){
-        this.cooldownYaml.getAccess().set("cooldowns."+ this.cooldownName +"."+itemName, null);
+    public void removeFromCooldown(String itemName) {
+        this.cooldownYaml.getAccess().set("cooldowns." + this.cooldownName + "." + itemName, null);
         this.cooldownYaml.save(true);
     }
 
@@ -86,7 +86,7 @@ public class Cooldown {
      * @return true if the item is on cooldown, and it has not finished.
      */
     @Deprecated
-    public boolean isInCooldown(String itemName){
+    public boolean isInCooldown(String itemName) {
         return getTimeLeft(itemName) > 0;
     }
 
@@ -97,28 +97,27 @@ public class Cooldown {
      * @param itemName The player to look for.
      * @return The time left for the item to leave the cooldown or 0 if the item was not in cooldown.
      */
-    public long getTimeLeft(String itemName){
-        if(!this.cooldownYaml.getAccess().contains("cooldowns."+ this.cooldownName +"."+itemName)) return 0;
+    public long getTimeLeft(String itemName) {
+        if (!this.cooldownYaml.getAccess().contains("cooldowns." + this.cooldownName + "." + itemName)) return 0;
 
-        final long timeLeft = this.cooldownYaml.getAccess().getLong("cooldowns."+ this.cooldownName +"."+itemName) - System.currentTimeMillis();
+        final long timeLeft = this.cooldownYaml.getAccess().getLong("cooldowns." + this.cooldownName + "." + itemName) - System.currentTimeMillis();
 
-        if(timeLeft <= 0){
+        if (timeLeft <= 0) {
             removeFromCooldown(itemName);
             return 0;
-        }else{
-            return java.util.concurrent.TimeUnit.MILLISECONDS.toSeconds(timeLeft)*TimeUnit.SECONDS.getMultiplier();
+        } else {
+            return java.util.concurrent.TimeUnit.MILLISECONDS.toSeconds(timeLeft) * TimeUnit.SECONDS.getMultiplier();
         }
     }
 
     /**
      * Removes every item from the cooldown.
      */
-    public void removeAll(){
-        if(!this.cooldownYaml.getAccess().contains("cooldowns."+ this.cooldownName)) return;
-        this.cooldownYaml.getAccess().set("cooldowns."+ this.cooldownName, null);
+    public void removeAll() {
+        if (!this.cooldownYaml.getAccess().contains("cooldowns." + this.cooldownName)) return;
+        this.cooldownYaml.getAccess().set("cooldowns." + this.cooldownName, null);
         this.cooldownYaml.save(true);
     }
-
 
 
 }

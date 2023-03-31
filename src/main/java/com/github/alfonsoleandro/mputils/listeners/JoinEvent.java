@@ -36,19 +36,19 @@ public class JoinEvent implements Listener {
 
     private final MPUtils plugin;
 
-    public JoinEvent(MPUtils plugin){
+    public JoinEvent(MPUtils plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent event){
+    public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         final String exclamation = "&e&l(&4&l!&e&l)";
         final String prefix = "&f[&aMPUtils&f]";
 
-        if(player.isOp() && !this.plugin.getVersion().equals(this.plugin.getLatestVersion())) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix+" "+exclamation+" &4New version available &7(&e"+ this.plugin.getLatestVersion()+"&7)"));
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix+" "+exclamation+" &fhttps://bit.ly/MPUtils") );
+        if (player.isOp() && !this.plugin.getVersion().equals(this.plugin.getLatestVersion())) {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + " " + exclamation + " &4New version available &7(&e" + this.plugin.getLatestVersion() + "&7)"));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('&', prefix + " " + exclamation + " &fhttps://bit.ly/MPUtils"));
         }
     }
 

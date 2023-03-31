@@ -43,7 +43,7 @@ public class GUIAttributes {
      */
     private final GUI gui;
 
-    public GUIAttributes(int page, GUIType guiType, GUI gui){
+    public GUIAttributes(int page, GUIType guiType, GUI gui) {
         this.page = page;
         this.guiType = guiType;
         this.gui = gui;
@@ -51,6 +51,7 @@ public class GUIAttributes {
 
     /**
      * Gets the page number the player was last seen on.
+     *
      * @return The GUI page number or -1 if the {@link GUIType} is equal to {@link SimpleGUI}.
      */
     public int getPage() {
@@ -59,6 +60,7 @@ public class GUIAttributes {
 
     /**
      * Gets the GUI type.
+     *
      * @return Either {@link SimpleGUI} or {@link PaginatedGUI}.
      */
     public GUIType getGuiType() {
@@ -67,9 +69,10 @@ public class GUIAttributes {
 
     /**
      * Gets the GUI object.
+     *
      * @return The GUI object.
      */
-    public GUI getGui(){
+    public GUI getGui() {
         return this.gui;
     }
 

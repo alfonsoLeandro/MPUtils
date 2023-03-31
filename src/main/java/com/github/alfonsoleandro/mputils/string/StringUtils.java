@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 
 /**
  * Utility class loaded with useful string tools.
+ *
  * @since 0.9.0
  */
 public class StringUtils {
@@ -39,20 +40,20 @@ public class StringUtils {
      * or in case the server version is older than 1.16.1 only uses {@link ChatColor#translateAlternateColorCodes(char, String)}.
      *
      * @param alternateColorCode The alternate color code to check for in replacement of '§'.
-     * @param string The string to give color to.
+     * @param string             The string to give color to.
      * @return An empty string if the given string is null and a message to console or the colored string.
      */
-    public static String colorizeString(char alternateColorCode, String string){
-        if(string == null){
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED+"[MPUtils] There was an error while colorizing a string, check your config");
+    public static String colorizeString(char alternateColorCode, String string) {
+        if (string == null) {
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[MPUtils] There was an error while colorizing a string, check your config");
             return "";
         }
         Pattern pattern = Pattern.compile("&#[0-9a-fA-F]{6}");
         Matcher matcher = pattern.matcher(string);
-        while(matcher.find()){
+        while (matcher.find()) {
             try {
                 string = string.replace(matcher.group(), net.md_5.bungee.api.ChatColor.of(matcher.group().replace("&", "")).toString());
-            }catch (Error | Exception e){
+            } catch (Error | Exception e) {
                 //Version < 1.16.1 = No RGB
                 break;
             }
@@ -66,37 +67,40 @@ public class StringUtils {
      * Calls {@link #colorizeString(char, String)} using {@literal '&'} as the alternate color code.
      * Supports {@literal &} and any number from 0 through 9, or any letter with 'a' through 'f' or
      * any RGB hex color code of 6 digits using the format {@literal '&#RRGGBB'}.
+     *
      * @param string The string to apply color to.
      * @return The given string, but with color codes replaced with the color they represent.
      */
-    public static String colorizeString(String string){
+    public static String colorizeString(String string) {
         return colorizeString('&', string);
     }
 
 
     /**
      * Checks if a string is either null or empty ("").
+     *
      * @param string The string to check.
      * @return true if the string is null or empty, false otherwise.
      */
-    public static boolean isNullOrEmpty(String string){
+    public static boolean isNullOrEmpty(String string) {
         return string == null || string.isEmpty();
     }
 
 
     /**
      * Counts the amount of time a string is present in another string.
-     * @param string The string where to count matches.
+     *
+     * @param string    The string where to count matches.
      * @param subString The string that should be found in the first string to count one more match.
      * @return 0 if any of the parameter Strings is null or empty, in other case,
      * the amount of time the second string is found in the first string.
      */
-    public static int countMatches(String string, String subString){
-        if(isNullOrEmpty(string)) return 0;
-        if(isNullOrEmpty(subString)) return 0;
+    public static int countMatches(String string, String subString) {
+        if (isNullOrEmpty(string)) return 0;
+        if (isNullOrEmpty(subString)) return 0;
 
         String string2 = string.replace(subString, "");
 
-        return (string.length() - string2.length())/subString.length();
+        return (string.length() - string2.length()) / subString.length();
     }
 }

@@ -26,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * Class containing several utility methods related to inventories.
+ *
  * @since 1.10.0
  */
 public class InventoryUtils {
@@ -36,18 +37,19 @@ public class InventoryUtils {
 
     /**
      * Checks if an item can be added to a given Inventory.
+     *
      * @param item The item to add.
-     * @param inv The inventory where the item is trying to be added to.
+     * @param inv  The inventory where the item is trying to be added to.
      * @return true if the item can be added to the given inventory.
      * @since 1.10.0
      */
-    public static boolean canAdd(ItemStack item, Inventory inv){
-        if(inv.firstEmpty() != -1) return true;
+    public static boolean canAdd(ItemStack item, Inventory inv) {
+        if (inv.firstEmpty() != -1) return true;
 
         for (int i = 0; i < inv.getSize(); i++) {
             ItemStack inSlot = inv.getItem(i);
             assert inSlot != null;
-            if(inSlot.isSimilar(item) && inSlot.getAmount()+item.getAmount() <= item.getMaxStackSize()){
+            if (inSlot.isSimilar(item) && inSlot.getAmount() + item.getAmount() <= item.getMaxStackSize()) {
                 return true;
             }
         }

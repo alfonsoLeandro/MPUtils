@@ -56,16 +56,16 @@ public class GUIButtonClickEvent extends GUIClickEvent {
      * inside a GUI's navigation bar.
      * Should be used for turning pages, interactive GUIs and cancelling the {@link InventoryClickEvent}.
      *
-     * @param view {@link InventoryClickEvent}'s InventoryView.
-     * @param type {@link InventoryClickEvent}'s SlotType.
-     * @param slot {@link InventoryClickEvent}'s clicked slot.
-     * @param click {@link InventoryClickEvent}'s ClickType.
-     * @param action {@link InventoryClickEvent}'s InventoryAction.
-     * @param key {@link InventoryClickEvent}'s hotbar key pressed (if any).
-     * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
-     * @param gui The PaginatedGUI object.
+     * @param view          {@link InventoryClickEvent}'s InventoryView.
+     * @param type          {@link InventoryClickEvent}'s SlotType.
+     * @param slot          {@link InventoryClickEvent}'s clicked slot.
+     * @param click         {@link InventoryClickEvent}'s ClickType.
+     * @param action        {@link InventoryClickEvent}'s InventoryAction.
+     * @param key           {@link InventoryClickEvent}'s hotbar key pressed (if any).
+     * @param page          The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
+     * @param gui           The PaginatedGUI object.
      * @param clickedButton The button that was involved in this event.
-     * @param navBarSlot The slot in which the clicked button was in relative to the navigation bar.
+     * @param navBarSlot    The slot in which the clicked button was in relative to the navigation bar.
      * @see NavigationBar
      */
     public GUIButtonClickEvent(InventoryView view,
@@ -77,7 +77,7 @@ public class GUIButtonClickEvent extends GUIClickEvent {
                                int page,
                                Navigable gui,
                                GUIButton clickedButton,
-                               int navBarSlot){
+                               int navBarSlot) {
         super(view, type, slot, click, action, key, GUIType.PAGINATED, page, gui, true);
         this.clickedButton = clickedButton;
         this.navBarSlot = navBarSlot;
@@ -117,23 +117,26 @@ public class GUIButtonClickEvent extends GUIClickEvent {
 
     /**
      * Gets the button involved in this event.
+     *
      * @return The button responsible for triggering this event.
      */
-    public GUIButton getClickedButton(){
+    public GUIButton getClickedButton() {
         return this.clickedButton;
     }
 
     /**
      * Gets the slot of the button that was clicked.
      * Can be used to get the button using {@link NavigationBar#getButtonAt(int)}.
+     *
      * @return The navigation bar slot the button was placed.
      */
-    public int getNavBarSlot(){
+    public int getNavBarSlot() {
         return this.navBarSlot;
     }
 
     /**
      * Gets whether the button met its condition needed for showing its main item or not.
+     *
      * @return True if the button met its condition and was showing its main item the moment it was clicked.
      */
     public boolean buttonMetCondition() {

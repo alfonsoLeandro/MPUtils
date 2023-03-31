@@ -49,7 +49,7 @@ public final class MPItemStacks {
     /**
      * Private constructor so this class cannot be instantiated
      */
-    private MPItemStacks(){
+    private MPItemStacks() {
         throw new IllegalStateException("MPItemStacks is only a utility class!");
     }
 
@@ -58,28 +58,28 @@ public final class MPItemStacks {
      * Replaces every placeholder from a map of placeholders with their corresponding value from the same map.
      * It works on display names and lore lines.
      *
-     * @param itemStack The item to modify.
+     * @param itemStack    The item to modify.
      * @param placeholders The map containing every placeholder with its corresponding value in the following way:
      *                     (placeholder : value).
      * @return The ItemStack with its name and lore placeholders replaced, null if the ItemStack was null,
      * or the same ItemStack if its type was AIR
      */
-    public static ItemStack replacePlaceholders(ItemStack itemStack, Map<String,String> placeholders){
-        if(itemStack == null || itemStack.getType().equals(Material.AIR)) return itemStack;
+    public static ItemStack replacePlaceholders(ItemStack itemStack, Map<String, String> placeholders) {
+        if (itemStack == null || itemStack.getType().equals(Material.AIR)) return itemStack;
 
         ItemMeta meta = itemStack.getItemMeta();
-        if(meta == null) return itemStack;
+        if (meta == null) return itemStack;
 
-        if(meta.hasDisplayName()){
+        if (meta.hasDisplayName()) {
             String displayName = meta.getDisplayName();
-            for (String key: placeholders.keySet()) {
+            for (String key : placeholders.keySet()) {
                 displayName = displayName.replace(key, placeholders.get(key));
             }
             meta.setDisplayName(displayName);
         }
-        if(meta.getLore() != null){
+        if (meta.getLore() != null) {
             List<String> lore = new ArrayList<>();
-            for (String line: meta.getLore()) {
+            for (String line : meta.getLore()) {
                 for (String key : placeholders.keySet()) {
                     line = line.replace(key, placeholders.get(key));
                 }
@@ -98,27 +98,27 @@ public final class MPItemStacks {
      * Helps on the making of a new {@link ItemStack} setting its lore a display name.
      * Colorizes the lore and display name using {@link StringUtils#colorizeString(char, String)} using {@literal '&'} as the alternateColorCode.
      *
-     * @param material The material for the ItemStack.
-     * @param amount The size of the stack.
+     * @param material    The material for the ItemStack.
+     * @param amount      The size of the stack.
      * @param displayName The display nam for the item.
-     * @param lore The lore to be added. If none wanted, a {@code new ArrayList<>()} should be acceptable.
+     * @param lore        The lore to be added. If none wanted, a {@code new ArrayList<>()} should be acceptable.
      * @return The new ItemStack with the given properties.
      */
-    public static ItemStack newItemStack(Material material, int amount, String displayName, List<String> lore){
+    public static ItemStack newItemStack(Material material, int amount, String displayName, List<String> lore) {
         ItemStack itemStack = new ItemStack(material, amount);
         ItemMeta meta = itemStack.getItemMeta();
-        if(meta == null) return itemStack;
+        if (meta == null) return itemStack;
 
-        if(displayName != null && !displayName.equalsIgnoreCase("")) {
+        if (displayName != null && !displayName.equalsIgnoreCase("")) {
             meta.setDisplayName(StringUtils.colorizeString('&', displayName));
         }
 
         List<String> resultingLore = new ArrayList<>();
-        for(String line : lore){
+        for (String line : lore) {
             resultingLore.add(StringUtils.colorizeString('&', line));
         }
         meta.setLore(resultingLore);
-        
+
         itemStack.setItemMeta(meta);
 
         return itemStack;
@@ -128,20 +128,20 @@ public final class MPItemStacks {
      * Changes a given {@link ItemStack}'s lore and display name.
      * Colorizes the lore and display name using {@link StringUtils#colorizeString(char, String)} using {@literal '&'} as the alternateColorCode.
      *
-     * @param itemStack The original ItemStack.
+     * @param itemStack   The original ItemStack.
      * @param displayName The display nam for the item. Set to null to leave unmodified.
-     * @param lore The lore to be added. Set to null to leave unmodified.
+     * @param lore        The lore to be added. Set to null to leave unmodified.
      * @return The same ItemStack with the given properties.
      */
-    public static ItemStack rename(@NotNull ItemStack itemStack, @Nullable String displayName, @Nullable List<String> lore){
-        if(!itemStack.hasItemMeta()) return itemStack;
+    public static ItemStack rename(@NotNull ItemStack itemStack, @Nullable String displayName, @Nullable List<String> lore) {
+        if (!itemStack.hasItemMeta()) return itemStack;
         ItemMeta meta = itemStack.getItemMeta();
         assert meta != null;
 
-        if(displayName != null) {
+        if (displayName != null) {
             meta.setDisplayName(StringUtils.colorizeString('&', displayName));
         }
-        if(lore != null) {
+        if (lore != null) {
             List<String> resultingLore = new ArrayList<>();
             for (String line : lore) {
                 resultingLore.add(StringUtils.colorizeString('&', line));
@@ -156,11 +156,12 @@ public final class MPItemStacks {
 
     /**
      * Serializes an inventory: saves inventory type, size, and contents.
+     *
      * @param inv The inventory to serialize.
      * @return A string that can be deserialized using {@link #deserializeInventory(String)}.
      * @see #serializeContents(ItemStack[])
      */
-    public static String serializeInventory(Inventory inv){
+    public static String serializeInventory(Inventory inv) {
         Map<String, Object> properties = new HashMap<>();
         properties.put("type", inv.getType());
         properties.put("size", inv.getSize());
@@ -172,24 +173,26 @@ public final class MPItemStacks {
     /**
      * Loads an inventory from a given string.
      * The given string must be provided by {@link #serializeInventory(Inventory)} or have the same format.
+     *
      * @param invString The String object that represents an inventory.
      * @return The inventory that the string argument represents.
      * @throws InvalidConfigurationException If the given String contains a contents String that
-     * is invalid for {@link YamlConfiguration#loadFromString(String)} use.
+     *                                       is invalid for {@link YamlConfiguration#loadFromString(String)} use.
      */
     public static Inventory deserializeInventory(String invString) throws InvalidConfigurationException {
         Map<String, Object> inventoryProperties = new Gson().fromJson(invString,
-                new TypeToken<Map<String, Object>>(){}.getType());
+                new TypeToken<Map<String, Object>>() {
+                }.getType());
         String type = (String) inventoryProperties.get("type");
         int size = (Integer) inventoryProperties.get("size");
         ItemStack[] contents = deserializeContents(
-                (String)inventoryProperties.get("contents"),
+                (String) inventoryProperties.get("contents"),
                 size);
 
         Inventory inv;
-        if(type.equalsIgnoreCase("CHEST")){
+        if (type.equalsIgnoreCase("CHEST")) {
             inv = Bukkit.createInventory(null, size);
-        }else{
+        } else {
             inv = Bukkit.createInventory(null, InventoryType.valueOf(type));
         }
         inv.setContents(contents);
@@ -200,12 +203,13 @@ public final class MPItemStacks {
 
     /**
      * Saves an array of ItemStacks to a String, preserves null spaces.
+     *
      * @param contents The contents of an inventory.
      * @return A string object that represents the given array of ItemStacks.
      */
-    public static String serializeContents(ItemStack[] contents){
+    public static String serializeContents(ItemStack[] contents) {
         YamlConfiguration tempConfig = new YamlConfiguration();
-        for(int i = 0; i < contents.length; i++){
+        for (int i = 0; i < contents.length; i++) {
             ItemStack item = contents[i];
             tempConfig.set(String.valueOf(i), item);
         }
@@ -217,8 +221,9 @@ public final class MPItemStacks {
     /**
      * Loads an array of ItemStacks from a given String.
      * The String must be provided by {@link #serializeContents(ItemStack[])} or have the same format.
+     *
      * @param contentsString The contents of the array.
-     * @param invSize The size of the inventory that these contents will be added to.
+     * @param invSize        The size of the inventory that these contents will be added to.
      * @return An array of ItemStacks with the size equal to {@code invSize}.
      * @throws InvalidConfigurationException If the given String is invalid for {@link YamlConfiguration#loadFromString(String)} use.
      */

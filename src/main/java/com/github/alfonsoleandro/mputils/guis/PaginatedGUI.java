@@ -35,7 +35,7 @@ import java.util.*;
  * Class for creating a paginated GUI with unlimited pages.
  * Dynamically updates the number of pages according to the given List of ItemStacks.
  */
-public class PaginatedGUI extends Navigable{
+public class PaginatedGUI extends Navigable {
 
     /**
      * The total list of items throughout the entire GUI.
@@ -78,10 +78,11 @@ public class PaginatedGUI extends Navigable{
 
     /**
      * Adds an item to this GUI at the end of the list of items.
+     *
      * @param item The item to add.
      */
     @Override
-    public void addItem(ItemStack item){
+    public void addItem(ItemStack item) {
         this.items.add(item);
         updateItemsPerPage(this.items);
     }
@@ -98,13 +99,13 @@ public class PaginatedGUI extends Navigable{
         this.pagesOfItems = new HashMap<>();
         List<ItemStack> itemsOnAPage = new ArrayList<>();
         for (ItemStack item : items) {
-            if(itemsOnAPage.size() >= this.guiSize - 9) {
+            if (itemsOnAPage.size() >= this.guiSize - 9) {
                 this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
                 itemsOnAPage = new ArrayList<>();
             }
             itemsOnAPage.add(item);
         }
-        if(!itemsOnAPage.isEmpty()) this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
+        if (!itemsOnAPage.isEmpty()) this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
         this.pages = this.pagesOfItems.size();
     }
 
@@ -128,8 +129,8 @@ public class PaginatedGUI extends Navigable{
      * @param page   The page of the GUI to open for the player.
      */
     public void openGUI(Player player, int page) {
-        if(player == null) return;
-        if(page > this.pages) return;
+        if (player == null) return;
+        if (page > this.pages) return;
         player.closeInventory();
         setPage(player, page);
         player.openInventory(this.inventory);
@@ -138,11 +139,12 @@ public class PaginatedGUI extends Navigable{
 
     /**
      * Changes the items inside the inventory for the items in the given page.
+     *
      * @param player The player to set the GUI page for.
-     * @param page The page to set the items for.
+     * @param page   The page to set the items for.
      */
     @Override
-    public void setPage(Player player, int page){
+    public void setPage(Player player, int page) {
         setItemsForPage(page);
         setNavBarForPage(page);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
@@ -153,16 +155,16 @@ public class PaginatedGUI extends Navigable{
      *
      * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
      */
-    public void setItemsForPage(int page){
+    public void setItemsForPage(int page) {
         List<ItemStack> itemsOnPage = this.pagesOfItems.get(page);
 
-        if(itemsOnPage == null || itemsOnPage.isEmpty()){
-            for(int i = 0; i < this.guiSize -9; i++){
+        if (itemsOnPage == null || itemsOnPage.isEmpty()) {
+            for (int i = 0; i < this.guiSize - 9; i++) {
                 this.inventory.setItem(i, null);
             }
-        }else{
-            for(int i = 0; i < this.guiSize -9; i++) {
-                if(i < itemsOnPage.size()) {
+        } else {
+            for (int i = 0; i < this.guiSize - 9; i++) {
+                if (i < itemsOnPage.size()) {
                     this.inventory.setItem(i, itemsOnPage.get(i));
                 } else {
                     this.inventory.setItem(i, null);
@@ -175,7 +177,7 @@ public class PaginatedGUI extends Navigable{
      * Clears the inventory and the item list for this PaginatedGUI.
      */
     @Override
-    public void clearInventory(){
+    public void clearInventory() {
         this.inventory.clear();
         this.items.clear();
     }
@@ -183,26 +185,30 @@ public class PaginatedGUI extends Navigable{
 
     /**
      * Opens this PaginatedGUI in page 0 for the given player.
+     *
      * @param player The player to open the GUI for.
      * @see #openGUI(Player, int)
      */
     @Override
-    public void openGUI(Player player){
+    public void openGUI(Player player) {
         this.openGUI(player, 0);
     }
 
 
     /**
      * Gets a list of all the items contained throughout all the pages in this GUI.
+     *
      * @return The list of items.
      */
-    public List<ItemStack> getItems(){
+    public List<ItemStack> getItems() {
         return this.items;
     }
 
     //<editor-fold desc="Deprecated methods" defaultstate="collapsed">
+
     /**
      * Sets the default items for the navBar buttons.
+     *
      * @deprecated Now in NavigationBar class ({@link NavigationBar#setDefaultButtons()}).
      */
     @Deprecated
@@ -301,7 +307,7 @@ public class PaginatedGUI extends Navigable{
      * up to 9 different buttons to any PaginatedGUI using {@link NavigationBar} and {@link GUIButton}.
      */
     @Deprecated
-    public ItemStack getPreviousPageItem(int page){
+    public ItemStack getPreviousPageItem(int page) {
         return MPItemStacks.replacePlaceholders(this.navBar.getButtonAt(0).getRawItem().clone(),
                 getPlaceHoldersMap(page, this.pages));
     }
@@ -316,7 +322,7 @@ public class PaginatedGUI extends Navigable{
      * up to 9 different buttons to any PaginatedGUI using {@link NavigationBar} and {@link GUIButton}.
      */
     @Deprecated
-    public ItemStack getNavBarItem(int page){
+    public ItemStack getNavBarItem(int page) {
         return this.navBar.getButtonAt(1).getItem(page, this.pages);
     }
 
@@ -329,7 +335,7 @@ public class PaginatedGUI extends Navigable{
      * up to 9 different buttons to any PaginatedGUI using {@link NavigationBar} and {@link GUIButton}.
      */
     @Deprecated
-    public ItemStack getCurrentPageItem(int page){
+    public ItemStack getCurrentPageItem(int page) {
         return this.navBar.getButtonAt(4).getItem(page, this.pages);
     }
 
@@ -342,7 +348,7 @@ public class PaginatedGUI extends Navigable{
      * up to 9 different buttons to any PaginatedGUI using {@link NavigationBar} and {@link GUIButton}.
      */
     @Deprecated
-    public ItemStack getNextPageItem(int page){
+    public ItemStack getNextPageItem(int page) {
         return MPItemStacks.replacePlaceholders(this.navBar.getButtonAt(8).getRawItem().clone(),
                 getPlaceHoldersMap(page, this.pages));
     }
@@ -350,15 +356,16 @@ public class PaginatedGUI extends Navigable{
 
     /**
      * Gets a Map with every placeholder available for this object with every corresponding value.
+     *
      * @param page The page the GUI is in.
      * @return A map containing every placeholder and every value.
      * @deprecated Moved to {@link GUIButton}.
      */
     @Deprecated
-    private Map<String, String> getPlaceHoldersMap(int page, int totalPages){
+    private Map<String, String> getPlaceHoldersMap(int page, int totalPages) {
         Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("%page%", String.valueOf(page+1));
-        placeholders.put("%nextpage%", String.valueOf(page+2));
+        placeholders.put("%page%", String.valueOf(page + 1));
+        placeholders.put("%nextpage%", String.valueOf(page + 2));
         placeholders.put("%previouspage%", String.valueOf(page));
         placeholders.put("%totalpages%", String.valueOf(totalPages));
 

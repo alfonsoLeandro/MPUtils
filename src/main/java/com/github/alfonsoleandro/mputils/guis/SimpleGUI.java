@@ -30,9 +30,10 @@ import java.util.HashMap;
 
 /**
  * Class for creating a GUI of a single page.
+ *
  * @see PaginatedGUI
  */
-public class SimpleGUI extends GUI{
+public class SimpleGUI extends GUI {
 
     /**
      * Hashmap containing every item that has been added to the GUI.
@@ -44,11 +45,11 @@ public class SimpleGUI extends GUI{
      * Creates an empty non-paginated CHEST type {@link InventoryType#CHEST} inventory for GUI purposes
      * with a title (not colored by default, can be passed colored) and a size.
      *
-     * @param title Inventory title.
-     * @param size Inventory size.
+     * @param title   Inventory title.
+     * @param size    Inventory size.
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
-    public SimpleGUI(String title, int size, String guiTags){
+    public SimpleGUI(String title, int size, String guiTags) {
         super(title, size, guiTags, GUIType.SIMPLE);
         this.items = new HashMap<>();
     }
@@ -58,10 +59,10 @@ public class SimpleGUI extends GUI{
      * Can replace an existing ItemStack if it was in the given index.
      *
      * @param index The index where to put the item.
-     * @param item The item to be put.
+     * @param item  The item to be put.
      */
-    public void setItem(int index, ItemStack item){
-        if(index >= this.guiSize || index < 0) return;
+    public void setItem(int index, ItemStack item) {
+        if (index >= this.guiSize || index < 0) return;
         this.inventory.setItem(index, item);
         this.items.put(index, item);
     }
@@ -72,11 +73,11 @@ public class SimpleGUI extends GUI{
      * @param item The item to add.
      */
     @Override
-    public void addItem(ItemStack item){
+    public void addItem(ItemStack item) {
         this.inventory.addItem(item);
-        for(int i = 0; i < this.guiSize; i++){
+        for (int i = 0; i < this.guiSize; i++) {
             ItemStack inI = this.inventory.getItem(i);
-            if(inI != null && inI.isSimilar(item)){
+            if (inI != null && inI.isSimilar(item)) {
                 this.items.put(i, item);
             }
         }
@@ -88,9 +89,9 @@ public class SimpleGUI extends GUI{
      *
      * @param title The new title to use.
      */
-    public void setTitle(String title){
+    public void setTitle(String title) {
         this.inventory = Bukkit.createInventory(null, this.guiSize, title);
-        for(int i : this.items.keySet()){
+        for (int i : this.items.keySet()) {
             this.inventory.setItem(i, this.items.get(i));
         }
 
@@ -100,16 +101,17 @@ public class SimpleGUI extends GUI{
      * Removes all the items from the inventory.
      */
     @Override
-    public void clearInventory(){
+    public void clearInventory() {
         this.inventory.clear();
         this.items.clear();
     }
 
     /**
      * Gets a hashmap containing every item in the inventory and its slot.
+     *
      * @return The hashmap containing the items in this GUI.
      */
-    public HashMap<Integer, ItemStack> getItems(){
+    public HashMap<Integer, ItemStack> getItems() {
         return this.items;
     }
 

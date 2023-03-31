@@ -46,7 +46,7 @@ public final class PlayersOnGUIsManager {
      * @param playerName The name of the player to look for.
      * @return the page the player is in if it is a paginated GUI, -1 if it is not paginated or null if that player is not in a GUI.
      */
-    public static GUIAttributes getAttributesByPlayer(String playerName){
+    public static GUIAttributes getAttributesByPlayer(String playerName) {
         return players.get(playerName);
     }
 
@@ -56,10 +56,10 @@ public final class PlayersOnGUIsManager {
      *
      * @param playerName The name of the player to add.
      * @param pageNumber The page of the GUI the player is on, or -1 if it's not a paginated GUI.
-     * @param guiType The GUI type the player is currently on. Either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
-     * @param gui The GUI instance used to then pass it to {@link GUIClickEvent}.
+     * @param guiType    The GUI type the player is currently on. Either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
+     * @param gui        The GUI instance used to then pass it to {@link GUIClickEvent}.
      */
-    public static void addPlayer(String playerName, int pageNumber, GUIType guiType, GUI gui){
+    public static void addPlayer(String playerName, int pageNumber, GUIType guiType, GUI gui) {
         players.remove(playerName);
         players.put(playerName, new GUIAttributes(pageNumber, guiType, gui));
     }
@@ -69,7 +69,7 @@ public final class PlayersOnGUIsManager {
      *
      * @param playerName The player to look for.
      */
-    public static void removePlayer(String playerName){
+    public static void removePlayer(String playerName) {
         players.remove(playerName);
     }
 
@@ -79,18 +79,18 @@ public final class PlayersOnGUIsManager {
      * @param playerName The name of the player to look for.
      * @return true if there is a player with that name being managed by this manager.
      */
-    public static boolean isInGUI(String playerName){
+    public static boolean isInGUI(String playerName) {
         return players.containsKey(playerName);
     }
 
     /**
-     *  Forcibly removes all players from this manager and closes their inventories.
+     * Forcibly removes all players from this manager and closes their inventories.
      */
-    public static void removeAll(){
-        for(String playerName : new ArrayList<>( players.keySet())){
+    public static void removeAll() {
+        for (String playerName : new ArrayList<>(players.keySet())) {
             removePlayer(playerName);
             Player player = Bukkit.getPlayerExact(playerName);
-            if(player == null) continue;
+            if (player == null) continue;
             player.closeInventory();
         }
     }

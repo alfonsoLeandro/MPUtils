@@ -32,6 +32,7 @@ import java.util.Arrays;
 /**
  * Series of items that must be present in every PaginatedGUI.
  * Serves the purpose of helping the users to navigate a GUI.
+ *
  * @since 1.8.1
  */
 public class NavigationBar {
@@ -44,22 +45,23 @@ public class NavigationBar {
     /**
      * Creates a new Navigation bar with the default items.
      */
-    public NavigationBar(){
+    public NavigationBar() {
         this.buttons = new GUIButton[9];
         setDefaultButtons();
     }
 
     /**
      * Creates a new navigation bar, with the given array of buttons.
+     *
      * @param buttons The buttons contained in this navigation bar.
      * @throws IllegalArgumentException Thrown if the size of the given array of buttons is not 9.
      */
     public NavigationBar(GUIButton[] buttons) throws IllegalArgumentException {
-        if(buttons == null){
+        if (buttons == null) {
             this.buttons = new GUIButton[9];
             setDefaultButtons();
-        }else {
-            if(buttons.length != 9) throw new IllegalArgumentException("There must be 9 buttons in the buttons array");
+        } else {
+            if (buttons.length != 9) throw new IllegalArgumentException("There must be 9 buttons in the buttons array");
             this.buttons = buttons;
         }
     }
@@ -69,7 +71,7 @@ public class NavigationBar {
      * Sets the default buttons for this Navigation Bar.
      * Previous page, empty slot*3, current page, empty slot*3 and next page.
      */
-    public void setDefaultButtons(){
+    public void setDefaultButtons() {
         GUIButton nextPage = new GUIButton("DEFAULT:next page",
                 MPItemStacks.newItemStack(Material.ARROW,
                         1,
@@ -124,41 +126,45 @@ public class NavigationBar {
 
     /**
      * Gets the button in the given position.
+     *
      * @param i The position of the button relative to the navigation bar (0-8).
      * @return The button in the given position.
      */
-    public GUIButton getButtonAt(int i){
+    public GUIButton getButtonAt(int i) {
         return this.buttons[i];
     }
 
     /**
      * Sets the button in the given position.
-     * @param i The position of the button relative to the navigation bar (0-8).
+     *
+     * @param i      The position of the button relative to the navigation bar (0-8).
      * @param button The new button.
      */
-    public void setButtonAt(int i, GUIButton button){
+    public void setButtonAt(int i, GUIButton button) {
         this.buttons[i] = button;
     }
 
 
     /**
      * Gets the button array in this NavigationBar.
+     *
      * @return The array of buttons included in this NavigationBar.
      */
-    public GUIButton[] getButtons(){
+    public GUIButton[] getButtons() {
         return this.buttons;
     }
 
     /**
      * Adds the navigation bar to the PaginatedGUI.
-     * @param inv The GUI inventory.
-     * @param page The page the GUI is going to open in.
+     *
+     * @param inv        The GUI inventory.
+     * @param page       The page the GUI is going to open in.
      * @param totalPages The total amount of pages of the PaginatedGUI.
      */
-    public void addNavigationBar(Inventory inv, int page, int totalPages){
-        int navBarSlot = inv.getSize()-9;
-        for(int i = 0; i < 9; i++){
-            inv.setItem(navBarSlot+i, this.buttons[i].getItem(page, totalPages));
+    public void addNavigationBar(Inventory inv, int page, int totalPages) {
+        int navBarSlot = inv.getSize() - 9;
+        for (int i = 0; i < 9; i++) {
+            inv.setItem(navBarSlot + i, this.buttons[i].getItem(page, totalPages));
         }
     }
 

@@ -39,6 +39,7 @@ import java.util.Map;
 
 /**
  * Messages manager. Should manage every message a plugin can send. Includes several message sending methods.
+ *
  * @param <E> The Enum supposed to contain every configurable message included in a configuration file.
  */
 public class MessageSender<E extends MessageEnum> extends Reloadable {
@@ -63,6 +64,7 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      * The string that will go before every message for the path inside the file.
      * Example: message "some message" messagesPath "messages" the message "SOME_MESSAGE" will be found under
      * "messages.some message".
+     *
      * @deprecated Should now be grabbed from {@link MessageEnum#getPath()}. Will be removed in 1.11.0
      */
     @Deprecated
@@ -78,15 +80,16 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
     /**
      * Creates a new instance of the message sender.
-     * @param plugin The plugin using this manager's main class instance.
+     *
+     * @param plugin             The plugin using this manager's main class instance.
      * @param messagesEnumValues The values from the enum containing the messages, each
      *                           of these values will be used later to load the messages from the given yaml file
      *                           after the given path. Keep in mind that "_" will be replaced for " " and the string
      *                           will be in lower case.
-     * @param messagesYamlFile The YamlFile where the messages will be taken from.
-     * @param messagesPath The path where the messages will be found under inside the given YamlFile.
-     * @param prefixPath The path where the prefix (string before every message) will be found inside the given YamlFile.
-     *                   Can be null (messages will not have a prefix by default).
+     * @param messagesYamlFile   The YamlFile where the messages will be taken from.
+     * @param messagesPath       The path where the messages will be found under inside the given YamlFile.
+     * @param prefixPath         The path where the prefix (string before every message) will be found inside the given YamlFile.
+     *                           Can be null (messages will not have a prefix by default).
      * @deprecated Now the message path should be specified inside the enum {@link MessageEnum}.
      */
     @Deprecated
@@ -103,12 +106,13 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
     /**
      * Creates a new instance of the message sender.
-     * @param plugin The plugin using this manager's main class instance.
+     *
+     * @param plugin             The plugin using this manager's main class instance.
      * @param messagesEnumValues The values from the enum containing the messages, each
      *                           of these values will be used later to load the messages from the given yaml file
      *                           after the given path. Keep in mind that "_" will be replaced for " " and the string
      *                           will be in lower case.
-     * @param messagesYamlFile The YamlFile where the messages will be taken from.
+     * @param messagesYamlFile   The YamlFile where the messages will be taken from.
      **/
     public MessageSender(@NotNull ReloaderPlugin plugin, @NotNull E[] messagesEnumValues,
                          @NotNull YamlFile messagesYamlFile) {
@@ -118,14 +122,15 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
     /**
      * Creates a new instance of the message sender.
-     * @param plugin The plugin using this manager's main class instance.
+     *
+     * @param plugin             The plugin using this manager's main class instance.
      * @param messagesEnumValues The values from the enum containing the messages, each
      *                           of these values will be used later to load the messages from the given yaml file
      *                           after the given path. Keep in mind that "_" will be replaced for " " and the string
      *                           will be in lower case.
-     * @param messagesYamlFile The YamlFile where the messages will be taken from.
-     * @param prefixPath The path where the prefix (string before every message) will be found inside the given YamlFile.
-     *                   Can be null (messages will not have a prefix by default).
+     * @param messagesYamlFile   The YamlFile where the messages will be taken from.
+     * @param prefixPath         The path where the prefix (string before every message) will be found inside the given YamlFile.
+     *                           Can be null (messages will not have a prefix by default).
      */
     public MessageSender(@NotNull ReloaderPlugin plugin, @NotNull E[] messagesEnumValues,
                          @NotNull YamlFile messagesYamlFile, @Nullable String prefixPath) {
@@ -148,13 +153,13 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
         this.prefix = this.prefixPath == null ? null : messages.getString(this.prefixPath);
 
-        if(this.messagesPath != null) {
+        if (this.messagesPath != null) {
             for (E message : this.messagesEnumValues) {
                 this.messages.put(message,
                         messages.getString(this.messagesPath + "." +
                                 message.toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
             }
-        }else{
+        } else {
             for (E message : this.messagesEnumValues) {
                 this.messages.put(message,
                         messages.getString(message.getPath()));
@@ -164,65 +169,70 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
     /**
      * Sends a string to the given CommandSender.
+     *
      * @param sender The intended receiver for the message.
-     * @param msg The String to send.
+     * @param msg    The String to send.
      */
-    public void send(@NotNull CommandSender sender, @NotNull String msg){
-        sender.sendMessage(StringUtils.colorizeString((this.prefix == null ? "" : this.prefix +" ")+msg));
+    public void send(@NotNull CommandSender sender, @NotNull String msg) {
+        sender.sendMessage(StringUtils.colorizeString((this.prefix == null ? "" : this.prefix + " ") + msg));
     }
 
     /**
      * Sends a string to the console.
+     *
      * @param msg The string to send.
      */
-    public void send(@NotNull String msg){
+    public void send(@NotNull String msg) {
         send(Bukkit.getConsoleSender(), msg);
     }
 
     /**
      * Sends a message to the given CommandSender.
-     * @param sender The intended receiver for the message.
-     * @param message The message to send.
+     *
+     * @param sender       The intended receiver for the message.
+     * @param message      The message to send.
      * @param replacements The string to replace from the message and its replacements in the following format:
      *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
      */
-    public void send(@NotNull CommandSender sender, @NotNull E message, String... replacements){
+    public void send(@NotNull CommandSender sender, @NotNull E message, String... replacements) {
         send(sender, getString(message, replacements));
     }
 
     /**
      * Sends a message to every player online and the console.
-     * @param excluded A player to exclude from this message.
-     * @param message The message to send.
+     *
+     * @param excluded     A player to exclude from this message.
+     * @param message      The message to send.
      * @param replacements The string to replace from the message and its replacements in the following format:
      *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
      */
-    public void broadcast(@Nullable Player excluded, @NotNull E message, String... replacements){
+    public void broadcast(@Nullable Player excluded, @NotNull E message, String... replacements) {
         String msg = getString(message, replacements);
 
-        for(Player toSend : Bukkit.getOnlinePlayers()) {
-            if(toSend.equals(excluded)) continue;
+        for (Player toSend : Bukkit.getOnlinePlayers()) {
+            if (toSend.equals(excluded)) continue;
             send(toSend, msg);
         }
-        Bukkit.getConsoleSender().sendMessage(StringUtils.colorizeString((this.prefix == null ? "" : this.prefix +" ")+msg));
+        Bukkit.getConsoleSender().sendMessage(StringUtils.colorizeString((this.prefix == null ? "" : this.prefix + " ") + msg));
     }
 
     /**
      * Sends a title and subtitle to a player.
-     * @param player The player that will be receiving this title and subtitle.
-     * @param title The title to send (set to null to not send title).
-     * @param subtitle The subtitle to send (set to null to not send subtitle).
-     * @param stay The amount of time the title
+     *
+     * @param player       The player that will be receiving this title and subtitle.
+     * @param title        The title to send (set to null to not send title).
+     * @param subtitle     The subtitle to send (set to null to not send subtitle).
+     * @param stay         The amount of time the title
      * @param replacements The string to replace from the message and its replacements in the following format:
      *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
      */
-    public void title(@NotNull Player player, @Nullable E title, @Nullable E subtitle, int stay, String... replacements){
+    public void title(@NotNull Player player, @Nullable E title, @Nullable E subtitle, int stay, String... replacements) {
         String ttl = null;
-        if(title != null) {
+        if (title != null) {
             ttl = getString(title, replacements);
         }
         String sub = null;
-        if(subtitle != null) {
+        if (subtitle != null) {
             sub = getString(subtitle, replacements);
         }
         player.sendTitle(ttl == null ? "" : StringUtils.colorizeString(ttl),
@@ -234,20 +244,21 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
     /**
      * Sends a title and subtitle to a player.
-     * @param player The player that will be receiving this title and subtitle.
-     * @param title The title to send (set to "" or null to not send title).
-     * @param subtitle The subtitle to send (set to "" or null to not send subtitle).
-     * @param stay The amount of time the title
+     *
+     * @param player       The player that will be receiving this title and subtitle.
+     * @param title        The title to send (set to "" or null to not send title).
+     * @param subtitle     The subtitle to send (set to "" or null to not send subtitle).
+     * @param stay         The amount of time the title
      * @param replacements The string to replace from the message and its replacements in the following format:
      *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
      */
     public void title(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int stay, String... replacements) {
-        if(title != null){
+        if (title != null) {
             for (int i = 0; i < replacements.length; i++) {
                 title = title.replace(replacements[i], replacements[++i]);
             }
         }
-        if(subtitle != null) {
+        if (subtitle != null) {
             for (int i = 0; i < replacements.length; i++) {
                 subtitle = subtitle.replace(replacements[i], replacements[++i]);
             }
@@ -261,14 +272,15 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
     /**
      * Gets the string that goes with the given enum value ("message").
-     * @param message The enum value.
+     *
+     * @param message      The enum value.
      * @param replacements The string to replace from the message and its replacements in the following format:
      *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
      * @return The string that goes with the given message with the given strings replaced.
      */
-    public String getString(E message, String... replacements){
+    public String getString(E message, String... replacements) {
         String msg = this.messages.get(message);
-        if(msg == null) msg = message.getDefault();
+        if (msg == null) msg = message.getDefault();
         for (int i = 0; i < replacements.length; i++) {
             msg = msg.replace(replacements[i], replacements[++i]);
         }
@@ -278,15 +290,15 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
     /**
      * Reloads every reloadable class, reloading the plugin.
+     *
      * @param deep True to re define the value of {@link #messagesYamlFile}. Usually not necessary.
      * @see Reloadable
      */
     @Override
     public void reload(boolean deep) {
-        if(deep) this.messagesYamlFile = new YamlFile(this.plugin, this.messagesYamlFile.getFileName());
+        if (deep) this.messagesYamlFile = new YamlFile(this.plugin, this.messagesYamlFile.getFileName());
         this.loadMessages();
     }
-
 
 
 }

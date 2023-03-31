@@ -49,15 +49,15 @@ public class GUIClickEvent extends InventoryClickEvent {
      * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
      * Should be used for turning pages, interactive GUIs and cancelling the {@link InventoryClickEvent}.
      *
-     * @param view {@link InventoryClickEvent}'s InventoryView.
-     * @param type {@link InventoryClickEvent}'s SlotType.
-     * @param slot {@link InventoryClickEvent}'s clicked slot.
-     * @param click {@link InventoryClickEvent}'s ClickType.
-     * @param action {@link InventoryClickEvent}'s InventoryAction.
-     * @param key {@link InventoryClickEvent}'s hotbar key pressed (if any).
-     * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
-     * @param page The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
-     * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
+     * @param view          {@link InventoryClickEvent}'s InventoryView.
+     * @param type          {@link InventoryClickEvent}'s SlotType.
+     * @param slot          {@link InventoryClickEvent}'s clicked slot.
+     * @param click         {@link InventoryClickEvent}'s ClickType.
+     * @param action        {@link InventoryClickEvent}'s InventoryAction.
+     * @param key           {@link InventoryClickEvent}'s hotbar key pressed (if any).
+     * @param guiType       The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
+     * @param page          The page the clicker was on when clicking, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
+     * @param gui           The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
      * @param isButtonClick Whether a Button was clicked and therefore called {@link GUIButtonClickEvent}.
      */
     public GUIClickEvent(InventoryView view,
@@ -69,7 +69,7 @@ public class GUIClickEvent extends InventoryClickEvent {
                          GUIType guiType,
                          int page,
                          GUI gui,
-                         boolean isButtonClick){
+                         boolean isButtonClick) {
         super(view, type, slot, click, action, key);
         this.guiType = guiType;
         this.page = page;
@@ -151,29 +151,31 @@ public class GUIClickEvent extends InventoryClickEvent {
     /**
      * Gets the true index of the clicked slot, if it was a usable slot.
      * i.e: in a paginated gui, the first slot of the second page would be slot number 45.
+     *
      * @return -1 if the click is outside the menu, or inside the navigation bar, the usable slot index in other case.
      */
-    public int getTrueSlotClicked(){
+    public int getTrueSlotClicked() {
         // Click outside the GUI.
-        if(getRawSlot() >= this.gui.getSize()) return -1;
-        if(this.guiType.equals(GUIType.SIMPLE)){
+        if (getRawSlot() >= this.gui.getSize()) return -1;
+        if (this.guiType.equals(GUIType.SIMPLE)) {
             return getRawSlot();
-        }else{
+        } else {
             // Navbar click.
-            if(getRawSlot() >= this.gui.getSize()-9) return -1;
-            if(this.gui instanceof DynamicGUI && !((DynamicGUI)this.gui).isPaginated()){
+            if (getRawSlot() >= this.gui.getSize() - 9) return -1;
+            if (this.gui instanceof DynamicGUI && !((DynamicGUI) this.gui).isPaginated()) {
                 return getRawSlot();
-            }else{
-                return getRawSlot() + 45*(this.page);
+            } else {
+                return getRawSlot() + 45 * (this.page);
             }
         }
     }
 
     /**
      * Checks if a {@link GUIButtonClickEvent} was fired from the same click event this event was fired.
+     *
      * @return true if a {@link GUIButtonClickEvent} was called.
      */
-    public boolean isButtonClick(){
+    public boolean isButtonClick() {
         return this.isButtonClick;
     }
 }

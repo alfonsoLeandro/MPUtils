@@ -44,11 +44,11 @@ public class GUICloseEvent extends InventoryCloseEvent {
      * Custom event for registering when a player closes a MPUtils GUI inventory.
      *
      * @param transaction {@link InventoryCloseEvent}'s InventoryView.
-     * @param guiType The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
-     * @param page The page the clicker was on when closing the GUI, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
-     * @param gui The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
+     * @param guiType     The {@link GUIType} clicked, either {@link GUIType#PAGINATED} or {@link GUIType#SIMPLE}
+     * @param page        The page the clicker was on when closing the GUI, or -1 if the {@link GUIType} is {@link GUIType#SIMPLE}
+     * @param gui         The gui object, can be simple or paginated, use {@link GUIClickEvent#getGuiType()} to check whether it is a paginated gui or a simple gui.
      */
-    public GUICloseEvent(InventoryView transaction, GUIType guiType, int page, GUI gui){
+    public GUICloseEvent(InventoryView transaction, GUIType guiType, int page, GUI gui) {
         super(transaction);
         this.guiType = guiType;
         this.page = page;
