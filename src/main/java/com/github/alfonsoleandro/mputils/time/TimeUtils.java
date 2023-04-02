@@ -27,7 +27,8 @@ import java.util.List;
 /**
  * Class containing various useful time related methods.
  *
- * @author lelesape
+ * @author alfonsoLeandro
+ * @since 1.6.0
  */
 public class TimeUtils {
 

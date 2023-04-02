@@ -33,6 +33,7 @@ import java.util.Arrays;
  * Series of items that must be present in every PaginatedGUI.
  * Serves the purpose of helping the users to navigate a GUI.
  *
+ * @author alfonsoLeandro
  * @since 1.8.1
  */
 public class NavigationBar {

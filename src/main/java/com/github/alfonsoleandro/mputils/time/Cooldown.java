@@ -28,6 +28,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Class used for creating plain cooldowns (for "items", players or functions of any type).
+ *
+ * @author alfonsoLeandro
+ * @since 1.6.0
  */
 public class Cooldown {
 

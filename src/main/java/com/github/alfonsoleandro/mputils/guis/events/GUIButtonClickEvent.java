@@ -34,6 +34,12 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Custom event for GUI navbar button's clicks, called when a player, using a paginated GUI clicks a GUI navbar item.
+ *
+ * @author alfonsoLeandro
+ * @since 1.8.1
+ */
 public class GUIButtonClickEvent extends GUIClickEvent {
 
     private static final HandlerList HANDLERS = new HandlerList();

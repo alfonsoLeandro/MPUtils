@@ -27,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Class containing several utility methods related to inventories.
  *
+ * @author alfonsoLeandro
  * @since 1.10.0
  */
 public class InventoryUtils {

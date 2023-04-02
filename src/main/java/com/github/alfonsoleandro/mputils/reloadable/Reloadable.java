@@ -23,6 +23,9 @@ package com.github.alfonsoleandro.mputils.reloadable;
 
 /**
  * Represents a class that can and should be reloaded when the plugin reloads.
+ *
+ * @author alfonsoLeandro
+ * @since 1.7.0
  */
 public abstract class Reloadable {
 

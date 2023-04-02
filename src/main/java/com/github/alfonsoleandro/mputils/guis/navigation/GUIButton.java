@@ -32,6 +32,7 @@ import java.util.Map;
  *
  * @see NavigationBar
  * @see com.github.alfonsoleandro.mputils.guis.PaginatedGUI
+ * @author alfonsoLeandro
  * @since 1.8.1
  */
 public class GUIButton {

@@ -27,6 +27,9 @@ import com.github.alfonsoleandro.mputils.guis.SimpleGUI;
 
 /**
  * Class containing various GUI's details for using on MPUtils' custom events.
+ *
+ * @author alfonsoLeandro
+ * @since 0.9.0
  */
 public class GUIAttributes {
 

@@ -21,6 +21,10 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.time;
 
+/**
+ * @author alfonsoLeandro
+ * @since 1.6.0
+ */
 public enum TimeUnit {
 
     /**

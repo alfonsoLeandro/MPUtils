@@ -43,6 +43,9 @@ import java.util.Map;
 
 /**
  * Class containing {@link ItemStack} related methods.
+ *
+ * @author alfonsoLeandro
+ * @since 1.1.0
  */
 public final class MPItemStacks {
 

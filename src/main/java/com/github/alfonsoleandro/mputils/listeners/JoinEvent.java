@@ -31,6 +31,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 /**
  * {@link PlayerJoinEvent} listener used for notifying server operators whenever there
  * is a new MPUtils version available.
+ *
+ * @author alfonsoLeandro
+ * @since 1.0.0
  */
 public class JoinEvent implements Listener {
 

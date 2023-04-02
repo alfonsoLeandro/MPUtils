@@ -34,6 +34,9 @@ import java.util.*;
 /**
  * Class for creating a paginated GUI with unlimited pages.
  * Dynamically updates the number of pages according to the given List of ItemStacks.
+ *
+ * @author alfonsoLeandro
+ * @since 0.9.0
  */
 public class PaginatedGUI extends Navigable {
 

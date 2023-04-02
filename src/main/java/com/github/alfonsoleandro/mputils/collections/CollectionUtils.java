@@ -28,6 +28,8 @@ import java.util.List;
 
 /**
  * Class containing several utility methods related to Collections.
+ *
+ * @author alfonsoLeandro
  * @since 1.10.0
  */
 public class CollectionUtils {

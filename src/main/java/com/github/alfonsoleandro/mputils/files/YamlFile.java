@@ -12,9 +12,10 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * YamlFile by OcZi (https://github.com/OcZi). With the permission given to MasterPlugins for using this class.
+ * YamlFile by <a href="https://github.com/OcZi">OcZi</a>. With the permission given to MasterPlugins for using this class.
  *
  * @author OcZi
+ * @since 1.4.0
  */
 public class YamlFile {
     /**
@@ -23,6 +24,7 @@ public class YamlFile {
     private final JavaPlugin plugin;
     /**
      * String,String map used for refilling nodes.
+     *
      * @see #refillNodes()
      */
     private final Map<String, String> mapRefill;
@@ -41,7 +43,8 @@ public class YamlFile {
 
     /**
      * YamlFile constructor.
-     * @param plugin Your plugin's main instance.
+     *
+     * @param plugin   Your plugin's main instance.
      * @param fileName The file name to look for on your resources folder and the file name for the final file in
      *                 your plugin's data folder in the server.
      */
@@ -53,9 +56,10 @@ public class YamlFile {
 
     /**
      * YamlFile constructor.
-     * @param plugin Your plugin's main instance.
-     * @param fileName The file name to look for on your resources folder and the file name for the final file in
-     *                 your plugin's data folder in the server.
+     *
+     * @param plugin    Your plugin's main instance.
+     * @param fileName  The file name to look for on your resources folder and the file name for the final file in
+     *                  your plugin's data folder in the server.
      * @param mapRefill String, String map used for adding default values not set in the default file.
      */
     public YamlFile(JavaPlugin plugin,
@@ -69,7 +73,9 @@ public class YamlFile {
         saveDefault();
         loadFileConfiguration();
 
-        if (mapRefill != null)  { refillNodes(); }
+        if (mapRefill != null) {
+            refillNodes();
+        }
     }
 
     /**
@@ -91,7 +97,7 @@ public class YamlFile {
     }
 
     /**
-     *  Fills the config file with some given keys and values.
+     * Fills the config file with some given keys and values.
      */
     public void refillNodes() {
         for (Map.Entry<String, String> mapEntry : this.mapRefill.entrySet()) {
@@ -104,6 +110,7 @@ public class YamlFile {
 
     /**
      * Saves the {@link FileConfiguration} object to the file in your plugin's data folder.
+     *
      * @deprecated Please use {@link #save(boolean)} instead. Allows you to decide if you want to save the
      * file synchronously or asynchronously.
      */
@@ -118,12 +125,14 @@ public class YamlFile {
 
     /**
      * Saves the {@link FileConfiguration} object to the file in your plugin's data folder.
+     *
      * @param async Whether to save this file synchronously or asynchronously.
+     * @since 1.8.1
      */
     public void save(boolean async) {
-        if(async){
-            new BukkitRunnable(){
-                public void run(){
+        if (async) {
+            new BukkitRunnable() {
+                public void run() {
                     try {
                         YamlFile.this.fileConfig.save(YamlFile.this.file);
                     } catch (IOException e) {
@@ -131,7 +140,7 @@ public class YamlFile {
                     }
                 }
             }.runTaskAsynchronously(this.plugin);
-        }else{
+        } else {
             try {
                 this.fileConfig.save(this.file);
             } catch (IOException e) {
@@ -151,6 +160,7 @@ public class YamlFile {
 
     /**
      * Gets the file in your plugin's data folder.
+     *
      * @return The File object.
      */
     public File getFile() {
@@ -159,6 +169,7 @@ public class YamlFile {
 
     /**
      * Get the fileName you first entered when creating this YamlFile object.
+     *
      * @return the file name.
      */
     public String getFileName() {
@@ -167,6 +178,7 @@ public class YamlFile {
 
     /**
      * Gets the {@link FileConfiguration} object of this YamlFile object.
+     *
      * @return The FileConfiguration object.
      */
     public FileConfiguration getAccess() {

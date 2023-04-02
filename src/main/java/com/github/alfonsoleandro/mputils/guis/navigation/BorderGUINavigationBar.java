@@ -31,6 +31,7 @@ import java.util.ArrayList;
 /**
  * Special {@link NavigationBar} used in {@link BorderPaginatedGUI}.
  *
+ * @author alfonsoLeandro
  * @since 1.8.1
  */
 public class BorderGUINavigationBar extends NavigationBar {

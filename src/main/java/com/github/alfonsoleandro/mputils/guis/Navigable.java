@@ -28,6 +28,7 @@ import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 /**
  * Represents a GUI that can be navigable (has Navigation bar and pages).
  *
+ * @author alfonsoLeandro
  * @since 1.8.1
  */
 public abstract class Navigable extends GUI {

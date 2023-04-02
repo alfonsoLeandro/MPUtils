@@ -30,6 +30,9 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * Abstract class for defining a GUI's base behaviour.
+ *
+ * @author alfonsoLeandro
+ * @since 1.4.1
  */
 public abstract class GUI {
 

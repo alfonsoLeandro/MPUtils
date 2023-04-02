@@ -32,6 +32,8 @@ import java.util.HashMap;
  * Class for creating a GUI of a single page.
  *
  * @see PaginatedGUI
+ * @author alfonsoLeandro
+ * @since 0.9.0
  */
 public class SimpleGUI extends GUI {
 

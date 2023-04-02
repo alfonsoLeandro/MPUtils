@@ -35,6 +35,9 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Custom event for GUI clicks, called when a player who is being GUI managed by MPUtils clicks a GUI.
  * Should be used for turning pages, interactive GUIs and cancelling {@link InventoryClickEvent}
+ *
+ * @author alfonsoLeandro
+ * @since 0.9.0
  */
 public class GUIClickEvent extends InventoryClickEvent {
 

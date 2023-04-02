@@ -40,6 +40,7 @@ import java.net.URL;
 /**
  * MPUtils' main class. Nothing useful here.
  *
+ * @author alfonsoLeandro
  * @since 0.9.0
  */
 public final class MPUtils extends JavaPlugin {

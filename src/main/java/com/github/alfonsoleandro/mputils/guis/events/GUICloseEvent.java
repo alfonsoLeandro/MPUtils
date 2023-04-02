@@ -32,6 +32,9 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Custom event for when a GUI closes, called when a player who is being GUI managed by MPUtils closes a GUI.
+ *
+ * @author alfonsoLeandro
+ * @since 1.8.1
  */
 public class GUICloseEvent extends InventoryCloseEvent {
 

@@ -36,6 +36,7 @@ import java.util.List;
  * a {@link PaginatedGUI} in any other case.
  * See an example here: <a href="https://imgur.com/a/oS9UsJc">https://imgur.com/a/oS9UsJc</a>
  *
+ * @author alfonsoLeandro
  * @since 1.8.1
  */
 public class DynamicGUI extends Navigable {

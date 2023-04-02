@@ -41,6 +41,8 @@ import java.util.Map;
  * Messages manager. Should manage every message a plugin can send. Includes several message sending methods.
  *
  * @param <E> The Enum supposed to contain every configurable message included in a configuration file.
+ * @author alfonsoLeandro
+ * @since 1.9.0
  */
 public class MessageSender<E extends MessageEnum> extends Reloadable {
 

@@ -40,6 +40,9 @@ import java.util.List;
 
 /**
  * Class used to fire custom events and helping {@link PlayersOnGUIsManager}
+ *
+ * @author alfonsoLeandro
+ * @since 1.8.1
  */
 public class GUIEvents implements Listener {
 

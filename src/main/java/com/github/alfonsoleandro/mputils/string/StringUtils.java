@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 /**
  * Utility class loaded with useful string tools.
  *
+ * @author alfonsoLeandro
  * @since 0.9.0
  */
 public class StringUtils {

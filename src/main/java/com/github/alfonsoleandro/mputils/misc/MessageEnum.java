@@ -27,7 +27,8 @@ import org.jetbrains.annotations.NotNull;
  * Simple interface containing methods that an enum containing a list of messages for
  * the {@link com.github.alfonsoleandro.mputils.managers.MessageSender} should have.
  *
- * @since
+ * @author alfonsoLeandro
+ * @since 1.9.2
  */
 public interface MessageEnum {
 

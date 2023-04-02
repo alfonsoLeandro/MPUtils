@@ -27,6 +27,7 @@ import org.bukkit.Sound;
  * Settings for a specific sound.
  *
  * @see SoundUtils
+ * @author alfonsoLeandro.
  * @since 1.10.0
  */
 public class SoundSettings {

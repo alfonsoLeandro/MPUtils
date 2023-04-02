@@ -29,6 +29,9 @@ import java.util.Set;
 /**
  * Represents a {@link JavaPlugin} that can be reloaded and when it does,
  * it reloads every {@link Reloadable} registered in this class.
+ *
+ * @author alfonsoLeandro
+ * @since 1.7.0
  */
 public abstract class ReloaderPlugin extends JavaPlugin {
 

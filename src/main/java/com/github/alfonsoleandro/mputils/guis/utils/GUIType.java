@@ -23,6 +23,9 @@ package com.github.alfonsoleandro.mputils.guis.utils;
 
 /**
  * Enum for representing the available types of GUI objects.
+ *
+ * @author alfonsoLeandro
+ * @since 0.9.0
  */
 public enum GUIType {
     /**

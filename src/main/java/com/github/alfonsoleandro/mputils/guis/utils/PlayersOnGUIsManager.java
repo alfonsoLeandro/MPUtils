@@ -31,6 +31,9 @@ import java.util.HashMap;
 
 /**
  * Class for managing which players have GUIs opened and what page they are on.
+ *
+ * @author alfonsoLeandro
+ * @since 0.9.0
  */
 public final class PlayersOnGUIsManager {
 
