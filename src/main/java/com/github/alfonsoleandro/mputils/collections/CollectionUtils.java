@@ -40,17 +40,18 @@ public class CollectionUtils {
 
     /**
      * Takes a list of unknown type and returns one of the given type, to ensure it only contains that type.
+     *
      * @param list The list of unknown type.
      * @param type The class of the type of object to look for.
-     * @param <T> The type parameter of the object
+     * @param <T>  The type parameter of the object
      * @return A list containing only the given type of objects.
      * @since 1.10.0
      */
-    public static <T> List<T> getListOfType(List<?> list, Class<T> type){
+    public static <T> List<T> getListOfType(List<?> list, Class<T> type) {
         List<T> result = new ArrayList<>();
-        if(list == null) return result;
-        for(Object obj : list){
-            if(type.isInstance(obj)) {
+        if (list == null) return result;
+        for (Object obj : list) {
+            if (type.isInstance(obj)) {
                 result.add(type.cast(obj));
             }
         }
@@ -59,14 +60,15 @@ public class CollectionUtils {
 
     /**
      * Colorizes a String collection.
+     *
      * @param collection The collection to colorize.
-     * @param <T> Iterable of any type, containing Strings.
+     * @param <T>        Iterable of any type, containing Strings.
      * @return An ArrayList filled with the strings in the first collection, but the strings have colors applied.
      * @since 1.10.0
      */
-    public static <T extends Iterable<String>> ArrayList<String> colorizeList(T collection){
+    public static <T extends Iterable<String>> ArrayList<String> colorizeList(T collection) {
         ArrayList<String> result = new ArrayList<>();
-        for(String str : collection){
+        for (String str : collection) {
             result.add(StringUtils.colorizeString(str));
         }
         return result;

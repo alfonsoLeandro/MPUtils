@@ -68,17 +68,6 @@ public enum TimeUnit {
         this.multiplier = multiplier;
     }
 
-
-    /**
-     * Gets the value that a value needs to be multiplied to transform to ticks.
-     *
-     * @return The value that a value needs to be multiplied to transform to ticks.
-     */
-    public int getMultiplier() {
-        return this.multiplier;
-    }
-
-
     /**
      * Gets a timeUnit by its alias (t/T = ticks, m/M = minutes, h/H = hours, d/D = days,
      * w/W = weeks, any other case = seconds).
@@ -106,6 +95,15 @@ public enum TimeUnit {
             default:
                 return SECONDS;
         }
+    }
+
+    /**
+     * Gets the value that a value needs to be multiplied to transform to ticks.
+     *
+     * @return The value that a value needs to be multiplied to transform to ticks.
+     */
+    public int getMultiplier() {
+        return this.multiplier;
     }
 }
 

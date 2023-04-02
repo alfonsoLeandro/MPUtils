@@ -34,17 +34,17 @@ import com.github.alfonsoleandro.mputils.guis.SimpleGUI;
 public class GUIAttributes {
 
     /**
-     * The page number the player is currently on.
+     * The actual GUI object.
      */
-    private final int page;
+    private final GUI gui;
     /**
      * The type of GUI the player has open.
      */
     private final GUIType guiType;
     /**
-     * The actual GUI object.
+     * The page number the player is currently on.
      */
-    private final GUI gui;
+    private final int page;
 
     public GUIAttributes(int page, GUIType guiType, GUI gui) {
         this.page = page;

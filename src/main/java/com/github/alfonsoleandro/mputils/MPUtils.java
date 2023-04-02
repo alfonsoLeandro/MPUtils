@@ -21,9 +21,9 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils;
 
-import com.github.alfonsoleandro.mputils.listeners.JoinEvent;
 import com.github.alfonsoleandro.mputils.files.YamlFile;
 import com.github.alfonsoleandro.mputils.listeners.GUIEvents;
+import com.github.alfonsoleandro.mputils.listeners.JoinEvent;
 import com.github.alfonsoleandro.mputils.metrics.Metrics;
 import com.github.alfonsoleandro.mputils.string.StringUtils;
 import org.bukkit.Bukkit;
@@ -54,10 +54,6 @@ public final class MPUtils extends JavaPlugin {
      */
     final private String version = this.pdfFile.getVersion();
     /**
-     * The latest available version on spigot.
-     */
-    private String latestVersion;
-    /**
      * YamlFile object used for storing the {@link FileConfiguration} object for the config file and the file itself.
      */
     private YamlFile configYaml;
@@ -65,6 +61,10 @@ public final class MPUtils extends JavaPlugin {
      * YamlFile object used for storing the {@link FileConfiguration} object for the cooldown file and the file itself.
      */
     private YamlFile cooldownYaml;
+    /**
+     * The latest available version on spigot.
+     */
+    private String latestVersion;
 
     /**
      * Sends a message to the console with colors and prefix.

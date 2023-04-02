@@ -58,12 +58,11 @@ public class GUICloseEvent extends InventoryCloseEvent {
         this.gui = gui;
     }
 
-
-    public @NotNull HandlerList getHandlers() {
+    public static @NotNull HandlerList getHandlerList() {
         return HANDLERS;
     }
 
-    public static @NotNull HandlerList getHandlerList() {
+    public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 

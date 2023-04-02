@@ -30,9 +30,9 @@ import java.util.Map;
 /**
  * Class that represents a clickable button inside the Navigation bar of a PaginatedGUI.
  *
+ * @author alfonsoLeandro
  * @see NavigationBar
  * @see com.github.alfonsoleandro.mputils.guis.PaginatedGUI
- * @author alfonsoLeandro
  * @since 1.8.1
  */
 public class GUIButton {
@@ -42,17 +42,17 @@ public class GUIButton {
      */
     private final String buttonTags;
     /**
-     * The main item of this button.
+     * Item shown if the condition is not met.
      */
-    private ItemStack item;
+    private ItemStack backup;
     /**
      * The condition this button needs to meet in order to show its main item.
      */
     private GUIButtonCondition condition;
     /**
-     * Item shown if the condition is not met.
+     * The main item of this button.
      */
-    private ItemStack backup;
+    private ItemStack item;
 
     /**
      * Creates a new GUIButton. These are clickable slots inside the Navigation Bar.
@@ -121,21 +121,21 @@ public class GUIButton {
     }
 
     /**
-     * Sets the main item of this button.
-     *
-     * @param item The new main item.
-     */
-    public void setItem(ItemStack item) {
-        this.item = item;
-    }
-
-    /**
      * Sets the condition for this button to show its main item.
      *
      * @param condition The new condition.
      */
     public void setCondition(GUIButtonCondition condition) {
         this.condition = condition;
+    }
+
+    /**
+     * Sets the main item of this button.
+     *
+     * @param item The new main item.
+     */
+    public void setItem(ItemStack item) {
+        this.item = item;
     }
 
     /**
@@ -149,13 +149,14 @@ public class GUIButton {
 
     /**
      * Gets a Map with every placeholder available for this object with every corresponding value.
+     *
      * @param page The page the GUI is in.
      * @return A map containing every placeholder and every value.
      */
-    private Map<String, String> getPlaceHoldersMap(int page, int totalPages){
+    private Map<String, String> getPlaceHoldersMap(int page, int totalPages) {
         Map<String, String> placeholders = new HashMap<>();
-        placeholders.put("%page%", String.valueOf(page+1));
-        placeholders.put("%nextpage%", String.valueOf(page+2));
+        placeholders.put("%page%", String.valueOf(page + 1));
+        placeholders.put("%nextpage%", String.valueOf(page + 2));
         placeholders.put("%previouspage%", String.valueOf(page));
         placeholders.put("%totalpages%", String.valueOf(totalPages));
 

@@ -22,8 +22,8 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.guis;
 
 import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
-import org.bukkit.entity.Player;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
+import org.bukkit.entity.Player;
 
 /**
  * Represents a GUI that can be navigable (has Navigation bar and pages).

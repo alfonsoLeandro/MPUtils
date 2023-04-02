@@ -22,14 +22,17 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.guis;
 
 import com.github.alfonsoleandro.mputils.guis.navigation.GUIButton;
-import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
+import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
 import com.github.alfonsoleandro.mputils.itemstacks.MPItemStacks;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class for creating a paginated GUI with unlimited pages.

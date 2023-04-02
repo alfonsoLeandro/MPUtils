@@ -35,14 +35,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Cooldown {
 
     /**
-     * YAMLFile object containing cooldowns.
-     */
-    private final YamlFile cooldownYaml;
-    /**
      * Cooldown name for this object, used for creating more than one cooldown, for different purposes.
      * i.e: send a message cooldown and open a chest cooldown.
      */
     private final String cooldownName;
+    /**
+     * YAMLFile object containing cooldowns.
+     */
+    private final YamlFile cooldownYaml;
 
 
     /**

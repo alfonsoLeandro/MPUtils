@@ -23,8 +23,8 @@ package com.github.alfonsoleandro.mputils.listeners;
 
 import com.github.alfonsoleandro.mputils.guis.*;
 import com.github.alfonsoleandro.mputils.guis.events.GUIButtonClickEvent;
-import com.github.alfonsoleandro.mputils.guis.utils.GUIAttributes;
 import com.github.alfonsoleandro.mputils.guis.navigation.GUIButton;
+import com.github.alfonsoleandro.mputils.guis.utils.GUIAttributes;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
 import org.bukkit.Bukkit;

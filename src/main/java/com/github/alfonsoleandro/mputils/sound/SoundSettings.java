@@ -26,15 +26,15 @@ import org.bukkit.Sound;
 /**
  * Settings for a specific sound.
  *
- * @see SoundUtils
  * @author alfonsoLeandro.
+ * @see SoundUtils
  * @since 1.10.0
  */
 public class SoundSettings {
 
+    private final float pitch;
     private final Sound sound;
     private final float volume;
-    private final float pitch;
 
     public SoundSettings(String sound, double volume, double pitch) {
         this.sound = Sound.valueOf(sound);

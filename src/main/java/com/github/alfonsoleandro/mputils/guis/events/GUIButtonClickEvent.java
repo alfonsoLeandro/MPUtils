@@ -90,14 +90,13 @@ public class GUIButtonClickEvent extends GUIClickEvent {
         this.metCondition = clickedButton.getCondition().meetsCondition(page, gui.getPages());
     }
 
-    public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
     public static @NotNull HandlerList getHandlerList() {
         return HANDLERS;
     }
 
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
 
     /**
      * Gets the page the player was standing on when clicking the GUI.

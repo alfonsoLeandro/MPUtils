@@ -37,13 +37,13 @@ import org.bukkit.inventory.ItemStack;
 public abstract class GUI {
 
     /**
-     * The actual inventory, where the GUI is supposed to go in.
-     */
-    protected Inventory inventory;
-    /**
      * Some extra tags you may add to differentiate between GUIs.
      */
     protected final String guiTags;
+    /**
+     * The actual inventory, where the GUI is supposed to go in.
+     */
+    protected Inventory inventory;
     /**
      * The size for the GUI. In case of a {@link PaginatedGUI} this is the size for each page.
      */

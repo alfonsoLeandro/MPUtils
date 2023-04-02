@@ -47,10 +47,6 @@ import java.util.Map;
 public class MessageSender<E extends MessageEnum> extends Reloadable {
 
     /**
-     * The plugin using this manager's main class.
-     */
-    private final ReloaderPlugin plugin;
-    /**
      * A map containing every configurable message.
      */
     private final Map<E, String> messages = new HashMap<>();
@@ -58,10 +54,6 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      * An array containing every value inside an enum. (enum#values).
      */
     private final E[] messagesEnumValues;
-    /**
-     * The {@link YamlFile} object that will contain every message listed in the enum.
-     */
-    private YamlFile messagesYamlFile;
     /**
      * The string that will go before every message for the path inside the file.
      * Example: message "some message" messagesPath "messages" the message "SOME_MESSAGE" will be found under
@@ -72,9 +64,17 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
     @Deprecated
     private final String messagesPath;
     /**
+     * The plugin using this manager's main class.
+     */
+    private final ReloaderPlugin plugin;
+    /**
      * The path where the prefix is located (if any) inside the same file that contains the messages.
      */
     private final String prefixPath;
+    /**
+     * The {@link YamlFile} object that will contain every message listed in the enum.
+     */
+    private YamlFile messagesYamlFile;
     /**
      * A string that goes before every message.
      */
