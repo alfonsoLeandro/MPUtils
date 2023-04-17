@@ -19,19 +19,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.github.alfonsoleandro.mputils.misc;
+package com.github.alfonsoleandro.mputils.message;
 
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Simple interface containing methods that an enum containing a list of messages for
- * the {@link com.github.alfonsoleandro.mputils.managers.MessageSender} should have.
+ * the {@link com.github.alfonsoleandro.mputils.message.MessageSender} should have.
  *
  * @author alfonsoLeandro
- * @since 1.9.2
- * @deprecated Use {@link com.github.alfonsoleandro.mputils.message.MessageEnum} instead. This will be removed in 1.11.0.
+ * @since 1.10.0
  */
-@Deprecated
 public interface MessageEnum {
 
 

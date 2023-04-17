@@ -19,7 +19,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
-package com.github.alfonsoleandro.mputils.managers;
+package com.github.alfonsoleandro.mputils.message;
 
 import com.github.alfonsoleandro.mputils.files.YamlFile;
 import com.github.alfonsoleandro.mputils.misc.MessageEnum;
@@ -42,10 +42,8 @@ import java.util.Map;
  *
  * @param <E> The Enum supposed to contain every configurable message included in a configuration file.
  * @author alfonsoLeandro
- * @since 1.9.0
- * @deprecated moved to com.github.alfonsoleandro.mputils.messages.MessageSender. Will be removed in 1.11.0.
+ * @since 1.10.0
  */
-@Deprecated
 public class MessageSender<E extends MessageEnum> extends Reloadable {
 
     /**
