@@ -28,8 +28,10 @@ import java.util.zip.GZIPOutputStream;
  * Check out <a href="https://bStats.org/">https://bStats.org/</a> to learn more about bStats!
  *
  * @since 1.4.1
+ * @deprecated since 1.10.0, now using the shaded bStats Metrics class.
  */
 @SuppressWarnings({"WeakerAccess", "SpellCheckingInspection"})
+@Deprecated
 public class Metrics {
 
     static {

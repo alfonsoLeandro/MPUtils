@@ -22,6 +22,8 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.time;
 
 /**
+ * Represents a conventional time unit.
+ *
  * @author alfonsoLeandro
  * @since 1.6.0
  */
