@@ -46,6 +46,11 @@ public class GUIAttributes {
      */
     private final int page;
 
+    /**
+     * @param page The page number the player was last seen on.
+     * @param guiType Either {@link SimpleGUI} or {@link PaginatedGUI}.
+     * @param gui The GUI object.
+     */
     public GUIAttributes(int page, GUIType guiType, GUI gui) {
         this.page = page;
         this.guiType = guiType;

@@ -41,10 +41,25 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GUIClickEvent extends InventoryClickEvent {
 
+    /**
+     * The handlers list for this event.
+     */
     private static final HandlerList HANDLERS = new HandlerList();
+    /**
+     * The GUI type of the GUI clicked.
+     */
     protected final GUIType guiType;
+    /**
+     * The page the player was on when clicking.
+     */
     protected final int page;
+    /**
+     * The GUI object.
+     */
     protected final GUI gui;
+    /**
+     * The player who clicked the GUI.
+     */
     protected final boolean isButtonClick;
 
 
@@ -80,10 +95,18 @@ public class GUIClickEvent extends InventoryClickEvent {
         this.isButtonClick = isButtonClick;
     }
 
+    /**
+     * Spigot API required method.
+     * @return A list of all the handlers for this event.
+     */
     public static @NotNull HandlerList getHandlerList() {
         return HANDLERS;
     }
 
+    /**
+     * Spigot API required method.
+     * @return A list of all the handlers for this event.
+     */
     public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }

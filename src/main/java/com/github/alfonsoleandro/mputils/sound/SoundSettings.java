@@ -32,14 +32,37 @@ import org.bukkit.Sound;
  */
 public class SoundSettings {
 
+    /**
+     * The pitch of the sound.
+     */
     private final float pitch;
+    /**
+     * The sound.
+     */
     private final Sound sound;
+    /**
+     * The volume of the sound.
+     */
     private final float volume;
 
+    /**
+     * Class constructor.
+     *
+     * @param sound  The sound.
+     * @param volume The volume of the sound.
+     * @param pitch  The pitch of the sound.
+     */
     public SoundSettings(String sound, double volume, double pitch) {
         this(Sound.valueOf(sound), volume, pitch);
     }
 
+    /**
+     * Class constructor.
+     *
+     * @param sound  The sound.
+     * @param volume The volume of the sound.
+     * @param pitch  The pitch of the sound.
+     */
     public SoundSettings(Sound sound, double volume, double pitch) {
         this.sound = sound;
         this.volume = (float) volume;
@@ -47,14 +70,29 @@ public class SoundSettings {
     }
 
 
+    /**
+     * Gets the sound.
+     *
+     * @return The sound.
+     */
     public Sound getSound() {
         return this.sound;
     }
 
+    /**
+     * Gets the volume of the sound.
+     *
+     * @return The volume of the sound.
+     */
     public float getVolume() {
         return this.volume;
     }
 
+    /**
+     * Gets the pitch of the sound.
+     *
+     * @return The pitch of the sound.
+     */
     public float getPitch() {
         return this.pitch;
     }

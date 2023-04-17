@@ -42,6 +42,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GUIButtonClickEvent extends GUIClickEvent {
 
+    /**
+     * The handlers list for this event.
+     */
     private static final HandlerList HANDLERS = new HandlerList();
     /**
      * The button involved in this event.
@@ -90,10 +93,18 @@ public class GUIButtonClickEvent extends GUIClickEvent {
         this.metCondition = clickedButton.getCondition().meetsCondition(page, gui.getPages());
     }
 
+    /**
+     * Spigot API required method.
+     * @return A list of all the handlers for this event.
+     */
     public static @NotNull HandlerList getHandlerList() {
         return HANDLERS;
     }
 
+    /**
+     * Spigot API required method.
+     * @return A list of all the handlers for this event.
+     */
     public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }

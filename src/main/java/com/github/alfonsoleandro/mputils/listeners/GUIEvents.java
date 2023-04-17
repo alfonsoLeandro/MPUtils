@@ -46,6 +46,9 @@ import java.util.List;
  */
 public class GUIEvents implements Listener {
 
+    /**
+     * The slots of the border of the GUI.
+     */
     private final List<Integer> borderGUIButtonSlots = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8,
             9, 17,
             18, 26,
@@ -53,6 +56,11 @@ public class GUIEvents implements Listener {
             36, 44);
 
 
+    /**
+     * Method used to fire the {@link GUIButtonClickEvent} when a player clicks on a GUI button and
+     * the {@link GUIClickEvent} when a player clicks on a GUI.
+     * @param event The event.
+     */
     @SuppressWarnings("deprecation") //Support older MPUtils versions
     @EventHandler(priority = EventPriority.LOWEST)
     public void onClick(InventoryClickEvent event) {
@@ -149,7 +157,10 @@ public class GUIEvents implements Listener {
         }
     }
 
-
+    /**
+     * Method used to fire the {@link com.github.alfonsoleandro.mputils.guis.events.GUICloseEvent}
+     * @param event The {@link InventoryCloseEvent} to handle.
+     */
     @SuppressWarnings("deprecation") //Support older MPUtils versions.
     @EventHandler
     public void onClose(InventoryCloseEvent event) {

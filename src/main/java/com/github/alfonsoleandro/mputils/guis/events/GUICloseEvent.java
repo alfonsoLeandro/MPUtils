@@ -38,9 +38,21 @@ import org.jetbrains.annotations.NotNull;
  */
 public class GUICloseEvent extends InventoryCloseEvent {
 
+    /**
+     * The handlers list for this event.
+     */
     private static final HandlerList HANDLERS = new HandlerList();
+    /**
+     * The GUI type of the closed GUI.
+     */
     protected final GUIType guiType;
+    /**
+     * The page the player was on when closing.
+     */
     protected final int page;
+    /**
+     * The GUI object.
+     */
     protected final GUI gui;
 
     /**
@@ -58,10 +70,18 @@ public class GUICloseEvent extends InventoryCloseEvent {
         this.gui = gui;
     }
 
+    /**
+     * Spigot API required method.
+     * @return A list of all the handlers for this event.
+     */
     public static @NotNull HandlerList getHandlerList() {
         return HANDLERS;
     }
 
+    /**
+     * Spigot API required method.
+     * @return A list of all the handlers for this event.
+     */
     public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }

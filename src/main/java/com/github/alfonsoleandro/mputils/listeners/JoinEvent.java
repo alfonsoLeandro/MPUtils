@@ -37,12 +37,25 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class JoinEvent implements Listener {
 
+    /**
+     * The plugin instance.
+     */
     private final MPUtils plugin;
 
+    /**
+     * Class constructor.
+     *
+     * @param plugin The plugin instance.
+     */
     public JoinEvent(MPUtils plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * Event handler for when a player joins the server.
+     *
+     * @param event The {@link PlayerJoinEvent} event.
+     */
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
