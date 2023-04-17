@@ -74,19 +74,12 @@ public final class MPItemStacks {
         if (meta == null) return itemStack;
 
         if (meta.hasDisplayName()) {
-            String displayName = meta.getDisplayName();
-            for (String key : placeholders.keySet()) {
-                displayName = displayName.replace(key, placeholders.get(key));
-            }
-            meta.setDisplayName(displayName);
+            meta.setDisplayName(StringUtils.replacePlaceholders(meta.getDisplayName(), placeholders));
         }
         if (meta.getLore() != null) {
             List<String> lore = new ArrayList<>();
             for (String line : meta.getLore()) {
-                for (String key : placeholders.keySet()) {
-                    line = line.replace(key, placeholders.get(key));
-                }
-                lore.add(line);
+                lore.add(StringUtils.replacePlaceholders(line, placeholders));
             }
 
             meta.setLore(lore);

@@ -24,6 +24,7 @@ package com.github.alfonsoleandro.mputils.string;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,8 +101,25 @@ public class StringUtils {
         if (isNullOrEmpty(string)) return 0;
         if (isNullOrEmpty(subString)) return 0;
 
-        String string2 = string.replace(subString, "");
+        Matcher matcher = Pattern.compile(subString).matcher(string);
+        int count = 0;
+        while (matcher.find()) {
+            count++;
+        }
+        return count;
+    }
 
-        return (string.length() - string2.length()) / subString.length();
+    /**
+     * Replaces all the placeholders in a string with the values in the map.
+     *
+     * @param original     The original string.
+     * @param placeholders The map with the placeholders and their values.
+     * @return The string with all the placeholders replaced.
+     */
+    public static String replacePlaceholders(String original, Map<String, String> placeholders) {
+        for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+            original = original.replace(entry.getKey(), entry.getValue());
+        }
+        return original;
     }
 }

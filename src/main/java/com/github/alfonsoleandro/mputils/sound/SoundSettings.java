@@ -37,7 +37,11 @@ public class SoundSettings {
     private final float volume;
 
     public SoundSettings(String sound, double volume, double pitch) {
-        this.sound = Sound.valueOf(sound);
+        this(Sound.valueOf(sound), volume, pitch);
+    }
+
+    public SoundSettings(Sound sound, double volume, double pitch) {
+        this.sound = sound;
         this.volume = (float) volume;
         this.pitch = (float) pitch;
     }

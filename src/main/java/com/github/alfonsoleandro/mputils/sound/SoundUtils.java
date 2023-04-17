@@ -26,7 +26,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- * Utility methods related to sounds.
+ * Utility class loaded with useful methods related to sound.
+ *
  *
  * @author alfonsoLeandro
  * @since 1.10.0
