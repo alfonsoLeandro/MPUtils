@@ -22,7 +22,6 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.message;
 
 import com.github.alfonsoleandro.mputils.files.YamlFile;
-import com.github.alfonsoleandro.mputils.misc.MessageEnum;
 import com.github.alfonsoleandro.mputils.reloadable.Reloadable;
 import com.github.alfonsoleandro.mputils.reloadable.ReloaderPlugin;
 import com.github.alfonsoleandro.mputils.string.StringUtils;
@@ -34,7 +33,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -54,15 +52,6 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      * An array containing every value inside an enum. (enum#values).
      */
     private final E[] messagesEnumValues;
-    /**
-     * The string that will go before every message for the path inside the file.
-     * Example: message "some message" messagesPath "messages" the message "SOME_MESSAGE" will be found under
-     * "messages.some message".
-     *
-     * @deprecated Should now be grabbed from {@link MessageEnum#getPath()}. Will be removed in 1.11.0
-     */
-    @Deprecated
-    private final String messagesPath;
     /**
      * The plugin using this manager's main class.
      */
@@ -89,19 +78,15 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
      *                           after the given path. Keep in mind that "_" will be replaced for " " and the string
      *                           will be in lower case.
      * @param messagesYamlFile   The YamlFile where the messages will be taken from.
-     * @param messagesPath       The path where the messages will be found under inside the given YamlFile.
      * @param prefixPath         The path where the prefix (string before every message) will be found inside the given YamlFile.
      *                           Can be null (messages will not have a prefix by default).
-     * @deprecated Now the message path should be specified inside the enum {@link MessageEnum}.
      */
-    @Deprecated
     public MessageSender(ReloaderPlugin plugin, E[] messagesEnumValues,
-                         YamlFile messagesYamlFile, String messagesPath, @Nullable String prefixPath) {
+                         YamlFile messagesYamlFile, @Nullable String prefixPath) {
         super(plugin);
         this.plugin = plugin;
         this.messagesEnumValues = messagesEnumValues;
         this.messagesYamlFile = messagesYamlFile;
-        this.messagesPath = messagesPath;
         this.prefixPath = prefixPath;
         loadMessages();
     }
@@ -123,49 +108,16 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
 
     /**
-     * Creates a new instance of the message sender.
-     *
-     * @param plugin             The plugin using this manager's main class instance.
-     * @param messagesEnumValues The values from the enum containing the messages, each
-     *                           of these values will be used later to load the messages from the given yaml file
-     *                           after the given path. Keep in mind that "_" will be replaced for " " and the string
-     *                           will be in lower case.
-     * @param messagesYamlFile   The YamlFile where the messages will be taken from.
-     * @param prefixPath         The path where the prefix (string before every message) will be found inside the given YamlFile.
-     *                           Can be null (messages will not have a prefix by default).
-     */
-    public MessageSender(@NotNull ReloaderPlugin plugin, @NotNull E[] messagesEnumValues,
-                         @NotNull YamlFile messagesYamlFile, @Nullable String prefixPath) {
-        super(plugin);
-        this.plugin = plugin;
-        this.messagesEnumValues = messagesEnumValues;
-        this.messagesYamlFile = messagesYamlFile;
-        this.messagesPath = null;
-        this.prefixPath = prefixPath;
-        loadMessages();
-    }
-
-
-    /**
      * Loads every message and the prefix, if the prefix path has been specified.
      */
     private void loadMessages() {
-        this.messages.clear();
         FileConfiguration messages = this.messagesYamlFile.getAccess();
-
         this.prefix = this.prefixPath == null ? null : messages.getString(this.prefixPath);
+        this.messages.clear();
 
-        if (this.messagesPath != null) {
-            for (E message : this.messagesEnumValues) {
-                this.messages.put(message,
-                        messages.getString(this.messagesPath + "." +
-                                message.toString().toLowerCase(Locale.ENGLISH).replace("_", " ")));
-            }
-        } else {
-            for (E message : this.messagesEnumValues) {
-                this.messages.put(message,
-                        messages.getString(message.getPath()));
-            }
+        for (E message : this.messagesEnumValues) {
+            this.messages.put(message,
+                    messages.getString(message.getPath()));
         }
     }
 
@@ -299,7 +251,7 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
     @Override
     public void reload(boolean deep) {
         if (deep) this.messagesYamlFile = new YamlFile(this.plugin, this.messagesYamlFile.getFileName());
-        this.loadMessages();
+        loadMessages();
     }
 
 

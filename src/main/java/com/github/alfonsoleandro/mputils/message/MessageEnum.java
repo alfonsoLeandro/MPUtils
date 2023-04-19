@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Simple interface containing methods that an enum containing a list of messages for
- * the {@link com.github.alfonsoleandro.mputils.message.MessageSender} should have.
+ * the {@link MessageSender} should have.
  *
  * @author alfonsoLeandro
  * @since 1.10.0
