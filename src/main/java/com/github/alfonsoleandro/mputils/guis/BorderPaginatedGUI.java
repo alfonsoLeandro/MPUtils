@@ -22,7 +22,9 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.guis;
 
 import com.github.alfonsoleandro.mputils.guis.navigation.BorderGUINavigationBar;
-import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
+import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
+import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -36,7 +38,16 @@ import java.util.List;
  * @author alfonsoLeandro
  * @since 1.8.1
  */
-public class BorderPaginatedGUI extends PaginatedGUI {
+public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
+
+    /**
+     * The total list of items throughout the entire GUI.
+     */
+    protected List<ItemStack> items;
+    /**
+     * The list of {@link ItemStack} per page.
+     */
+    protected HashMap<Integer, List<ItemStack>> pagesOfItems;
 
     /**
      * Creates a new BorderPaginatedGUI with a border made up of {@link com.github.alfonsoleandro.mputils.guis.navigation.GUIButton} around the contained items.
@@ -48,7 +59,9 @@ public class BorderPaginatedGUI extends PaginatedGUI {
      * @param navBar  The navBar to use for this GUI.
      */
     public BorderPaginatedGUI(String title, List<ItemStack> items, String guiTags, BorderGUINavigationBar navBar) {
-        super(title, 54, items, guiTags, navBar);
+        super(title, 54, guiTags, GUIType.PAGINATED, navBar);
+
+        updateItemsPerPage(items);
     }
 
     /**
@@ -61,64 +74,31 @@ public class BorderPaginatedGUI extends PaginatedGUI {
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
     public BorderPaginatedGUI(String title, List<ItemStack> items, String guiTags) {
-        super(title, 54, items, guiTags, new BorderGUINavigationBar());
+        super(title, 54, guiTags, GUIType.PAGINATED, new BorderGUINavigationBar());
+
+        updateItemsPerPage(items);
     }
 
-    /**
-     * Updates the page list for the GUI (28 items per page).
-     * Used for changing the items contained in the GUI.
-     *
-     * @param items The total list of items to display throughout the entire paginated GUI.
-     */
     @Override
-    public void updateItemsPerPage(List<ItemStack> items) {
-        this.items = items;
-        this.pagesOfItems = new HashMap<>();
-        List<ItemStack> itemsOnAPage = new ArrayList<>();
-        for (ItemStack item : items) {
-            if (itemsOnAPage.size() >= 28) {
-                this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
-                itemsOnAPage = new ArrayList<>();
-            }
-            itemsOnAPage.add(item);
-        }
-        if (!itemsOnAPage.isEmpty()) this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
-        this.pages = this.pagesOfItems.size();
+    public void addItem(ItemStack item) {
+        this.items.add(item);
+        updateItemsPerPage(this.items);
     }
 
-    /**
-     * The size of a BorderPaginatedGUI is always 54. You cannot change this size.
-     *
-     * @param size N/A.
-     */
     @Override
-    public void setSizePerPage(int size) {
-        throw new UnsupportedOperationException("The size of a BorderPaginatedGUI is always 54. You cannot change this size.");
+    public void clearInventory() {
+        this.inventory.clear();
+        this.items.clear();
     }
 
-    /**
-     * Gets the NavigationBar associated to this GUI.
-     *
-     * @return The BorderedGUINavigationBar associated with this GUI.
-     */
     @Override
-    public BorderGUINavigationBar getNavBar() {
-        return (BorderGUINavigationBar) this.navBar;
-    }
-
-    /**
-     * Sets the navigation bar that this GUI will be using.
-     *
-     * @param navBar The navigation bar you want this GUI to use.
-     * @throws IllegalArgumentException If the given NavigationBar is not an instance of BorderGUINavigationBar.
-     * @see NavigationBar
-     * @see BorderGUINavigationBar
-     */
-    @Override
-    public void setNavBar(NavigationBar navBar) {
-        if (!(navBar instanceof BorderGUINavigationBar))
-            throw new IllegalArgumentException("The Navigation Bar for a BorderPaginatedGUI MUST be a BorderedGUINavigationBar.");
-        this.navBar = navBar;
+    public void openGUI(Player player, int page) {
+        if (player == null) return;
+        if (page > this.pages) return;
+        player.closeInventory();
+        preparePage(player, page);
+        player.openInventory(this.inventory);
+        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
     }
 
     /**
@@ -126,10 +106,10 @@ public class BorderPaginatedGUI extends PaginatedGUI {
      *
      * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
      */
-    @Override
-    public void setItemsForPage(int page) {
+    public void prepareItemsForPage(int page) {
         List<ItemStack> itemsOnPage = this.pagesOfItems.get(page);
-        int[] itemSlots = new int[]{10, 11, 12, 13, 14, 15, 16,
+        int[] itemSlots = new int[]{
+                10, 11, 12, 13, 14, 15, 16,
                 19, 20, 21, 22, 23, 24, 25,
                 28, 29, 30, 31, 32, 33, 34,
                 37, 38, 39, 40, 41, 42, 43};
@@ -148,4 +128,46 @@ public class BorderPaginatedGUI extends PaginatedGUI {
             }
         }
     }
+
+    @Override
+    public void preparePage(Player player, int page) {
+        setItemsForPage(page);
+        prepareNavBarForPage(page);
+        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
+    }
+
+    /**
+     * Updates the page list for the GUI (28 items per page).
+     * Used for changing the items contained in the GUI.
+     *
+     * @param items The total list of items to display throughout the entire paginated GUI.
+     */
+    public void updateItemsPerPage(List<ItemStack> items) {
+        this.items = items;
+        this.pagesOfItems = new HashMap<>();
+        List<ItemStack> itemsOnAPage = new ArrayList<>();
+        for (ItemStack item : items) {
+            if (itemsOnAPage.size() >= 28) {
+                this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
+                itemsOnAPage = new ArrayList<>();
+            }
+            itemsOnAPage.add(item);
+        }
+        if (!itemsOnAPage.isEmpty()) this.pagesOfItems.put(this.pagesOfItems.size(), itemsOnAPage);
+        this.pages = this.pagesOfItems.size();
+    }
+
+    // <editor-fold desc="Deprecated methods" defaultstate="collapsed">
+    /**
+     * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
+     *
+     * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
+     *
+     * @deprecated Renamed to prepareItemsForPage
+     */
+    @Deprecated
+    public void setItemsForPage(int page) {
+        prepareItemsForPage(page);
+    }
+    // </editor-fold>
 }
