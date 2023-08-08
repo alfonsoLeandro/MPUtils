@@ -41,7 +41,7 @@ import java.util.Map;
  * @author alfonsoLeandro
  * @since 0.9.0
  */
-public class PaginatedGUI extends Navigable {
+public class PaginatedGUI extends Navigable<NavigationBar> {
 
     /**
      * The total list of items throughout the entire GUI.
@@ -65,7 +65,6 @@ public class PaginatedGUI extends Navigable {
     public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags, NavigationBar navBar) {
         super(title, sizePerPage, guiTags, GUIType.PAGINATED, navBar);
 
-        this.items = items;
         updateItemsPerPage(items);
     }
 
@@ -134,11 +133,12 @@ public class PaginatedGUI extends Navigable {
      * @param player The player to open the GUI for.
      * @param page   The page of the GUI to open for the player.
      */
+    @Override
     public void openGUI(Player player, int page) {
         if (player == null) return;
         if (page > this.pages) return;
         player.closeInventory();
-        setPage(player, page);
+        preparePage(player, page);
         player.openInventory(this.inventory);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
     }
@@ -150,9 +150,9 @@ public class PaginatedGUI extends Navigable {
      * @param page   The page to set the items for.
      */
     @Override
-    public void setPage(Player player, int page) {
+    public void preparePage(Player player, int page) {
         setItemsForPage(page);
-        setNavBarForPage(page);
+        prepareNavBarForPage(page);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
     }
 
