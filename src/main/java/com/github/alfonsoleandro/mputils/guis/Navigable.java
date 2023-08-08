@@ -31,12 +31,12 @@ import org.bukkit.entity.Player;
  * @author alfonsoLeandro
  * @since 1.8.1
  */
-public abstract class Navigable extends GUI {
+public abstract class Navigable<N extends NavigationBar> extends GUI {
 
     /**
      * The navigation bar present in this GUI.
      */
-    protected NavigationBar navBar;
+    protected N navBar;
     /**
      * The total number of pages this GUI has.
      */
@@ -51,7 +51,7 @@ public abstract class Navigable extends GUI {
      * @param guiType The type of GUI. Either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
      * @param navBar  The {@link NavigationBar} object that goes with this Navigable GUI.
      */
-    protected Navigable(String title, int size, String guiTags, GUIType guiType, NavigationBar navBar) {
+    protected Navigable(String title, int size, String guiTags, GUIType guiType, N navBar) {
         super(title, size, guiTags, guiType);
         this.navBar = navBar;
     }
@@ -61,7 +61,7 @@ public abstract class Navigable extends GUI {
      *
      * @return The NavigationBar object being used.
      */
-    public NavigationBar getNavBar() {
+    public N getNavBar() {
         return this.navBar;
     }
 
@@ -71,7 +71,7 @@ public abstract class Navigable extends GUI {
      * @param navBar The navigation bar you want this GUI to use.
      * @see NavigationBar
      */
-    public void setNavBar(NavigationBar navBar) {
+    public void setNavBar(N navBar) {
         this.navBar = navBar;
     }
 
@@ -81,7 +81,7 @@ public abstract class Navigable extends GUI {
      * @param player The player to set the GUI page for.
      * @param page   The page to set the items for.
      */
-    public abstract void setPage(Player player, int page);
+    public abstract void preparePage(Player player, int page);
 
     /**
      * Opens the GUI in the given page for a given player.
@@ -98,7 +98,7 @@ public abstract class Navigable extends GUI {
      *
      * @param page The current open page, used for placeholders.
      */
-    public void setNavBarForPage(int page) {
+    public void prepareNavBarForPage(int page) {
         this.navBar.addNavigationBar(this.inventory, page, getPages());
     }
 
@@ -110,4 +110,35 @@ public abstract class Navigable extends GUI {
     public int getPages() {
         return this.pages;
     }
+
+
+    //<editor-fold desc="Deprecated methods" defaultstate="collapsed">
+
+    /**
+     * Updates the navigation bar, called when the GUI is opened for a user, replicates the navBar items and
+     * replaces the %page%, %nextpage%, %previouspage% and %totalpages% placeholders.
+     *
+     * @param page The current open page, used for placeholders.
+     *
+     * @deprecated Renamed to prepareNavBarForPage
+     */
+    @Deprecated
+    public void setNavBarForPage(int page) {
+        prepareNavBarForPage(page);
+    }
+
+    /**
+     * Changes the items inside the inventory for the items in the given page.
+     *
+     * @param player The player to set the GUI page for.
+     * @param page   The page to set the items for.
+     *
+     * @deprecated Renamed to preparePage
+     */
+    @Deprecated
+    public void setPage(Player player, int page) {
+        preparePage(player, page);
+    }
+
+    //</editor-fold>
 }
