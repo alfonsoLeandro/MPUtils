@@ -33,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -124,11 +125,11 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
     /**
      * Sends a string to the given CommandSender.
      *
-     * @param sender The intended receiver for the message.
-     * @param msg    The String to send.
+     * @param receiver The intended receiver for the message.
+     * @param msg      The String to send.
      */
-    public void send(@NotNull CommandSender sender, @NotNull String msg) {
-        sender.sendMessage(StringUtils.colorizeString((this.prefix == null ? "" : this.prefix + " ") + msg));
+    public void send(@NotNull CommandSender receiver, @NotNull String msg) {
+        receiver.sendMessage(StringUtils.colorizeString((this.prefix == null ? "" : this.prefix + " ") + msg));
     }
 
     /**
@@ -143,13 +144,27 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
     /**
      * Sends a message to the given CommandSender.
      *
-     * @param sender       The intended receiver for the message.
+     * @param receiver     The intended receiver for the message.
      * @param message      The message to send.
      * @param replacements The string to replace from the message and its replacements in the following format:
      *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
      */
-    public void send(@NotNull CommandSender sender, @NotNull E message, String... replacements) {
-        send(sender, getString(message, replacements));
+    public void send(@NotNull CommandSender receiver, @NotNull E message, String... replacements) {
+        send(receiver, getString(message, replacements));
+    }
+
+    /**
+     * Sends a message to the given CommandSender.
+     *
+     * @param receivers    The list of intended receivers for the message.
+     * @param message      The message to send.
+     * @param replacements The string to replace from the message and its replacements in the following format:
+     *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
+     */
+    public void send(@NotNull List<CommandSender> receivers, @NotNull E message, String... replacements) {
+        for (CommandSender receiver : receivers) {
+            send(receiver, getString(message, replacements));
+        }
     }
 
     /**
@@ -165,6 +180,24 @@ public class MessageSender<E extends MessageEnum> extends Reloadable {
 
         for (Player toSend : Bukkit.getOnlinePlayers()) {
             if (toSend.equals(excluded)) continue;
+            send(toSend, msg);
+        }
+        Bukkit.getConsoleSender().sendMessage(StringUtils.colorizeString((this.prefix == null ? "" : this.prefix + " ") + msg));
+    }
+
+    /**
+     * Sends a message to every player online and the console.
+     *
+     * @param excluded     A list of players to exclude from this message.
+     * @param message      The message to send.
+     * @param replacements The string to replace from the message and its replacements in the following format:
+     *                     "string1", "replacement1", "string2", replacement2,... , "stringN", "replacementN".
+     */
+    public void broadcast(@Nullable List<Player> excluded, @NotNull E message, String... replacements) {
+        String msg = getString(message, replacements);
+
+        for (Player toSend : Bukkit.getOnlinePlayers()) {
+            if (excluded != null && excluded.contains(toSend)) continue;
             send(toSend, msg);
         }
         Bukkit.getConsoleSender().sendMessage(StringUtils.colorizeString((this.prefix == null ? "" : this.prefix + " ") + msg));
