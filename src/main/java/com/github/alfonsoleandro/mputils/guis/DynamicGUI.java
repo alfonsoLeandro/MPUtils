@@ -39,7 +39,7 @@ import java.util.List;
  * @author alfonsoLeandro
  * @since 1.8.1
  */
-public class DynamicGUI extends Navigable {
+public class DynamicGUI extends Navigable<NavigationBar> {
 
     /**
      * The title for the GUI. Use on {@link #checkSize()}.
@@ -108,12 +108,19 @@ public class DynamicGUI extends Navigable {
         if (player == null) return;
         player.closeInventory();
         if (this.isPaginated) {
-            setPage(player, 0);
+            preparePage(player, 0);
         } else {
-            setItemsForPage(0);
+            prepareItemsForPage(0);
             PlayersOnGUIsManager.addPlayer(player.getName(), -1, GUIType.SIMPLE, this);
         }
         player.openInventory(this.inventory);
+    }
+
+    @Override
+    public void preparePage(Player player, int page) {
+        prepareItemsForPage(page);
+        prepareNavBarForPage(page);
+        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
     }
 
     /**
@@ -127,21 +134,7 @@ public class DynamicGUI extends Navigable {
             openGUI(player);
             return;
         }
-        setPage(player, page);
-    }
-
-
-    /**
-     * Changes the items inside the inventory for the items in the given page.
-     *
-     * @param player The player to set the GUI page for.
-     * @param page   The page to set the items for.
-     */
-    @Override
-    public void setPage(Player player, int page) {
-        setItemsForPage(page);
-        setNavBarForPage(page);
-        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
+        preparePage(player, page);
     }
 
 
@@ -150,7 +143,7 @@ public class DynamicGUI extends Navigable {
      *
      * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
      */
-    public void setItemsForPage(int page) {
+    public void prepareItemsForPage(int page) {
         List<ItemStack> itemsOnPage = this.isPaginated ?
                 this.items.subList(45 * page, Math.min(this.items.size(), (45 * page) + 45))
                 :
@@ -211,4 +204,17 @@ public class DynamicGUI extends Navigable {
     public boolean isPaginated() {
         return this.isPaginated;
     }
+
+    //<editor-fold desc="Deprecated methods" defaultstate="collapsed">
+    /**
+     * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
+     *
+     * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
+     * @deprecated Renamed to prepareItemsForPage
+     */
+    @Deprecated
+    public void setItemsForPage(int page) {
+        prepareItemsForPage(page);
+    }
+    //</editor-fold>
 }
