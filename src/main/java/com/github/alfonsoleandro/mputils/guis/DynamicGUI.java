@@ -78,12 +78,24 @@ public class DynamicGUI extends Navigable<NavigationBar> {
     }
 
     /**
-     * Clears the inventory for this GUI object. Leaving it with no items.
+     * Checks whether this GUI is paginated.
+     * Same as doing {@code DynamicGUI#getPages() > -1}.
+     *
+     * @return True if this GUI has more than one page.
+     */
+    public boolean isPaginated() {
+        return this.isPaginated;
+    }
+
+    /**
+     * Gets the amount of pages on this DynamicGUI.
+     *
+     * @return -1 if this GUI is not paginated, the amount of pages in any other case.
      */
     @Override
-    public void clearInventory() {
-        this.items.clear();
-        checkSize();
+    public int getPages() {
+        if (this.isPaginated) return (int) Math.ceil(this.items.size() / 45.0);
+        return -1;
     }
 
     /**
@@ -94,6 +106,32 @@ public class DynamicGUI extends Navigable<NavigationBar> {
     @Override
     public void addItem(ItemStack item) {
         this.items.add(item);
+        checkSize();
+    }
+
+    /**
+     * Checks and corrects the size of the GUI, checking whether this GUI will be Paginated or Simple.
+     */
+    public void checkSize() {
+        int previousSize = this.guiSize;
+        if (this.items.size() <= 54) {
+            this.guiSize = Math.max((int) Math.ceil(this.items.size() / 9.0) * 9, 9);
+            this.isPaginated = false;
+        } else {
+            this.guiSize = 54;
+            this.isPaginated = true;
+        }
+        if (this.guiSize != previousSize) {
+            this.inventory = Bukkit.createInventory(null, this.guiSize, this.title);
+        }
+    }
+
+    /**
+     * Clears the inventory for this GUI object. Leaving it with no items.
+     */
+    @Override
+    public void clearInventory() {
+        this.items.clear();
         checkSize();
     }
 
@@ -116,13 +154,6 @@ public class DynamicGUI extends Navigable<NavigationBar> {
         player.openInventory(this.inventory);
     }
 
-    @Override
-    public void preparePage(Player player, int page) {
-        prepareItemsForPage(page);
-        prepareNavBarForPage(page);
-        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
-    }
-
     /**
      * Opens the GUI in the given page if the gui is paginated, in other case opens the first page.
      *
@@ -136,7 +167,6 @@ public class DynamicGUI extends Navigable<NavigationBar> {
         }
         preparePage(player, page);
     }
-
 
     /**
      * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
@@ -165,45 +195,14 @@ public class DynamicGUI extends Navigable<NavigationBar> {
         }
     }
 
-
-    /**
-     * Checks and corrects the size of the GUI, checking whether this GUI will be Paginated or Simple.
-     */
-    public void checkSize() {
-        int previousSize = this.guiSize;
-        if (this.items.size() <= 54) {
-            this.guiSize = Math.max((int) Math.ceil(this.items.size() / 9.0) * 9, 9);
-            this.isPaginated = false;
-        } else {
-            this.guiSize = 54;
-            this.isPaginated = true;
-        }
-        if (this.guiSize != previousSize) {
-            this.inventory = Bukkit.createInventory(null, this.guiSize, this.title);
-        }
-    }
-
-
-    /**
-     * Gets the amount of pages on this DynamicGUI.
-     *
-     * @return -1 if this GUI is not paginated, the amount of pages in any other case.
-     */
     @Override
-    public int getPages() {
-        if (this.isPaginated) return (int) Math.ceil(this.items.size() / 45.0);
-        return -1;
+    public void preparePage(Player player, int page) {
+        prepareItemsForPage(page);
+        prepareNavBarForPage(page);
+        PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
     }
 
-    /**
-     * Checks whether this GUI is paginated.
-     * Same as doing {@code DynamicGUI#getPages() > -1}.
-     *
-     * @return True if this GUI has more than one page.
-     */
-    public boolean isPaginated() {
-        return this.isPaginated;
-    }
+
 
     //<editor-fold desc="Deprecated methods" defaultstate="collapsed">
     /**
