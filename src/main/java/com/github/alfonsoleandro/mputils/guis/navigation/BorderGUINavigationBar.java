@@ -23,18 +23,20 @@ package com.github.alfonsoleandro.mputils.guis.navigation;
 
 import com.github.alfonsoleandro.mputils.guis.BorderPaginatedGUI;
 import com.github.alfonsoleandro.mputils.itemstacks.MPItemStacks;
+import com.github.alfonsoleandro.mputils.string.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
- * Special {@link NavigationBar} used in {@link BorderPaginatedGUI}.
+ * Special {@link Navigator} for use in {@link BorderPaginatedGUI}.
  *
  * @author alfonsoLeandro
  * @since 1.8.1
  */
-public class BorderGUINavigationBar extends NavigationBar {
+public class BorderGUINavigationBar extends Navigator {
 
     /**
      * The array of buttons that go in the border of the {@link BorderPaginatedGUI}.
@@ -59,7 +61,6 @@ public class BorderGUINavigationBar extends NavigationBar {
      *                                  (9 for the buttons, 17 for the border buttons).
      */
     public BorderGUINavigationBar(GUIButton[] buttons, GUIButton[] borderButtons) throws IllegalArgumentException {
-        super(buttons);
         if (borderButtons == null) {
             this.borderButtons = new GUIButton[17];
             setDefaultBorderButtons();
@@ -105,7 +106,55 @@ public class BorderGUINavigationBar extends NavigationBar {
      */
     @Override
     public void setDefaultButtons() {
-        super.setDefaultButtons();
+        GUIButton nextPage = new GUIButton("DEFAULT:next page",
+                MPItemStacks.newItemStack(Material.ARROW,
+                        1,
+                        "&6&oNext page &6&l->",
+                        Arrays.asList((StringUtils.colorizeString('&', "&6Click &fhere,&fto go to page %nextpage%")).split(","))),
+                GUIButton.GUIButtonCondition.HAS_NEXT_PAGE,
+                MPItemStacks.newItemStack(Material.PAPER,
+                        1,
+                        "&8&l*",
+                        new ArrayList<>())
+        );
+        GUIButton previousPage = new GUIButton("DEFAULT:previous page",
+                MPItemStacks.newItemStack(Material.ARROW,
+                        1,
+                        "&6&l<- &6&oPrevious page",
+                        Arrays.asList((StringUtils.colorizeString('&', "&6Click &fhere,&fto go to page %previouspage%")).split(","))),
+                GUIButton.GUIButtonCondition.HAS_PREVIOUS_PAGE,
+                MPItemStacks.newItemStack(Material.PAPER,
+                        1,
+                        "&8&l*",
+                        new ArrayList<>())
+        );
+        GUIButton currentPage = new GUIButton("DEFAULT:current page",
+                MPItemStacks.newItemStack(Material.BOOK,
+                        1,
+                        "&f&lPage: &6%page%&f&l/&6%totalpages%",
+                        new ArrayList<>()),
+                GUIButton.GUIButtonCondition.ALWAYS,
+                null
+        );
+        GUIButton emptySlot = new GUIButton("DEFAULT:empty slot",
+                MPItemStacks.newItemStack(Material.PAPER,
+                        1,
+                        "&8&l*",
+                        new ArrayList<>()),
+                GUIButton.GUIButtonCondition.ALWAYS,
+                null
+        );
+
+
+        this.buttons[0] = previousPage;
+        this.buttons[1] = emptySlot;
+        this.buttons[2] = emptySlot;
+        this.buttons[3] = emptySlot;
+        this.buttons[4] = currentPage;
+        this.buttons[5] = emptySlot;
+        this.buttons[6] = emptySlot;
+        this.buttons[7] = emptySlot;
+        this.buttons[8] = nextPage;
         this.setDefaultBorderButtons();
     }
 

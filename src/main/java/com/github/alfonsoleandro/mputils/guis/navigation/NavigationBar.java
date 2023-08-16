@@ -36,12 +36,7 @@ import java.util.Arrays;
  * @author alfonsoLeandro
  * @since 1.8.1
  */
-public class NavigationBar {
-
-    /**
-     * The array of buttons inside this navigationBar.
-     */
-    protected final GUIButton[] buttons;
+public class NavigationBar extends Navigator {
 
     /**
      * Creates a new Navigation bar with the default items.
@@ -72,6 +67,7 @@ public class NavigationBar {
      * Sets the default buttons for this Navigation Bar.
      * Previous page, empty slot*3, current page, empty slot*3 and next page.
      */
+    @Override
     public void setDefaultButtons() {
         GUIButton nextPage = new GUIButton("DEFAULT:next page",
                 MPItemStacks.newItemStack(Material.ARROW,
@@ -124,37 +120,6 @@ public class NavigationBar {
         this.buttons[8] = nextPage;
     }
 
-
-    /**
-     * Gets the button in the given position.
-     *
-     * @param i The position of the button relative to the navigation bar (0-8).
-     * @return The button in the given position.
-     */
-    public GUIButton getButtonAt(int i) {
-        return this.buttons[i];
-    }
-
-    /**
-     * Sets the button in the given position.
-     *
-     * @param i      The position of the button relative to the navigation bar (0-8).
-     * @param button The new button.
-     */
-    public void setButtonAt(int i, GUIButton button) {
-        this.buttons[i] = button;
-    }
-
-
-    /**
-     * Gets the button array in this NavigationBar.
-     *
-     * @return The array of buttons included in this NavigationBar.
-     */
-    public GUIButton[] getButtons() {
-        return this.buttons;
-    }
-
     /**
      * Adds the navigation bar to the PaginatedGUI.
      *
@@ -162,6 +127,7 @@ public class NavigationBar {
      * @param page       The page the GUI is going to open in.
      * @param totalPages The total amount of pages of the PaginatedGUI.
      */
+    @Override
     public void addNavigationBar(Inventory inv, int page, int totalPages) {
         int navBarSlot = inv.getSize() - 9;
         for (int i = 0; i < 9; i++) {
