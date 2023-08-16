@@ -22,6 +22,7 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.guis;
 
 import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
+import com.github.alfonsoleandro.mputils.guis.navigation.Navigator;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import org.bukkit.entity.Player;
 
@@ -31,7 +32,7 @@ import org.bukkit.entity.Player;
  * @author alfonsoLeandro
  * @since 1.8.1
  */
-public abstract class Navigable<N extends NavigationBar> extends GUI {
+public abstract class Navigable<N extends Navigator> extends GUI {
 
     /**
      * The navigation bar present in this GUI.
