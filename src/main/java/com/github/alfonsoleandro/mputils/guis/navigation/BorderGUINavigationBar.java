@@ -41,15 +41,15 @@ public class BorderGUINavigationBar extends Navigator {
     /**
      * The array of buttons that go in the border of the {@link BorderPaginatedGUI}.
      */
-    protected final GUIButton[] borderButtons;
+    protected GUIButton[] borderButtons;
 
     /**
      * Creates a new Navigation Bar with the default items.
      */
     public BorderGUINavigationBar() {
-        super();
+        this.buttons = new GUIButton[9];
         this.borderButtons = new GUIButton[17];
-        setDefaultBorderButtons();
+        setDefaultButtons();
     }
 
     /**
@@ -61,13 +61,19 @@ public class BorderGUINavigationBar extends Navigator {
      *                                  (9 for the buttons, 17 for the border buttons).
      */
     public BorderGUINavigationBar(GUIButton[] buttons, GUIButton[] borderButtons) throws IllegalArgumentException {
-        if (borderButtons == null) {
-            this.borderButtons = new GUIButton[17];
-            setDefaultBorderButtons();
+        this.buttons = new GUIButton[9];
+        this.borderButtons = new GUIButton[17];
+
+        if (buttons == null) {
+            setDefaultButtons();
         } else {
-            if (borderButtons.length != 9)
+            if (buttons.length != 9) throw new IllegalArgumentException("There must be 9 buttons in the buttons array");
+            this.buttons = buttons;
+        }
+        if (borderButtons != null) {
+            if (borderButtons.length != 17)
                 throw new IllegalArgumentException("There must be 17 buttons in the border buttons array");
-            this.borderButtons = buttons;
+            this.borderButtons = borderButtons;
         }
     }
 
