@@ -107,8 +107,10 @@ public class BorderGUINavigationBar extends Navigator {
 
     /**
      * Sets the default buttons for this BorderGUI Navigation Bar.
-     * previous page, empty slot*3, current page, empty slot*3 and next page from super.
+     * Previous page, empty slot*3, current page, empty slot*3 and next page.
      * empty slot*17 for the GUI border.
+     * Leaving this as is in production is discouraged, as there may exist conflict with other plugins using MPUtils
+     * that also leave the default buttons, at the moment of handling button clicks.
      */
     @Override
     public void setDefaultButtons() {
