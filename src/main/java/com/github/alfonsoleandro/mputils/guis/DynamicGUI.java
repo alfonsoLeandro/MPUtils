@@ -88,8 +88,8 @@ public class DynamicGUI extends Navigable<NavigationBar> {
     /**
      * Creates a new DynamicGUI with the default navigation bar.
      *
-     * @param title   The title for the GUI.
-     * @param guiTags The unique String that will identify this GUI and help distinguish it from another GUIs.
+     * @param title      The title for the GUI.
+     * @param guiTags    The unique String that will identify this GUI and help distinguish it from another GUIs.
      * @param itemsMerge Watches for added items, when true, if they are the same as an existing item, it will merge them.
      *                   If false, every item will be count as a separate item.
      * @since 1.10.0
@@ -101,9 +101,9 @@ public class DynamicGUI extends Navigable<NavigationBar> {
     /**
      * Creates a new DynamicGUI with the given navigation bar.
      *
-     * @param title   The title for the GUI.
-     * @param guiTags The unique String that will identify this GUI and help distinguish it from another GUIs.
-     * @param navBar  The navigation bar to use in this GUI when it has more than one page.
+     * @param title      The title for the GUI.
+     * @param guiTags    The unique String that will identify this GUI and help distinguish it from another GUIs.
+     * @param navBar     The navigation bar to use in this GUI when it has more than one page.
      * @param itemsMerge Watches for added items, when true, if they are the same as an existing item, it will merge them.
      *                   If false, every item will be count as a separate item.
      * @since 1.10.0
@@ -133,7 +133,37 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      */
     @Override
     public void addItem(ItemStack item) {
-        this.items.add(item);
+        boolean added = false;
+        if (this.itemsMerge) {
+            for (ItemStack itemStack : this.items) {
+                if (itemStack.isSimilar(item)) {
+                    int amount = item.getAmount();
+                    int itemStackAmount = itemStack.getAmount();
+
+                    // Item has already the max amount
+                    if (itemStackAmount >= itemStack.getMaxStackSize()) {
+                        continue;
+                    }
+
+                    // Item would go above max amount, add as much as possible, then continue loop.
+                    if (itemStackAmount + amount > itemStack.getMaxStackSize()) {
+                        itemStack.setAmount(itemStack.getMaxStackSize());
+                        amount -= itemStack.getMaxStackSize() - itemStackAmount;
+                        item.setAmount(amount);
+                        continue;
+                    }
+
+                    // Item fully merged
+                    itemStack.setAmount(itemStack.getAmount() + item.getAmount());
+                    added = true;
+                    break;
+                }
+            }
+        }
+
+        if (!added) {
+            this.items.add(item);
+        }
         checkSize();
     }
 
@@ -262,6 +292,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
     }
 
     //<editor-fold desc="Deprecated methods" defaultstate="collapsed">
+
     /**
      * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
      *
