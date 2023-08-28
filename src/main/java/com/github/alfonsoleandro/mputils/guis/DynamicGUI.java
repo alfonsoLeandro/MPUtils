@@ -53,13 +53,19 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      * Whether this GUI has more than one page.
      */
     protected boolean isPaginated;
+    /**
+     * Whether to check if add items are similar to those already in the GUI and merge them if so.
+     */
+    private boolean itemsMerge;
 
     /**
      * Creates a new DynamicGUI with the default navigation bar.
      *
      * @param title   The title for the GUI.
      * @param guiTags The unique String that will identify this GUI and help distinguish it from another GUIs.
+     * @deprecated In favor of {@link #DynamicGUI(String, String, boolean)}.
      */
+    @Deprecated
     public DynamicGUI(String title, String guiTags) {
         this(title, guiTags, new NavigationBar());
     }
@@ -70,11 +76,41 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      * @param title   The title for the GUI.
      * @param guiTags The unique String that will identify this GUI and help distinguish it from another GUIs.
      * @param navBar  The navigation bar to use in this GUI when it has more than one page.
+     * @deprecated In favor of {@link #DynamicGUI(String, String, NavigationBar, boolean)}.
      */
+    @Deprecated
     public DynamicGUI(String title, String guiTags, NavigationBar navBar) {
         super(title, 9, guiTags, GUIType.SIMPLE, navBar);
         this.title = title;
         this.items = new ArrayList<>();
+    }
+
+    /**
+     * Creates a new DynamicGUI with the default navigation bar.
+     *
+     * @param title   The title for the GUI.
+     * @param guiTags The unique String that will identify this GUI and help distinguish it from another GUIs.
+     * @param itemsMerge Watches for added items, when true, if they are the same as an existing item, it will merge them.
+     *                   If false, every item will be count as a separate item.
+     */
+    public DynamicGUI(String title, String guiTags, boolean itemsMerge) {
+        this(title, guiTags, new NavigationBar(), itemsMerge);
+    }
+
+    /**
+     * Creates a new DynamicGUI with the given navigation bar.
+     *
+     * @param title   The title for the GUI.
+     * @param guiTags The unique String that will identify this GUI and help distinguish it from another GUIs.
+     * @param navBar  The navigation bar to use in this GUI when it has more than one page.
+     * @param itemsMerge Watches for added items, when true, if they are the same as an existing item, it will merge them.
+     *                   If false, every item will be count as a separate item.
+     */
+    public DynamicGUI(String title, String guiTags, NavigationBar navBar, boolean itemsMerge) {
+        super(title, 9, guiTags, GUIType.SIMPLE, navBar);
+        this.title = title;
+        this.items = new ArrayList<>();
+        this.itemsMerge = itemsMerge;
     }
 
     /**
