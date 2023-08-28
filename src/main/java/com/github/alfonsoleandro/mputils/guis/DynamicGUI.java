@@ -92,6 +92,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      * @param guiTags The unique String that will identify this GUI and help distinguish it from another GUIs.
      * @param itemsMerge Watches for added items, when true, if they are the same as an existing item, it will merge them.
      *                   If false, every item will be count as a separate item.
+     * @since 1.10.0
      */
     public DynamicGUI(String title, String guiTags, boolean itemsMerge) {
         this(title, guiTags, new NavigationBar(), itemsMerge);
@@ -105,22 +106,13 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      * @param navBar  The navigation bar to use in this GUI when it has more than one page.
      * @param itemsMerge Watches for added items, when true, if they are the same as an existing item, it will merge them.
      *                   If false, every item will be count as a separate item.
+     * @since 1.10.0
      */
     public DynamicGUI(String title, String guiTags, NavigationBar navBar, boolean itemsMerge) {
         super(title, 9, guiTags, GUIType.SIMPLE, navBar);
         this.title = title;
         this.items = new ArrayList<>();
         this.itemsMerge = itemsMerge;
-    }
-
-    /**
-     * Checks whether this GUI is paginated.
-     * Same as doing {@code DynamicGUI#getPages() > -1}.
-     *
-     * @return True if this GUI has more than one page.
-     */
-    public boolean isPaginated() {
-        return this.isPaginated;
     }
 
     /**
@@ -239,6 +231,35 @@ public class DynamicGUI extends Navigable<NavigationBar> {
     }
 
 
+    /**
+     * Checks whether this GUI is paginated.
+     * Same as doing {@code DynamicGUI#getPages() > -1}.
+     *
+     * @return True if this GUI has more than one page.
+     */
+    public boolean isPaginated() {
+        return this.isPaginated;
+    }
+
+    /**
+     * Checks whether the items are merged or not.
+     *
+     * @return True if the items are merged when added.
+     * @since 1.10.0
+     */
+    public boolean isItemsMerge() {
+        return this.itemsMerge;
+    }
+
+    /**
+     * Sets whether the items are merged or not.
+     *
+     * @param itemsMerge True if the items are merged when added.
+     * @since 1.10.0
+     */
+    public void setItemsMerge(boolean itemsMerge) {
+        this.itemsMerge = itemsMerge;
+    }
 
     //<editor-fold desc="Deprecated methods" defaultstate="collapsed">
     /**
