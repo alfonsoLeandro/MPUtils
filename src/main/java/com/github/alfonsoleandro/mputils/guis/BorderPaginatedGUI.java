@@ -131,7 +131,7 @@ public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
 
     @Override
     public void preparePage(Player player, int page) {
-        setItemsForPage(page);
+        prepareItemsForPage(page);
         prepareNavBarForPage(page);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
     }
