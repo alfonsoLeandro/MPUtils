@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 /**
  * Manages tab completion for commands, using a list of command arguments.
- * <br/>
+ * <br>
  * Placeholders available:
  * <ul>
  *     <li>{PLAYER} - Will return the list of all players online.</li>
