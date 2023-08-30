@@ -151,7 +151,7 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
      */
     @Override
     public void preparePage(Player player, int page) {
-        setItemsForPage(page);
+        prepareItemsForPage(page);
         prepareNavBarForPage(page);
         PlayersOnGUIsManager.addPlayer(player.getName(), page, GUIType.PAGINATED, this);
     }
@@ -159,9 +159,9 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
     /**
      * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
      *
-     * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
+     * @param page The page to look for in the map of items per page.
      */
-    public void setItemsForPage(int page) {
+    public void prepareItemsForPage(int page) {
         List<ItemStack> itemsOnPage = this.pagesOfItems.get(page);
 
         if (itemsOnPage == null || itemsOnPage.isEmpty()) {
@@ -364,6 +364,31 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
         placeholders.put("%totalpages%", String.valueOf(totalPages));
 
         return placeholders;
+    }
+
+    /**
+     * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
+     *
+     * @param page The page to look for in the map of items per page.
+     * @deprecated Renamed to {@link #prepareItemsForPage(int)}.
+     */
+    @Deprecated
+    public void setItemsForPage(int page) {
+        List<ItemStack> itemsOnPage = this.pagesOfItems.get(page);
+
+        if (itemsOnPage == null || itemsOnPage.isEmpty()) {
+            for (int i = 0; i < this.guiSize - 9; i++) {
+                this.inventory.setItem(i, null);
+            }
+        } else {
+            for (int i = 0; i < this.guiSize - 9; i++) {
+                if (i < itemsOnPage.size()) {
+                    this.inventory.setItem(i, itemsOnPage.get(i));
+                } else {
+                    this.inventory.setItem(i, null);
+                }
+            }
+        }
     }
     //</editor-fold>
 
