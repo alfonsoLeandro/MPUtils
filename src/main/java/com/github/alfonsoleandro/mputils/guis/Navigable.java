@@ -78,6 +78,7 @@ public abstract class Navigable<N extends Navigator> extends GUI {
 
     /**
      * Changes the items inside the inventory for the items in the given page.
+     * Recommended to use when turning pages, over {@link #openGUI(Player, int)}.
      *
      * @param player The player to set the GUI page for.
      * @param page   The page to set the items for.
