@@ -85,6 +85,16 @@ public abstract class Navigable<N extends Navigator> extends GUI {
     public abstract void preparePage(Player player, int page);
 
     /**
+     * Opens the GUI in the first page for a given player.
+     *
+     * @param player The player to open the GUI for.
+     * @since 1.10.0
+     */
+    public void openGUI(Player player) {
+        openGUI(player, 0);
+    }
+
+    /**
      * Opens the GUI in the given page for a given player.
      *
      * @param player The player to open the GUI for.

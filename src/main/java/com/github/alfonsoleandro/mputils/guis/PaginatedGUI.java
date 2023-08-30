@@ -190,18 +190,6 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
 
 
     /**
-     * Opens this PaginatedGUI in page 0 for the given player.
-     *
-     * @param player The player to open the GUI for.
-     * @see #openGUI(Player, int)
-     */
-    @Override
-    public void openGUI(Player player) {
-        this.openGUI(player, 0);
-    }
-
-
-    /**
      * Gets a list of all the items contained throughout all the pages in this GUI.
      *
      * @return The list of items.
