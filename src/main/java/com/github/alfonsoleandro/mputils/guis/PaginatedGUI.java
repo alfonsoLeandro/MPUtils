@@ -157,7 +157,7 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
     }
 
     /**
-     * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
+     * Sets the items, from the items in this GUI, for the desired page.
      *
      * @param page The page to look for in the map of items per page.
      */
