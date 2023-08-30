@@ -26,6 +26,7 @@ import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import com.github.alfonsoleandro.mputils.guis.utils.PlayersOnGUIsManager;
 import com.github.alfonsoleandro.mputils.itemstacks.MPItemStacks;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -126,7 +127,8 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
      * @param size The size for each GUI page.
      */
     public void setSizePerPage(int size) {
-        this.guiSize = size;
+        this.guiSize = GUI.getValidSize(size, GUIType.PAGINATED);
+        this.inventory = Bukkit.createInventory(null, this.guiSize, this.title);
         updateItemsPerPage(this.items);
     }
 
