@@ -67,7 +67,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      */
     @Deprecated
     public DynamicGUI(String title, String guiTags) {
-        this(title, guiTags, new NavigationBar());
+        this(title, guiTags, new NavigationBar(), false);
     }
 
     /**
@@ -83,6 +83,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
         super(title, 9, guiTags, GUIType.SIMPLE, navBar);
         this.title = title;
         this.items = new ArrayList<>();
+        this.itemsMerge = false;
     }
 
     /**
