@@ -58,15 +58,27 @@ public abstract class GUI {
      * @param guiType The type of GUI. Either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
      */
     protected GUI(String title, int size, String guiTags, GUIType guiType) {
-        if (size > 54) size = 54;
-        if (size % 9 != 0) size = (int) Math.floor(size / 9.0) * 9;
-        if (guiType.equals(GUIType.PAGINATED) && size < 18) size = 18;
-        if (size < 9) size = 9;
-
+        size = getValidSize(size, guiType);
 
         this.guiSize = size;
         this.inventory = Bukkit.createInventory(null, size, title);
         this.guiTags = guiTags;
+    }
+
+    /**
+     * Gets a valid size for a GUI, depending on its type.
+     *
+     * @param size The raw size input, to sanitize.
+     * @param guiType The type of GUI.
+     * @return A valid size for the GUI, equal to the input size, if it were to be valid in the first place,
+     * or the closest, valid one in other case.
+     */
+    public static int getValidSize(int size, GUIType guiType) {
+        if (size > 54) size = 54;
+        if (size % 9 != 0) size = (int) Math.floor(size / 9.0) * 9;
+        if (guiType.equals(GUIType.PAGINATED) && size < 18) size = 18;
+        if (size < 9) size = 9;
+        return size;
     }
 
     /**
