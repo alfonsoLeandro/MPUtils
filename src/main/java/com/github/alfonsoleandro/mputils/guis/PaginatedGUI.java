@@ -44,6 +44,10 @@ import java.util.Map;
 public class PaginatedGUI extends Navigable<NavigationBar> {
 
     /**
+     * The title for the GUI. Used once on creation, then reused when changing size per page.
+     */
+    protected final String title;
+    /**
      * The total list of items throughout the entire GUI.
      */
     protected List<ItemStack> items;
@@ -64,6 +68,7 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
      */
     public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags, NavigationBar navBar) {
         super(title, sizePerPage, guiTags, GUIType.PAGINATED, navBar);
+        this.title = title;
 
         updateItemsPerPage(items);
     }
