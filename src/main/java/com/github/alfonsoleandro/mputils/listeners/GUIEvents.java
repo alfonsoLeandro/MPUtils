@@ -108,7 +108,7 @@ public class GUIEvents implements Listener {
 
                 } else if (gui instanceof BorderPaginatedGUI) {
                     if (this.borderGUIButtonSlots.contains(rawSlot)) {
-                        buttonSlot = this.borderGUIButtonSlots.indexOf(rawSlot) + 10;
+                        buttonSlot = this.borderGUIButtonSlots.indexOf(rawSlot) + 9;
                         GUIButton clickedButton = ((Navigable) gui).getNavBar()
                                 .getButtonAt(buttonSlot);
 
