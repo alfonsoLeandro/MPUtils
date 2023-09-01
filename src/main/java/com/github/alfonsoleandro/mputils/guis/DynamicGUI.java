@@ -67,7 +67,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      */
     @Deprecated
     public DynamicGUI(String title, String guiTags) {
-        this(title, guiTags, new NavigationBar(), false);
+        this(title, guiTags, false, new NavigationBar());
     }
 
     /**
@@ -76,7 +76,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      * @param title   The title for the GUI.
      * @param guiTags The unique String that will identify this GUI and help distinguish it from another GUIs.
      * @param navBar  The navigation bar to use in this GUI when it has more than one page.
-     * @deprecated In favor of {@link #DynamicGUI(String, String, NavigationBar, boolean)}.
+     * @deprecated In favor of {@link #DynamicGUI(String, String, boolean, NavigationBar)}.
      */
     @Deprecated
     public DynamicGUI(String title, String guiTags, NavigationBar navBar) {
@@ -96,7 +96,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      * @since 1.10.0
      */
     public DynamicGUI(String title, String guiTags, boolean itemsMerge) {
-        this(title, guiTags, new NavigationBar(), itemsMerge);
+        this(title, guiTags, itemsMerge, new NavigationBar());
     }
 
     /**
@@ -109,7 +109,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      *                   If false, every item will be count as a separate item.
      * @since 1.10.0
      */
-    public DynamicGUI(String title, String guiTags, NavigationBar navBar, boolean itemsMerge) {
+    public DynamicGUI(String title, String guiTags, boolean itemsMerge, NavigationBar navBar) {
         super(title, 9, guiTags, GUIType.SIMPLE, navBar);
         this.title = title;
         this.items = new ArrayList<>();
