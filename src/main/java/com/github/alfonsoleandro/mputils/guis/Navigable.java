@@ -58,25 +58,6 @@ public abstract class Navigable<N extends Navigator> extends GUI {
     }
 
     /**
-     * Gets the navigation bar object that this GUI is currently using.
-     *
-     * @return The NavigationBar object being used.
-     */
-    public N getNavBar() {
-        return this.navBar;
-    }
-
-    /**
-     * Sets the navigation bar that this GUI will be using.
-     *
-     * @param navBar The navigation bar you want this GUI to use.
-     * @see NavigationBar
-     */
-    public void setNavBar(N navBar) {
-        this.navBar = navBar;
-    }
-
-    /**
      * Changes the items inside the inventory for the items in the given page.
      * Recommended to use when turning pages, over {@link #openGUI(Player, int)}.
      *
@@ -121,6 +102,25 @@ public abstract class Navigable<N extends Navigator> extends GUI {
      */
     public int getPages() {
         return this.pages;
+    }
+
+    /**
+     * Gets the navigation bar object that this GUI is currently using.
+     *
+     * @return The NavigationBar object being used.
+     */
+    public N getNavBar() {
+        return this.navBar;
+    }
+
+    /**
+     * Sets the navigation bar that this GUI will be using.
+     *
+     * @param navBar The navigation bar you want this GUI to use.
+     * @see NavigationBar
+     */
+    public void setNavBar(N navBar) {
+        this.navBar = navBar;
     }
 
 
