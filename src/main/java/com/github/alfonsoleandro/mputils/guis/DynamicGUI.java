@@ -173,12 +173,13 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      */
     public void checkSize() {
         int previousSize = this.guiSize;
-        if (this.items.size() <= 54) {
-            this.guiSize = Math.max((int) Math.ceil(this.items.size() / 9.0) * 9, 9);
-            this.isPaginated = false;
-        } else {
+
+        this.isPaginated = this.items.size() > 54;
+
+        if (this.isPaginated) {
             this.guiSize = 54;
-            this.isPaginated = true;
+        } else {
+            this.guiSize = Math.max((int) Math.ceil(this.items.size() / 9.0) * 9, 9);
         }
         if (this.guiSize != previousSize) {
             this.inventory = Bukkit.createInventory(null, this.guiSize, this.title);
@@ -264,7 +265,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
 
     /**
      * Checks whether this GUI is paginated.
-     * Same as doing {@code DynamicGUI#getPages() > -1}.
+     * Same as doing {@code getPages() > -1}.
      *
      * @return True if this GUI has more than one page.
      */
