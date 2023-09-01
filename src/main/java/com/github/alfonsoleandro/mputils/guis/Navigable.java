@@ -63,6 +63,7 @@ public abstract class Navigable<N extends Navigator> extends GUI {
      *
      * @param player The player to set the GUI page for.
      * @param page   The page to set the items for.
+     * @since 1.10.0
      */
     public abstract void preparePage(Player player, int page);
 
@@ -90,6 +91,7 @@ public abstract class Navigable<N extends Navigator> extends GUI {
      * replaces the %page%, %nextpage%, %previouspage% and %totalpages% placeholders.
      *
      * @param page The current open page, used for placeholders.
+     * @since 1.10.0
      */
     public void prepareNavBarForPage(int page) {
         this.navBar.addNavigationBar(this.inventory, page, getPages());
