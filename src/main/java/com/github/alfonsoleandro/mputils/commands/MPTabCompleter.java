@@ -72,7 +72,7 @@ public class MPTabCompleter implements TabCompleter {
                     }
                 }
                 if (currentSuggestion.equalsIgnoreCase("{PLAYERS}")) {
-                    list.addAll(Bukkit.getOnlinePlayers().stream().map(CommandSender::getName).collect(Collectors.toList()));
+                    list.addAll(Bukkit.getOnlinePlayers().stream().map(CommandSender::getName).toList());
                 } else {
                     list.add(currentSuggestion);
                 }
@@ -88,7 +88,7 @@ public class MPTabCompleter implements TabCompleter {
 
                 String currentSuggestion = strings[inputAmount - 1];
                 if (currentSuggestion.equalsIgnoreCase("{PLAYERS}")) {
-                    for (String playerName : Bukkit.getOnlinePlayers().stream().map(CommandSender::getName).collect(Collectors.toList())) {
+                    for (String playerName : Bukkit.getOnlinePlayers().stream().map(CommandSender::getName).toList()) {
                         if (playerName.regionMatches(true, 0, input, 0, inputArgLength)) {
                             list.add(playerName);
                         }
