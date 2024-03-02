@@ -82,7 +82,7 @@ public final class MPUtils extends JavaPlugin {
     public void onEnable() {
         send("&aEnabled&f. Version: &e" + this.version);
         send("&fThank you for using my plugin! &a" + this.pdfFile.getName() + "&f By " + this.pdfFile.getAuthors().get(0));
-        send("&fJoin my discord server at &chttps://discordapp.com/invite/ZznhQud");
+        send("&fJoin my discord server at &chttps://bit.ly/MPDiscordSv");
         send("Please consider subscribing to my yt channel: &c" + this.pdfFile.getWebsite());
         registerConfig();
         registerCooldown();
@@ -98,7 +98,7 @@ public final class MPUtils extends JavaPlugin {
     public void onDisable() {
         send("&cDisabled&f. Version: &e" + this.version);
         send("&fThank you for using my plugin! &a" + this.pdfFile.getName() + "&f By " + this.pdfFile.getAuthors().get(0));
-        send("&fJoin my discord server at &chttps://discordapp.com/invite/ZznhQud");
+        send("&fJoin my discord server at &chttps://bit.ly/MPDiscordSv");
         send("Please consider subscribing to my yt channel: &c" + this.pdfFile.getWebsite());
     }
 
