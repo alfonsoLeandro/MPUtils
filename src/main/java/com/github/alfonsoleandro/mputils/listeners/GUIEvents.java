@@ -67,7 +67,7 @@ public class GUIEvents implements Listener {
         if (event.getWhoClicked() instanceof Player && PlayersOnGUIsManager.isInGUI(event.getWhoClicked().getName())) {
             int rawSlot = event.getRawSlot();
             GUIAttributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getWhoClicked().getName());
-            GUI gui = attributes.getGui();
+            GUI gui = attributes.gui();
             //<editor-fold desc="Legacy GUIClickEvent" defaultstate="collapsed">
             GUIClickEvent guiClickEvent = new GUIClickEvent(
                     event.getView(),
@@ -76,22 +76,22 @@ public class GUIEvents implements Listener {
                     event.getClick(),
                     event.getAction(),
                     event.getHotbarButton(),
-                    attributes.getGuiType().equals(GUIType.PAGINATED) ?
+                    attributes.guiType().equals(GUIType.PAGINATED) ?
                             com.github.alfonsoleandro.mputils.guis.GUIType.PAGINATED :
                             com.github.alfonsoleandro.mputils.guis.GUIType.SIMPLE,
-                    attributes.getPage(),
+                    attributes.page(),
                     gui);
             //</editor-fold>
             GUIButtonClickEvent guiButtonClickEvent = null;
             if (rawSlot < event.getInventory().getSize()
-                    && attributes.getGuiType().equals(GUIType.PAGINATED)
-                    && attributes.getGui() instanceof Navigable) {
+                    && attributes.guiType().equals(GUIType.PAGINATED)
+                    && attributes.gui() instanceof Navigable) {
                 int buttonSlot;
 
                 if ((rawSlot > event.getInventory().getSize() - 10 &&
                         rawSlot <= event.getInventory().getSize())) {
                     buttonSlot = rawSlot - (event.getInventory().getSize() - 9);
-                    GUIButton clickedButton = ((Navigable) gui).getNavBar().getButtonAt(buttonSlot);
+                    GUIButton clickedButton = ((Navigable<?>) gui).getNavBar().getButtonAt(buttonSlot);
                     //<editor-fold desc="GUIButtonClickEvent" defaultstate="collapsed">
                     guiButtonClickEvent = new GUIButtonClickEvent(
                             event.getView(),
@@ -100,8 +100,8 @@ public class GUIEvents implements Listener {
                             event.getClick(),
                             event.getAction(),
                             event.getHotbarButton(),
-                            attributes.getPage(),
-                            (Navigable) gui,
+                            attributes.page(),
+                            (Navigable<?>) gui,
                             clickedButton,
                             buttonSlot);
                     //</editor-fold>
@@ -109,7 +109,7 @@ public class GUIEvents implements Listener {
                 } else if (gui instanceof BorderPaginatedGUI) {
                     if (this.borderGUIButtonSlots.contains(rawSlot)) {
                         buttonSlot = this.borderGUIButtonSlots.indexOf(rawSlot) + 9;
-                        GUIButton clickedButton = ((Navigable) gui).getNavBar()
+                        GUIButton clickedButton = ((Navigable<?>) gui).getNavBar()
                                 .getButtonAt(buttonSlot);
 
                         //<editor-fold desc="GUIButtonClickEvent" defaultstate="collapsed">
@@ -120,8 +120,8 @@ public class GUIEvents implements Listener {
                                 event.getClick(),
                                 event.getAction(),
                                 event.getHotbarButton(),
-                                attributes.getPage(),
-                                (Navigable) gui,
+                                attributes.page(),
+                                (Navigable<?>) gui,
                                 clickedButton,
                                 buttonSlot);
                         //</editor-fold>
@@ -139,8 +139,8 @@ public class GUIEvents implements Listener {
                             event.getClick(),
                             event.getAction(),
                             event.getHotbarButton(),
-                            attributes.getGuiType(),
-                            attributes.getPage(),
+                            attributes.guiType(),
+                            attributes.page(),
                             gui,
                             guiButtonClickEvent != null);
             //</editor-fold>
@@ -168,14 +168,14 @@ public class GUIEvents implements Listener {
             GUIAttributes attributes = PlayersOnGUIsManager.getAttributesByPlayer(event.getPlayer().getName());
             Bukkit.getPluginManager().callEvent(new GUICloseEvent(
                     event.getView(),
-                    attributes.getGuiType(),
-                    attributes.getPage(),
-                    attributes.getGui()));
+                    attributes.guiType(),
+                    attributes.page(),
+                    attributes.gui()));
             Bukkit.getPluginManager().callEvent(new com.github.alfonsoleandro.mputils.guis.events.GUICloseEvent(
                     event.getView(),
-                    attributes.getGuiType(),
-                    attributes.getPage(),
-                    attributes.getGui()));
+                    attributes.guiType(),
+                    attributes.page(),
+                    attributes.gui()));
             PlayersOnGUIsManager.removePlayer(event.getPlayer().getName());
         }
     }

@@ -84,7 +84,7 @@ public class GUIButtonClickEvent extends GUIClickEvent {
                                InventoryAction action,
                                int key,
                                int page,
-                               Navigable gui,
+                               Navigable<?> gui,
                                GUIButton clickedButton,
                                int navBarSlot) {
         super(view, type, slot, click, action, key, GUIType.PAGINATED, page, gui, true);
@@ -127,8 +127,8 @@ public class GUIButtonClickEvent extends GUIClickEvent {
      * @return The Navigable GUI object.
      */
     @Override
-    public Navigable getGui() {
-        return (Navigable) this.gui;
+    public Navigable<?> getGui() {
+        return (Navigable<?>) this.gui;
     }
 
     /**

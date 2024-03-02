@@ -28,33 +28,20 @@ import com.github.alfonsoleandro.mputils.guis.SimpleGUI;
 /**
  * Class containing various GUI's details for using on MPUtils' custom events.
  *
+ * @param gui     The actual GUI object.
+ * @param guiType The type of GUI the player has open.
+ * @param page    The page number the player is currently on.
  * @author alfonsoLeandro
  * @since 0.9.0
  */
-public class GUIAttributes {
+public record GUIAttributes(int page, GUIType guiType, GUI gui) {
 
     /**
-     * The actual GUI object.
-     */
-    private final GUI gui;
-    /**
-     * The type of GUI the player has open.
-     */
-    private final GUIType guiType;
-    /**
-     * The page number the player is currently on.
-     */
-    private final int page;
-
-    /**
-     * @param page The page number the player was last seen on.
+     * @param page    The page number the player was last seen on.
      * @param guiType Either {@link SimpleGUI} or {@link PaginatedGUI}.
-     * @param gui The GUI object.
+     * @param gui     The GUI object.
      */
-    public GUIAttributes(int page, GUIType guiType, GUI gui) {
-        this.page = page;
-        this.guiType = guiType;
-        this.gui = gui;
+    public GUIAttributes {
     }
 
     /**
@@ -62,7 +49,8 @@ public class GUIAttributes {
      *
      * @return The GUI page number or -1 if the {@link GUIType} is equal to {@link SimpleGUI}.
      */
-    public int getPage() {
+    @Override
+    public int page() {
         return this.page;
     }
 
@@ -71,7 +59,8 @@ public class GUIAttributes {
      *
      * @return Either {@link SimpleGUI} or {@link PaginatedGUI}.
      */
-    public GUIType getGuiType() {
+    @Override
+    public GUIType guiType() {
         return this.guiType;
     }
 
@@ -80,7 +69,8 @@ public class GUIAttributes {
      *
      * @return The GUI object.
      */
-    public GUI getGui() {
+    @Override
+    public GUI gui() {
         return this.gui;
     }
 
