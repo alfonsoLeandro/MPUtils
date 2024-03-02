@@ -78,25 +78,14 @@ public enum TimeUnit {
      * @return The timeUnit the given char represents.
      */
     public static TimeUnit getByAlias(char alias) {
-        switch (alias) {
-            case 't':
-            case 'T':
-                return TICKS;
-            case 'm':
-            case 'M':
-                return MINUTES;
-            case 'h':
-            case 'H':
-                return HOURS;
-            case 'd':
-            case 'D':
-                return DAYS;
-            case 'w':
-            case 'W':
-                return WEEKS;
-            default:
-                return SECONDS;
-        }
+        return switch (alias) {
+            case 't', 'T' -> TICKS;
+            case 'm', 'M' -> MINUTES;
+            case 'h', 'H' -> HOURS;
+            case 'd', 'D' -> DAYS;
+            case 'w', 'W' -> WEEKS;
+            default -> SECONDS;
+        };
     }
 
     /**

@@ -192,15 +192,12 @@ public class GUIButton {
          * @return true if the condition is met.
          */
         public boolean meetsCondition(int page, int totalPages) {
-            switch (this) {
-                case ALWAYS:
-                    return true;
-                case HAS_NEXT_PAGE:
-                    return page + 1 < totalPages;
-                case HAS_PREVIOUS_PAGE:
-                    return page > 0;
-            }
-            return false;
+            return switch (this) {
+                case ALWAYS -> true;
+                case HAS_NEXT_PAGE -> page + 1 < totalPages;
+                case HAS_PREVIOUS_PAGE -> page > 0;
+                default -> false;
+            };
         }
     }
 }
