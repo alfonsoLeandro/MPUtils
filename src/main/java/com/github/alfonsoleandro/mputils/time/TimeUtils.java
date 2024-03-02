@@ -143,7 +143,7 @@ public class TimeUtils {
      * Gets the total amount of seconds a given amount of ticks represents.
      *
      * @param ticks The ticks to translate to seconds.
-     * @return The amount of seconds the given amount of ticks represent.
+     * @return The amount of seconds the given amount of ticks represents.
      */
     public static long getTotalSeconds(long ticks) {
         return ticks / 20;

@@ -28,7 +28,6 @@ import org.bukkit.entity.Player;
 /**
  * Utility class loaded with useful methods related to sound.
  *
- *
  * @author alfonsoLeandro
  * @since 1.10.0
  */
