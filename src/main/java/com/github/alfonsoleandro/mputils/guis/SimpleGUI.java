@@ -22,6 +22,7 @@ SOFTWARE.
 package com.github.alfonsoleandro.mputils.guis;
 
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
+import com.github.alfonsoleandro.mputils.itemstacks.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
@@ -90,6 +91,17 @@ public class SimpleGUI extends GUI {
     @Override
     public void clearInventory() {
         this.inventory.clear();
+    }
+
+    /**
+     * Check if a given item can be added to this GUI.
+     *
+     * @param item The item to check.
+     * @return True if the item can be added, false otherwise.
+     * @since 1.10.0
+     */
+    public boolean canAdd(ItemStack item) {
+        return InventoryUtils.canAdd(item, this.inventory);
     }
 
     /**
