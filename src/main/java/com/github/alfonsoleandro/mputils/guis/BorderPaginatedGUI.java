@@ -48,6 +48,15 @@ public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
      * The list of {@link ItemStack} per page.
      */
     protected HashMap<Integer, List<ItemStack>> pagesOfItems;
+    /**
+     * Indexes of inventory slots that can contain actual items in the GUI.
+     */
+    protected final int[] itemSlots = new int[]{
+            10, 11, 12, 13, 14, 15, 16,
+            19, 20, 21, 22, 23, 24, 25,
+            28, 29, 30, 31, 32, 33, 34,
+            37, 38, 39, 40, 41, 42, 43
+    };
 
     /**
      * Creates a new BorderPaginatedGUI with a border made up of {@link com.github.alfonsoleandro.mputils.guis.navigation.GUIButton} around the contained items.
@@ -108,22 +117,17 @@ public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
      */
     public void prepareItemsForPage(int page) {
         List<ItemStack> itemsOnPage = this.pagesOfItems.get(page);
-        int[] itemSlots = new int[]{
-                10, 11, 12, 13, 14, 15, 16,
-                19, 20, 21, 22, 23, 24, 25,
-                28, 29, 30, 31, 32, 33, 34,
-                37, 38, 39, 40, 41, 42, 43};
 
         if (itemsOnPage == null || itemsOnPage.isEmpty()) {
-            for (int i : itemSlots) {
+            for (int i : this.itemSlots) {
                 this.inventory.setItem(i, null);
             }
         } else {
-            for (int i = 0; i < itemSlots.length; i++) {
+            for (int i = 0; i < this.itemSlots.length; i++) {
                 if (i < itemsOnPage.size()) {
-                    this.inventory.setItem(itemSlots[i], itemsOnPage.get(i));
+                    this.inventory.setItem(this.itemSlots[i], itemsOnPage.get(i));
                 } else {
-                    this.inventory.setItem(itemSlots[i], null);
+                    this.inventory.setItem(this.itemSlots[i], null);
                 }
             }
         }
@@ -158,11 +162,11 @@ public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
     }
 
     // <editor-fold desc="Deprecated methods" defaultstate="collapsed">
+
     /**
      * Sets the items from {@link PaginatedGUI#updateItemsPerPage(List)} for the desired page.
      *
      * @param page The page to look for in {@link PaginatedGUI#pagesOfItems}.
-     *
      * @deprecated Renamed to prepareItemsForPage
      */
     @Deprecated
