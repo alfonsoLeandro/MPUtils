@@ -129,33 +129,35 @@ public class DynamicGUI extends Navigable<NavigationBar> {
 
     /**
      * Adds an item to the item list.
+     * If {@link #itemsMerge} is true, it will try to merge the item with an existing one if it is similar.
      *
      * @param item The item to add.
      */
     @Override
     public void addItem(ItemStack item) {
+        ItemStack toaAdd = item.clone();
         boolean added = false;
         if (this.itemsMerge) {
             for (ItemStack itemStack : this.items) {
-                if (itemStack.isSimilar(item)) {
-                    int amount = item.getAmount();
-                    int itemStackAmount = itemStack.getAmount();
+                if (itemStack.isSimilar(toaAdd)) {
+                    int toAddAmount = toaAdd.getAmount();
+                    int originalAmount = itemStack.getAmount();
 
                     // Item has already the max amount
-                    if (itemStackAmount >= itemStack.getMaxStackSize()) {
+                    if (originalAmount >= itemStack.getMaxStackSize()) {
                         continue;
                     }
 
                     // Item would go above max amount, add as much as possible, then continue loop.
-                    if (itemStackAmount + amount > itemStack.getMaxStackSize()) {
+                    if (originalAmount + toAddAmount > itemStack.getMaxStackSize()) {
                         itemStack.setAmount(itemStack.getMaxStackSize());
-                        amount -= itemStack.getMaxStackSize() - itemStackAmount;
-                        item.setAmount(amount);
+                        toAddAmount -= itemStack.getMaxStackSize() - originalAmount;
+                        toaAdd.setAmount(toAddAmount);
                         continue;
                     }
 
                     // Item fully merged
-                    itemStack.setAmount(itemStack.getAmount() + item.getAmount());
+                    itemStack.setAmount(itemStack.getAmount() + toaAdd.getAmount());
                     added = true;
                     break;
                 }
@@ -163,7 +165,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
         }
 
         if (!added) {
-            this.items.add(item);
+            this.items.add(toaAdd);
         }
         checkSize();
     }

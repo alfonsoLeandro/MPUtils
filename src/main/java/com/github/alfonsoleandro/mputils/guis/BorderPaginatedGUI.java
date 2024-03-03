@@ -81,7 +81,7 @@ public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
 
     @Override
     public void addItem(ItemStack item) {
-        this.items.add(item);
+        this.items.add(item.clone());
         updateItemsPerPage(this.items);
     }
 

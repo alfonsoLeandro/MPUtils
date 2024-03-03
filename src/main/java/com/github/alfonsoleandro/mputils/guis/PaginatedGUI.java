@@ -71,7 +71,7 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
         super(title, sizePerPage, guiTags, GUIType.PAGINATED, navBar);
         this.title = title;
 
-        updateItemsPerPage(items);
+        updateItemsPerPage(items.stream().map(ItemStack::clone).toList());
     }
 
     /**
@@ -94,7 +94,7 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
      */
     @Override
     public void addItem(ItemStack item) {
-        this.items.add(item);
+        this.items.add(item.clone());
         updateItemsPerPage(this.items);
     }
 

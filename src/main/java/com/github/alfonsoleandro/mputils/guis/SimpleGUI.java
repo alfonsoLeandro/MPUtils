@@ -76,11 +76,12 @@ public class SimpleGUI extends GUI {
      */
     @Override
     public void addItem(ItemStack item) {
-        this.inventory.addItem(item);
+        ItemStack toAdd = item.clone();
+        this.inventory.addItem(toAdd);
         for (int i = 0; i < this.guiSize; i++) {
             ItemStack inI = this.inventory.getItem(i);
-            if (inI != null && inI.isSimilar(item)) {
-                this.items.put(i, item);
+            if (inI != null && inI.isSimilar(toAdd)) {
+                this.items.put(i, toAdd);
             }
         }
     }

@@ -101,6 +101,9 @@ public abstract class GUI {
 
     /**
      * Adds an item to the item list.
+     * IMPORTANT: *ANY* implementation of this method should add a CLONE of the item passed by parameter, instead
+     * of the item itself. This is to prevent some bugs where the item is set to air when it shouldn't, as well
+     * as to prevent modifying the source item when trying to modify the item to add.
      *
      * @param item The item to add.
      */
