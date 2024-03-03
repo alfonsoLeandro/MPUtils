@@ -94,7 +94,8 @@ public class SimpleGUI extends GUI {
     }
 
     /**
-     * Check if a given item can be added to this GUI.
+     * Check if a given item can be added totally to this GUI.
+     * Even if this method returns false, the item may still be able to be partially added.
      *
      * @param item The item to check.
      * @return True if the item can be added, false otherwise.
