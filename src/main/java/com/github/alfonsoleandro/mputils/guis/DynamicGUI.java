@@ -135,12 +135,12 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      */
     @Override
     public void addItem(ItemStack item) {
-        ItemStack toaAdd = item.clone();
+        ItemStack toAdd = item.clone();
         boolean added = false;
         if (this.itemsMerge) {
             for (ItemStack itemStack : this.items) {
-                if (itemStack.isSimilar(toaAdd)) {
-                    int toAddAmount = toaAdd.getAmount();
+                if (itemStack.isSimilar(toAdd)) {
+                    int toAddAmount = toAdd.getAmount();
                     int originalAmount = itemStack.getAmount();
 
                     // Item has already the max amount
@@ -152,12 +152,12 @@ public class DynamicGUI extends Navigable<NavigationBar> {
                     if (originalAmount + toAddAmount > itemStack.getMaxStackSize()) {
                         itemStack.setAmount(itemStack.getMaxStackSize());
                         toAddAmount -= itemStack.getMaxStackSize() - originalAmount;
-                        toaAdd.setAmount(toAddAmount);
+                        toAdd.setAmount(toAddAmount);
                         continue;
                     }
 
                     // Item fully merged
-                    itemStack.setAmount(itemStack.getAmount() + toaAdd.getAmount());
+                    itemStack.setAmount(itemStack.getAmount() + toAdd.getAmount());
                     added = true;
                     break;
                 }
@@ -165,7 +165,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
         }
 
         if (!added) {
-            this.items.add(toaAdd);
+            this.items.add(toAdd);
         }
         checkSize();
     }
