@@ -169,7 +169,7 @@ public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
      * @param items The total list of items to display throughout the entire paginated GUI.
      */
     public void updateItemsPerPage(List<ItemStack> items) {
-        this.items = items;
+        this.items = new ArrayList<>(items);
         this.pagesOfItems = new HashMap<>();
         List<ItemStack> itemsOnAPage = new ArrayList<>();
         for (ItemStack item : items) {
