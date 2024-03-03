@@ -58,15 +58,43 @@ public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
      * Creates a new BorderPaginatedGUI with a border made up of {@link com.github.alfonsoleandro.mputils.guis.navigation.GUIButton} around the contained items.
      * The total size for this GUI will always be of 54, with 26 free slots for items to be placed on each page.
      *
+     * @param title      The title for the GUI, not colorized by default.
+     * @param items      The list of all items to show in the GUI throughout all pages.
+     * @param guiTags    Any string tags you may want to add in order to differentiate a GUI from another.
+     * @param itemsMerge Whether the items added to this GUI should be stacked on top of similar items when possible.
+     * @param navBar     The navBar to use for this GUI.
+     */
+    public BorderPaginatedGUI(String title, List<ItemStack> items, String guiTags, boolean itemsMerge, BorderGUINavigationBar navBar) {
+        super(title, 54, guiTags, GUIType.PAGINATED, itemsMerge, navBar);
+
+        updateItemsPerPage(items);
+    }
+
+    /**
+     * Creates a new BorderPaginatedGUI with a border made up of {@link com.github.alfonsoleandro.mputils.guis.navigation.GUIButton} around the contained items.
+     * The total size for this GUI will always be of 54, with 26 free slots for items to be placed on each page.
+     *
      * @param title   The title for the GUI, not colorized by default.
      * @param items   The list of all items to show in the GUI throughout all pages.
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      * @param navBar  The navBar to use for this GUI.
      */
     public BorderPaginatedGUI(String title, List<ItemStack> items, String guiTags, BorderGUINavigationBar navBar) {
-        super(title, 54, guiTags, GUIType.PAGINATED, navBar);
+        this(title, items, guiTags, false, navBar);
+    }
 
-        updateItemsPerPage(items);
+    /**
+     * Creates a new BorderPaginatedGUI with a border made up of {@link com.github.alfonsoleandro.mputils.guis.navigation.GUIButton} around the contained items.
+     * The total size for this GUI will always be of 54, with 26 free slots for items to be placed on each page.
+     * Uses the default {@link BorderGUINavigationBar}.
+     *
+     * @param title      The title for the GUI, not colorized by default.
+     * @param items      The list of all items to show in the GUI throughout all pages.
+     * @param itemsMerge Whether the items added to this GUI should be stacked on top of similar items when possible.
+     * @param guiTags    Any string tags you may want to add in order to differentiate a GUI from another.
+     */
+    public BorderPaginatedGUI(String title, List<ItemStack> items, String guiTags, boolean itemsMerge) {
+        this(title, items, guiTags, itemsMerge, new BorderGUINavigationBar());
     }
 
     /**
@@ -79,9 +107,7 @@ public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
      * @param guiTags Any string tags you may want to add in order to differentiate a GUI from another.
      */
     public BorderPaginatedGUI(String title, List<ItemStack> items, String guiTags) {
-        super(title, 54, guiTags, GUIType.PAGINATED, new BorderGUINavigationBar());
-
-        updateItemsPerPage(items);
+        this(title, items, guiTags, false, new BorderGUINavigationBar());
     }
 
     @Override

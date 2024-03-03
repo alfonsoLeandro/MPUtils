@@ -61,6 +61,24 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
      * @param sizePerPage The size of each page, must be multiple of 9, between (included) 9 and 54.
      * @param items       The list of all items to show in the GUI throughout all pages.
      * @param guiTags     Any string tags you may want to add in order to differentiate a GUI from another.
+     * @param itemsMerge Whether to check if items to add are similar to those already in the GUI and merge them if so.
+     * @param navBar      The navBar to use for this GUI.
+     */
+    public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags, boolean itemsMerge, NavigationBar navBar) {
+        super(title, sizePerPage, guiTags, GUIType.PAGINATED, itemsMerge, navBar);
+        this.title = title;
+
+        updateItemsPerPage(items.stream().map(ItemStack::clone).toList());
+    }
+
+    /**
+     * Creates a GUI of any size bigger than 9 and smaller than 54 slots, with ability to have various pages and a navigation bar in the last row.
+     * Will create the gui, and set the default navBar items.
+     *
+     * @param title       The title for the GUI, not colorized by default.
+     * @param sizePerPage The size of each page, must be multiple of 9, between (included) 9 and 54.
+     * @param items       The list of all items to show in the GUI throughout all pages.
+     * @param guiTags     Any string tags you may want to add in order to differentiate a GUI from another.
      * @param navBar      The navBar to use for this GUI.
      */
     public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags, NavigationBar navBar) {
@@ -68,6 +86,20 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
         this.title = title;
 
         updateItemsPerPage(items.stream().map(ItemStack::clone).toList());
+    }
+
+    /**
+     * Creates a GUI of any size bigger than 9 and smaller than 54 slots, with ability to have various pages and a navigation bar in the last row.
+     * Will create the gui, and set the default navBar items. (Uses default navbar).
+     *
+     * @param title       The title for the GUI, not colorized by default.
+     * @param sizePerPage The size of each page, must be multiple of 9, bigger than 9 and smaller than 54.
+     * @param items       The list of all items to show in the GUI throughout all pages.
+     * @param guiTags     Any string tags you may want to add in order to differentiate a GUI from another.
+     * @param itemsMerge Whether to check if items to add are similar to those already in the GUI and merge them if so.
+     */
+    public PaginatedGUI(String title, int sizePerPage, List<ItemStack> items, String guiTags, boolean itemsMerge) {
+        this(title, sizePerPage, items, guiTags, itemsMerge, new NavigationBar());
     }
 
     /**
