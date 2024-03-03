@@ -25,6 +25,9 @@ import com.github.alfonsoleandro.mputils.guis.navigation.NavigationBar;
 import com.github.alfonsoleandro.mputils.guis.navigation.Navigator;
 import com.github.alfonsoleandro.mputils.guis.utils.GUIType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 /**
  * Represents a GUI that can be navigable (has Navigation bar and pages).
@@ -42,6 +45,14 @@ public abstract class Navigable<N extends Navigator> extends GUI {
      * The total number of pages this GUI has.
      */
     protected int pages;
+    /**
+     * The total list of items throughout the entire GUI.
+     */
+    protected List<ItemStack> items;
+    /**
+     * Whether to check if add items are similar to those already in the GUI and merge them if so.
+     */
+    protected boolean itemsMerge;
 
     /**
      * Constructor for ANY Navigable GUI with its essential features.
@@ -53,7 +64,22 @@ public abstract class Navigable<N extends Navigator> extends GUI {
      * @param navBar  The {@link NavigationBar} object that goes with this Navigable GUI.
      */
     protected Navigable(String title, int size, String guiTags, GUIType guiType, N navBar) {
+        this(title, size, guiTags, guiType, false, navBar);
+    }
+
+    /**
+     * Constructor for ANY Navigable GUI with its essential features.
+     *
+     * @param title   The title for the inventory (colors must be applied before).
+     * @param size    The size for the inventory.
+     * @param guiTags Any String chosen to distinguish this GUI from another GUI.
+     * @param guiType The type of GUI. Either {@link GUIType#SIMPLE} or {@link GUIType#PAGINATED}.
+     * @param itemsMerge Whether to check if items to add are similar to those already in the GUI and merge them if so.
+     * @param navBar  The {@link NavigationBar} object that goes with this Navigable GUI.
+     */
+    protected Navigable(String title, int size, String guiTags, GUIType guiType, boolean itemsMerge, N navBar) {
         super(title, size, guiTags, guiType);
+        this.itemsMerge = itemsMerge;
         this.navBar = navBar;
     }
 
@@ -85,6 +111,48 @@ public abstract class Navigable<N extends Navigator> extends GUI {
      * @since 1.10.0
      */
     public abstract void openGUI(Player player, int page);
+
+    /**
+     * Adds an item to the item list.
+     * If {@link #itemsMerge} is true, it will try to merge the item with an existing one if it is similar.
+     *
+     * @param item The item to add.
+     */
+    @Override
+    public void addItem(ItemStack item) {
+        ItemStack toAdd = item.clone();
+        boolean added = false;
+        if (this.itemsMerge) {
+            for (ItemStack itemStack : this.items) {
+                if (itemStack.isSimilar(toAdd)) {
+                    int toAddAmount = toAdd.getAmount();
+                    int originalAmount = itemStack.getAmount();
+
+                    // Item has already the max amount
+                    if (originalAmount >= itemStack.getMaxStackSize()) {
+                        continue;
+                    }
+
+                    // Item would go above max amount, add as much as possible, then continue loop.
+                    if (originalAmount + toAddAmount > itemStack.getMaxStackSize()) {
+                        itemStack.setAmount(itemStack.getMaxStackSize());
+                        toAddAmount -= itemStack.getMaxStackSize() - originalAmount;
+                        toAdd.setAmount(toAddAmount);
+                        continue;
+                    }
+
+                    // Item fully merged
+                    itemStack.setAmount(itemStack.getAmount() + toAdd.getAmount());
+                    added = true;
+                    break;
+                }
+            }
+        }
+
+        if (!added) {
+            this.items.add(toAdd);
+        }
+    }
 
     /**
      * Updates the navigation bar, called when the GUI is opened for a user, replicates the navBar items and
@@ -123,6 +191,26 @@ public abstract class Navigable<N extends Navigator> extends GUI {
      */
     public void setNavBar(N navBar) {
         this.navBar = navBar;
+    }
+
+    /**
+     * Checks whether the items are merged when added or not.
+     *
+     * @return True if the items are merged when added.
+     * @since 1.10.0
+     */
+    public boolean isItemsMerge() {
+        return this.itemsMerge;
+    }
+
+    /**
+     * Sets whether the items are merged when added or not.
+     *
+     * @param itemsMerge True if the items are merged when added.
+     * @since 1.10.0
+     */
+    public void setItemsMerge(boolean itemsMerge) {
+        this.itemsMerge = itemsMerge;
     }
 
 

@@ -49,10 +49,6 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
      */
     protected final String title;
     /**
-     * The total list of items throughout the entire GUI.
-     */
-    protected List<ItemStack> items;
-    /**
      * The list of {@link ItemStack} per page.
      */
     protected HashMap<Integer, List<ItemStack>> pagesOfItems;
@@ -94,7 +90,7 @@ public class PaginatedGUI extends Navigable<NavigationBar> {
      */
     @Override
     public void addItem(ItemStack item) {
-        this.items.add(item.clone());
+        super.addItem(item);
         updateItemsPerPage(this.items);
     }
 

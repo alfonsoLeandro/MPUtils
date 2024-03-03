@@ -41,10 +41,6 @@ import java.util.List;
 public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
 
     /**
-     * The total list of items throughout the entire GUI.
-     */
-    protected List<ItemStack> items;
-    /**
      * The list of {@link ItemStack} per page.
      */
     protected HashMap<Integer, List<ItemStack>> pagesOfItems;
@@ -90,7 +86,7 @@ public class BorderPaginatedGUI extends Navigable<BorderGUINavigationBar> {
 
     @Override
     public void addItem(ItemStack item) {
-        this.items.add(item.clone());
+        super.addItem(item);
         updateItemsPerPage(this.items);
     }
 

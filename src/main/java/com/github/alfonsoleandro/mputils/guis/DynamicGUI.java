@@ -46,17 +46,9 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      */
     protected final String title;
     /**
-     * The list of items contained in this GUI.
-     */
-    protected final List<ItemStack> items;
-    /**
      * Whether this GUI has more than one page.
      */
     protected boolean isPaginated;
-    /**
-     * Whether to check if add items are similar to those already in the GUI and merge them if so.
-     */
-    private boolean itemsMerge;
 
     /**
      * Creates a new DynamicGUI with the default navigation bar.
@@ -80,10 +72,8 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      */
     @Deprecated
     public DynamicGUI(String title, String guiTags, NavigationBar navBar) {
-        super(title, 9, guiTags, GUIType.SIMPLE, navBar);
-        this.title = title;
+        this(title, guiTags, false, navBar);
         this.items = new ArrayList<>();
-        this.itemsMerge = false;
     }
 
     /**
@@ -110,10 +100,9 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      * @since 1.10.0
      */
     public DynamicGUI(String title, String guiTags, boolean itemsMerge, NavigationBar navBar) {
-        super(title, 9, guiTags, GUIType.SIMPLE, navBar);
+        super(title, 9, guiTags, GUIType.SIMPLE, itemsMerge, navBar);
         this.title = title;
         this.items = new ArrayList<>();
-        this.itemsMerge = itemsMerge;
     }
 
     /**
@@ -135,38 +124,7 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      */
     @Override
     public void addItem(ItemStack item) {
-        ItemStack toAdd = item.clone();
-        boolean added = false;
-        if (this.itemsMerge) {
-            for (ItemStack itemStack : this.items) {
-                if (itemStack.isSimilar(toAdd)) {
-                    int toAddAmount = toAdd.getAmount();
-                    int originalAmount = itemStack.getAmount();
-
-                    // Item has already the max amount
-                    if (originalAmount >= itemStack.getMaxStackSize()) {
-                        continue;
-                    }
-
-                    // Item would go above max amount, add as much as possible, then continue loop.
-                    if (originalAmount + toAddAmount > itemStack.getMaxStackSize()) {
-                        itemStack.setAmount(itemStack.getMaxStackSize());
-                        toAddAmount -= itemStack.getMaxStackSize() - originalAmount;
-                        toAdd.setAmount(toAddAmount);
-                        continue;
-                    }
-
-                    // Item fully merged
-                    itemStack.setAmount(itemStack.getAmount() + toAdd.getAmount());
-                    added = true;
-                    break;
-                }
-            }
-        }
-
-        if (!added) {
-            this.items.add(toAdd);
-        }
+        super.addItem(item);
         checkSize();
     }
 
@@ -273,26 +231,6 @@ public class DynamicGUI extends Navigable<NavigationBar> {
      */
     public boolean isPaginated() {
         return this.isPaginated;
-    }
-
-    /**
-     * Checks whether the items are merged or not.
-     *
-     * @return True if the items are merged when added.
-     * @since 1.10.0
-     */
-    public boolean isItemsMerge() {
-        return this.itemsMerge;
-    }
-
-    /**
-     * Sets whether the items are merged or not.
-     *
-     * @param itemsMerge True if the items are merged when added.
-     * @since 1.10.0
-     */
-    public void setItemsMerge(boolean itemsMerge) {
-        this.itemsMerge = itemsMerge;
     }
 
     //<editor-fold desc="Deprecated methods" defaultstate="collapsed">
