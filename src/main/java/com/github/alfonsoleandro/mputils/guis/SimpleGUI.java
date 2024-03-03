@@ -38,12 +38,6 @@ import java.util.HashMap;
 public class SimpleGUI extends GUI {
 
     /**
-     * Hashmap containing every item that has been added to the GUI.
-     */
-    private final HashMap<Integer, ItemStack> items;
-
-
-    /**
      * Creates an empty non-paginated CHEST type {@link InventoryType#CHEST} inventory for GUI purposes
      * with a title (not colored by default, can be passed colored) and a size.
      *
@@ -53,7 +47,6 @@ public class SimpleGUI extends GUI {
      */
     public SimpleGUI(String title, int size, String guiTags) {
         super(title, size, guiTags, GUIType.SIMPLE);
-        this.items = new HashMap<>();
     }
 
     /**
@@ -66,7 +59,6 @@ public class SimpleGUI extends GUI {
     public void setItem(int index, ItemStack item) {
         if (index >= this.guiSize || index < 0) return;
         this.inventory.setItem(index, item);
-        this.items.put(index, item);
     }
 
     /**
@@ -78,12 +70,6 @@ public class SimpleGUI extends GUI {
     public void addItem(ItemStack item) {
         ItemStack toAdd = item.clone();
         this.inventory.addItem(toAdd);
-        for (int i = 0; i < this.guiSize; i++) {
-            ItemStack inI = this.inventory.getItem(i);
-            if (inI != null && inI.isSimilar(toAdd)) {
-                this.items.put(i, toAdd);
-            }
-        }
     }
 
     /**
@@ -93,11 +79,9 @@ public class SimpleGUI extends GUI {
      * @param title The new title to use.
      */
     public void setTitle(String title) {
+        ItemStack[] oldContents = this.inventory.getContents();
         this.inventory = Bukkit.createInventory(null, this.guiSize, title);
-        for (int i : this.items.keySet()) {
-            this.inventory.setItem(i, this.items.get(i));
-        }
-
+        this.inventory.setContents(oldContents);
     }
 
     /**
@@ -106,16 +90,32 @@ public class SimpleGUI extends GUI {
     @Override
     public void clearInventory() {
         this.inventory.clear();
-        this.items.clear();
+    }
+
+    /**
+     * Gets the contents of the inventory in this GUI.
+     *
+     * @return The contents of the inventory.
+     * @since 1.10.0
+     */
+    public ItemStack[] getContents() {
+        return this.inventory.getContents();
     }
 
     /**
      * Gets a hashmap containing every item in the inventory and its slot.
      *
      * @return The hashmap containing the items in this GUI.
+     * @deprecated Items are now stored in an array, as items in the Inventory class do. Use {@link #getContents()} instead.
      */
+    @Deprecated(since = "1.10.0", forRemoval = true)
     public HashMap<Integer, ItemStack> getItems() {
-        return this.items;
+        ItemStack[] contents = this.inventory.getContents();
+        HashMap<Integer, ItemStack> items = new HashMap<>();
+        for (int i = 0; i < contents.length; i++) {
+            if (contents[i] != null) items.put(i, contents[i]);
+        }
+        return items;
     }
 
 
