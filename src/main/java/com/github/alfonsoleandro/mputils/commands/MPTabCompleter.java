@@ -15,7 +15,7 @@ import java.util.List;
  * <br>
  * Placeholders available:
  * <ul>
- *     <li>{PLAYER} - Will return the list of all players online.</li>
+ *     <li>{PLAYERS} - Will return the list of all players online.</li>
  * </ul>
  *
  * @author alfonsoLeandro
