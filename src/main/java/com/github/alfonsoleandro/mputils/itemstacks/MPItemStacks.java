@@ -21,6 +21,7 @@ SOFTWARE.
  */
 package com.github.alfonsoleandro.mputils.itemstacks;
 
+import com.github.alfonsoleandro.mputils.collections.CollectionUtils;
 import com.github.alfonsoleandro.mputils.string.StringUtils;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -109,11 +110,7 @@ public final class MPItemStacks {
             meta.setDisplayName(StringUtils.colorizeString('&', displayName));
         }
 
-        List<String> resultingLore = new ArrayList<>();
-        for (String line : lore) {
-            resultingLore.add(StringUtils.colorizeString('&', line));
-        }
-        meta.setLore(resultingLore);
+        meta.setLore(CollectionUtils.colorizeList(lore));
 
         itemStack.setItemMeta(meta);
 
@@ -138,11 +135,7 @@ public final class MPItemStacks {
             meta.setDisplayName(StringUtils.colorizeString('&', displayName));
         }
         if (lore != null) {
-            List<String> resultingLore = new ArrayList<>();
-            for (String line : lore) {
-                resultingLore.add(StringUtils.colorizeString('&', line));
-            }
-            meta.setLore(resultingLore);
+            meta.setLore(CollectionUtils.colorizeList(lore));
         }
 
         itemStack.setItemMeta(meta);
