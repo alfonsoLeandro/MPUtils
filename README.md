@@ -21,7 +21,7 @@ MP Utils is a simple library for helping on the developing of minecraft spigot p
 
 <a name="installation"></a>
 ## Installation
-Developers:
+### Developers
   Add the following maven dependency to your pom.xml file:
 
 ```xml
@@ -34,7 +34,14 @@ Developers:
         </dependency>
     </dependencies>
 ```
-Server owners:
+#### Installing locally
+If you are trying to modify the library and use your modified version for developing other plugins or testing your
+changes, you will need to install it in your local maven repository. To do so, you can use the following maven command:
+```shell
+mnv install
+```
+
+### Server owners
   1. Download  the .jar file either from here or the [plugin page on spigot](https://www.spigotmc.org/resources/mputils.82788/).
   2. Put the .jar file in your plugins folder inside your server folder.
   3. Start or reload the server.
