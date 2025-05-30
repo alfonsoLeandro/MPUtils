@@ -28,6 +28,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Class for managing which players have GUIs opened and what page they are on.
@@ -88,6 +89,9 @@ public final class PlayersOnGUIsManager {
 
     /**
      * Forcibly removes all players from this manager and closes their inventories.
+     * PREFERABLY USE {@link #removeAll(String)}.
+     *
+     * @since 1.10.0
      */
     public static void removeAll() {
         for (String playerName : new ArrayList<>(players.keySet())) {
@@ -95,6 +99,24 @@ public final class PlayersOnGUIsManager {
             Player player = Bukkit.getPlayerExact(playerName);
             if (player == null) continue;
             player.closeInventory();
+        }
+    }
+
+    /**
+     * Forcibly removes all players from this manager and closes their inventories.
+     * Only those whose GUI matches the guitag passed by parameter.
+     *
+     * @param guiTag The guitag of the GUI that is to be closed.
+     * @since 1.10.0
+     */
+    public static void removeAll(String guiTag) {
+        for (Map.Entry<String, GUIAttributes> playerAttributes : players.entrySet()) {
+            if(playerAttributes.getValue().gui().getGuiTags().equals(guiTag)) {
+                removePlayer(playerAttributes.getKey());
+                Player player = Bukkit.getPlayerExact(playerAttributes.getKey());
+                if (player == null) continue;
+                player.closeInventory();
+            }
         }
     }
 
