@@ -23,7 +23,9 @@ package com.github.alfonsoleandro.mputils.reloadable;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -40,7 +42,7 @@ public abstract class ReloaderPlugin extends JavaPlugin {
      *
      * @see #reload()
      */
-    protected final Set<Reloadable> reloadables = new HashSet<>();
+    protected final Map<Reloadable.Priority, Set<Reloadable>> reloadables = new HashMap<>();
 
     /**
      * Adds a new Reloadable to the reloadables collection.
@@ -48,7 +50,17 @@ public abstract class ReloaderPlugin extends JavaPlugin {
      * @param reloadable The {@link Reloadable} to add.
      */
     public void registerReloadable(Reloadable reloadable) {
-        this.reloadables.add(reloadable);
+        registerReloadable(reloadable, Reloadable.Priority.NORMAL);
+    }
+
+    /**
+     * Adds a new Reloadable to the reloadables collection, with the given priority.
+     *
+     * @param reloadable The {@link Reloadable} to add.
+     * @since 1.10.0
+     */
+    public void registerReloadable(Reloadable reloadable, Reloadable.Priority priority) {
+        this.reloadables.getOrDefault(priority, new HashSet<>()).add(reloadable);
     }
 
     /**
@@ -57,7 +69,11 @@ public abstract class ReloaderPlugin extends JavaPlugin {
      * @param reloadable The {@link Reloadable} to remove.
      */
     public void unRegisterReloadable(Reloadable reloadable) {
-        this.reloadables.remove(reloadable);
+        for (Reloadable.Priority priority : Reloadable.Priority.values()) {
+            if (this.reloadables.containsKey(priority)) {
+                this.reloadables.get(priority).remove(reloadable);
+            }
+        }
     }
 
     /**
@@ -68,7 +84,7 @@ public abstract class ReloaderPlugin extends JavaPlugin {
      */
     @Deprecated
     public void reload() {
-        this.reloadables.forEach(r -> r.reload(false));
+        reload(false);
     }
 
     /**
@@ -79,6 +95,15 @@ public abstract class ReloaderPlugin extends JavaPlugin {
      * @see Reloadable
      */
     public void reload(boolean deep) {
-        this.reloadables.forEach(r -> r.reload(deep));
+        for (Reloadable.Priority priority : new Reloadable.Priority[]{
+                Reloadable.Priority.HIGHEST,
+                Reloadable.Priority.HIGH,
+                Reloadable.Priority.NORMAL,
+                Reloadable.Priority.LOW,
+                Reloadable.Priority.LOWEST,
+        }) {
+            if (!this.reloadables.containsKey(priority)) continue;
+            this.reloadables.get(priority).forEach(reloadable -> reloadable.reload(deep));
+        }
     }
 }

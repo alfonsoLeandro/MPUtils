@@ -30,12 +30,38 @@ package com.github.alfonsoleandro.mputils.reloadable;
 public abstract class Reloadable {
 
     /**
+     * The priority with which the reloadable is registered, and eventually reloaded.
+     * Reloadables are reloaded from highest to lowest.
+     * Useful for reloading some classes before others.
+     *
+     * @since 1.10.0
+     */
+    public enum Priority {
+        HIGHEST,
+        HIGH,
+        NORMAL,
+        LOW,
+        LOWEST
+    }
+
+    /**
      * Creates a new Reloadable and registers it in the given {@link ReloaderPlugin}.
      *
      * @param plugin The {@link ReloaderPlugin} to register this Reloadable in.
      */
     public Reloadable(ReloaderPlugin plugin) {
         plugin.registerReloadable(this);
+    }
+
+    /**
+     * Creates a new Reloadable and registers it in the given {@link ReloaderPlugin}.
+     *
+     * @param plugin The {@link ReloaderPlugin} to register this Reloadable in.
+     * @param priority The relative priority of this class when reloaded.
+     * @since 1.10.0
+     */
+    public Reloadable(ReloaderPlugin plugin, Priority priority) {
+        plugin.registerReloadable(this, priority);
     }
 
     /**
