@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,22 +25,36 @@ import java.util.List;
 public class MPTabCompleter implements TabCompleter {
 
     private final List<String[]> commands = new ArrayList<>();
+    private final String requiredPermission;
+
+    /**
+     * Sets the commands to be tab completed, these commands should only contain their arguments, for example,
+     * if a command is "/plugin do stuff", the argument should be "do stuff".
+     * No permission is required to see the plugin's command autocompletion.
+     *
+     * @param argsPerCommand The args of each command available to be autocompleted.
+     */
+    public MPTabCompleter(List<String> argsPerCommand) {
+        this(argsPerCommand, null);
+    }
 
     /**
      * Sets the commands to be tab completed, these commands should only contain their arguments, for example,
      * if a command is "/plugin do stuff", the argument should be "do stuff".
      *
      * @param argsPerCommand The args of each command available to be autocompleted.
+     * @param requiredPermission The required permission to see all of your plugin's command autocompletion.
      */
-    public MPTabCompleter(List<String> argsPerCommand) {
+    public MPTabCompleter(List<String> argsPerCommand, String requiredPermission) {
         for (String command : argsPerCommand) {
             this.commands.add(command.split(" "));
         }
+        this.requiredPermission = requiredPermission;
     }
 
     /**
      * Returns a list of command suggestions based on the args written by the player.
-     * In case of "{PLAYERS}" given as suggestion, it will return the list of all players online.
+     * In the case of "{PLAYERS}" given as a suggestion, it will return the list of all players online.
      *
      * @param sender  The sender of the command.
      * @param command The command being tab completed.
@@ -50,6 +65,9 @@ public class MPTabCompleter implements TabCompleter {
     @Nullable
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        if (this.requiredPermission != null && sender instanceof Player && !sender.hasPermission(this.requiredPermission)) {
+            return null;
+        }
         List<String> list = new ArrayList<>();
         int inputAmount = args.length;
         String input = args[inputAmount - 1];
