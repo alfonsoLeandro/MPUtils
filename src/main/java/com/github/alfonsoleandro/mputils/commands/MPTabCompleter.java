@@ -5,6 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,6 +18,7 @@ import java.util.List;
  * Placeholders available:
  * <ul>
  *     <li>{PLAYERS} - Will return the list of all players online.</li>
+ *     <li>{WORLDS} - Will return the list of all worlds available.</li>
  * </ul>
  *
  * @author alfonsoLeandro
@@ -55,6 +57,7 @@ public class MPTabCompleter implements TabCompleter {
     /**
      * Returns a list of command suggestions based on the args written by the player.
      * In the case of "{PLAYERS}" given as a suggestion, it will return the list of all players online.
+     * In the cas of "{WORLDS}" given as a suggestion, it will return the list of all worlds available.
      *
      * @param sender  The sender of the command.
      * @param command The command being tab completed.
@@ -90,6 +93,8 @@ public class MPTabCompleter implements TabCompleter {
                 }
                 if (currentSuggestion.equalsIgnoreCase("{PLAYERS}")) {
                     list.addAll(Bukkit.getOnlinePlayers().stream().map(CommandSender::getName).toList());
+                } else if (currentSuggestion.equalsIgnoreCase("{WORLDS}")) {
+                    list.addAll(Bukkit.getWorlds().stream().map(WorldInfo::getName).toList());
                 } else {
                     list.add(currentSuggestion);
                 }
