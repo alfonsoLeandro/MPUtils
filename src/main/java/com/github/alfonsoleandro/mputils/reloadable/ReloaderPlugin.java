@@ -60,7 +60,10 @@ public abstract class ReloaderPlugin extends JavaPlugin {
      * @since 1.10.0
      */
     public void registerReloadable(Reloadable reloadable, Reloadable.Priority priority) {
-        this.reloadables.getOrDefault(priority, new HashSet<>()).add(reloadable);
+        if (!this.reloadables.containsKey(priority)) {
+            this.reloadables.put(priority, new HashSet<>());
+        }
+        this.reloadables.get(priority).add(reloadable);
     }
 
     /**
@@ -69,11 +72,7 @@ public abstract class ReloaderPlugin extends JavaPlugin {
      * @param reloadable The {@link Reloadable} to remove.
      */
     public void unRegisterReloadable(Reloadable reloadable) {
-        for (Reloadable.Priority priority : Reloadable.Priority.values()) {
-            if (this.reloadables.containsKey(priority)) {
-                this.reloadables.get(priority).remove(reloadable);
-            }
-        }
+        this.reloadables.values().forEach(set -> set.remove(reloadable));
     }
 
     /**
